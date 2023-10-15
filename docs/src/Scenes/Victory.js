@@ -1,4 +1,5 @@
 import { Menu } from './menu.js';
+import { Settings } from './Settings.js';
  
 export class Victory extends Phaser.Scene {
     constructor() {
@@ -23,7 +24,7 @@ export class Victory extends Phaser.Scene {
     menuButton.setInteractive(); // Hace que el botón sea interactivo, para poder pulsar sobre el o para accionar eventos.
 
     menuButton.on("pointerup", ()=>{ //Método que te lleva al menú principal si se presiona el botón menú.
-    this.scene.start('Menu');
+    this.scene.start('Settings');
     this.scene.stop();
     this.rufino.stop();
     });

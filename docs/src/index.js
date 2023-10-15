@@ -1,4 +1,5 @@
 import { Menu } from './Scenes/menu.js';
+import { Settings } from './Scenes/Settings.js';
 
 
 let config = {
@@ -17,13 +18,13 @@ let config = {
             height: 188
         },
 		max: {
-            width: 720,
-            height: 900
+            width: 1000,
+            height: 750
         },
 		zoom: 1
     },
 
-    scene: [ Menu],
+    scene: [ Menu, Settings],
 
     physics: { 
         default: 'arcade', 

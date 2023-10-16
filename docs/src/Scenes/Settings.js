@@ -1,4 +1,4 @@
-import { Menu } from './menu.js';
+import { gameSettings } from './menu.js';
 
 export class Settings extends Phaser.Scene {
     constructor() {
@@ -7,17 +7,18 @@ export class Settings extends Phaser.Scene {
 
     preload() {
         this.load.audio('menuMusic', './assets/audio/MenuMusic.mp3');
+        this.load.image('background', './assets/images/background/MenuBackground.png');
     }
 
     create() {
         // Música de fondo
-        this.backgroundMusic = this.sound.add('menuMusic', { volume: Menu.musicVolume }); // Asumiendo que 'Menu.musicVolume' almacena el volumen actual.
+        this.backgroundMusic = this.sound.add('menuMusic', { volume: gameSettings.musicVolume });
         if (!this.backgroundMusic.isPlaying) {
             this.backgroundMusic.play({ loop: true });
         }
 
-        // Imagen de fondo con 50% de transparencia
-        this.bg = this.add.image(0, 0, 'background').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(0.5);
+        // Imagen de fondo con transparencia según el brillo establecido
+        this.bg = this.add.image(0, 0, 'background').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
 
         let centerY = this.game.config.height * 0.5;
 
@@ -27,7 +28,7 @@ export class Settings extends Phaser.Scene {
         // Opciones de volumen
         this.add.text(this.game.config.width * 0.3, centerY - 50, 'Volumen:', { font: '48px Arial', fill: '#000000' }).setOrigin(0.5);
         this.volumeText = this.add.text(this.game.config.width * 0.7, centerY - 50, `${Math.round(this.sound.volume * 100)}%`, { font: '48px Arial', fill: '#000000' }).setOrigin(0.5).setInteractive();
-        
+
         this.volumeText.on('pointerup', () => {
             let currentVolume = this.sound.volume;
             if (currentVolume <= 0.1) {
@@ -37,22 +38,23 @@ export class Settings extends Phaser.Scene {
             }
             this.sound.setVolume(currentVolume);
             this.volumeText.setText(`${Math.round(currentVolume * 100)}%`);
-            Menu.musicVolume = currentVolume; // Almacenar el volumen actualizado en la escena del menú
+            gameSettings.musicVolume = currentVolume; // Almacenar el volumen actualizado
         });
 
         // Opciones de brillo
         this.add.text(this.game.config.width * 0.3, centerY, 'Brillo:', { font: '48px Arial', fill: '#000000' }).setOrigin(0.5);
-        this.brightnessText = this.add.text(this.game.config.width * 0.7, centerY, '100%', { font: '48px Arial', fill: '#000000' }).setOrigin(0.5).setInteractive();
+        this.brightnessText = this.add.text(this.game.config.width * 0.7, centerY, `${Math.round(gameSettings.brightness * 100)}%`, { font: '48px Arial', fill: '#000000' }).setOrigin(0.5).setInteractive();
 
         this.brightnessText.on('pointerup', () => {
-            let currentAlpha = this.bg.alpha;
-            if (currentAlpha <= 0.1) {
-                currentAlpha = 1;
+            let currentBrightness = this.bg.alpha;
+            if (currentBrightness <= 0.1) {
+                currentBrightness = 1;
             } else {
-                currentAlpha -= 0.1;
+                currentBrightness -= 0.1;
             }
-            this.bg.setAlpha(currentAlpha);
-            this.brightnessText.setText(`${Math.round(currentAlpha * 100)}%`);
+            this.bg.setAlpha(currentBrightness);
+            this.brightnessText.setText(`${Math.round(currentBrightness * 100)}%`);
+            gameSettings.brightness = currentBrightness; // Almacenar el brillo actualizado
         });
 
         // Botón de volver
@@ -65,7 +67,7 @@ export class Settings extends Phaser.Scene {
             alpha: 1,
             duration: 1500
         });
-        
+
         backButton.on('pointerup', () => {
             this.backgroundMusic.stop(); // Detener la música al salir de la escena de configuración
             this.tweens.add({
@@ -79,3 +81,4 @@ export class Settings extends Phaser.Scene {
         });
     }
 }
+

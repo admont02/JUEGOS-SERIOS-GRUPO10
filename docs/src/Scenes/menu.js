@@ -1,5 +1,5 @@
 export let gameSettings = {
-    brightness: 0.5
+    brightness: 1.0
 };
 
 export class Menu extends Phaser.Scene {

@@ -1,6 +1,6 @@
 import { Menu } from './Scenes/menu.js';
 import { Settings } from './Scenes/Settings.js';
-
+import { GameScene } from './Scenes/GameScene.js';
 
 let config = {
     type: Phaser.CANVAS,
@@ -24,7 +24,7 @@ let config = {
 		zoom: 1
     },
 
-    scene: [ Menu, Settings],
+    scene: [ Menu, Settings, GameScene],
 
     physics: { 
         default: 'arcade', 

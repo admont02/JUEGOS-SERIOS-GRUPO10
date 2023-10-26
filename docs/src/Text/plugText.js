@@ -15,7 +15,7 @@ class DialogModal {
     this.windowHeight = 150;
     this.padding = 32;
     this.closeBtnColor = 'darkgoldenrod';
-    this.dialogSpeed = 2;
+    this.dialogSpeed = 4;
     this.eventCounter = 0;
     this.visible = true;
     this.text = undefined;

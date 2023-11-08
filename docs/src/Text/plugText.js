@@ -60,7 +60,9 @@ class DialogModal {
     if (this.text) this.text.visible = this.visible;
     if (this.graphics) this.graphics.visible = this.visible;
     if (this.closeBtn) this.closeBtn.visible = this.visible;
+    // If you're adding a reopen button, you might want to handle its visibility here as well.
   }
+
 
   _animateText() {
     this.eventCounter++;
@@ -170,6 +172,8 @@ _createCloseModalButton() {
     this.graphics.lineStyle(this.borderThickness, this.borderColor, this.borderAlpha);
     this.graphics.strokeRect(x, y, rectWidth, rectHeight);
   }
+
+  
 
   _createCloseModalButtonBorder() {
     const x = this._getGameWidth() - this.padding - 20;

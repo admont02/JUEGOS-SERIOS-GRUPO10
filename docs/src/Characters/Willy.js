@@ -24,7 +24,7 @@ export default class Willy extends Phaser.GameObjects.Sprite {
         // Aseguramos que Willy no tenga movimiento en el eje Y
         this.y = this.y; // Mantenemos la posición Y actual
     
-        const speedFactor = 2;  // Aumenta este valor para que Willy vaya más lento
+        const speedFactor = 5;  // Aumenta este valor para que Willy vaya más lento
     
         // Creamos un nuevo tween para mover a Willy sólo en el eje X hacia la posición del puntero
         this.moveTween = this.scene.tweens.add({

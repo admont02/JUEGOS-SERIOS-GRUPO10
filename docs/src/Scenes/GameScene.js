@@ -34,8 +34,9 @@ export class GameScene extends Phaser.Scene {
         this.dialogModalAux = new DialogModal(this);
         this.dialogModalAux.init();
         this.dialogModalAux.doubleFontSize();
+        this.dialogModalAux._createWindow(100, this.dialogModal._getGameHeight()-450);
         if (this.dialogAuxIndex < this.dialogsAux.length) {
-            this.dialogModalAux.setText(this.dialogsAux[this.dialogAuxIndex], true);
+            this.dialogModalAux.setText(this.dialogsAux[this.dialogAuxIndex],100, this.dialogModal._getGameHeight()-450, true);
             this.dialogPrinted = true;
             this.dialogAuxIndex++;
         }
@@ -59,8 +60,9 @@ export class GameScene extends Phaser.Scene {
         this.car.setVelocity(100,0);
         this.car.body.allowGravity = false;
         this.dialogModal = new DialogModal(this);
-        this.dialogModal.init();
+        // this.dialogModal.init();
         this.dialogModal.doubleFontSize();
+        this.dialogModal._createWindow(0, this.dialogModal._getGameHeight()-250);
 
         this.printDialog();
         this.input.on('pointerdown', this.changeDialog, this);
@@ -68,7 +70,7 @@ export class GameScene extends Phaser.Scene {
 
     changeDialog() {
         if (this.dialogIndex < this.dialogs.length) {
-            this.dialogModal.setText(this.dialogs[this.dialogIndex], true);
+            this.dialogModal.setText(this.dialogs[this.dialogIndex],0, this.dialogModal._getGameHeight()-250, true);
             this.dialogPrinted = true;
             this.dialogIndex++;
         } else {
@@ -100,7 +102,7 @@ export class GameScene extends Phaser.Scene {
 
     printDialog() {
         if (this.dialogIndex < this.dialogs.length) {
-            this.dialogModal.setText(this.dialogs[this.dialogIndex], true);
+            this.dialogModal.setText(this.dialogs[this.dialogIndex],0,this.dialogModal._getGameHeight()-250, true);
             this.dialogPrinted = true;
             this.dialogIndex++;
         } else {

@@ -52,7 +52,7 @@ class DialogModal {
     this.closeBtnColor = opts.closeBtnColor || this.closeBtnColor;
     this.dialogSpeed = opts.dialogSpeed || this.dialogSpeed;
 
-    this._createWindow();
+    //this._createWindow();
   }
 
   toggleWindow() {
@@ -132,10 +132,11 @@ class DialogModal {
     }
   }
 
-  _createWindow() {
+  _createWindow(x,y) {
     const gameWidth = this._getGameWidth();
     const gameHeight = this._getGameHeight();
-    const windowDimensions = this._calculateWindowDimensions(gameWidth, gameHeight);
+    const windowDimensions = this._calculateWindowDimensions(x, y);
+
     this.graphics = this.scene.add.graphics();
 
     this._createOuterWindow(windowDimensions);
@@ -152,16 +153,17 @@ class DialogModal {
     return this.scene.sys.game.config.height;
   }
 
-  _calculateWindowDimensions(width, height) {
-    const x = this.padding;
-    const y = height - this.windowHeight - this.padding;
+  _calculateWindowDimensions(x, y) {
+    const rectWidth = this._getGameWidth() - (this.padding * 2);
+    const rectHeight = this.windowHeight;
+
     return {
-      x,
-      y,
-      rectWidth: width - (this.padding * 2),
-      rectHeight: this.windowHeight
+        x,
+        y,
+        rectWidth,
+        rectHeight
     };
-  }
+}
 
   _createInnerWindow({ x, y, rectWidth, rectHeight }) {
     this.graphics.fillStyle(this.windowColor, this.windowAlpha);

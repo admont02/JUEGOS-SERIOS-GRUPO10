@@ -24,7 +24,13 @@ export class GameScene extends Phaser.Scene {
     }
 
     preload() {
+<<<<<<< Updated upstream
         this.load.image('willy', 'assets/images/characters/balta.jpg');
+=======
+        this.load.image('fondo', 'assets/images/background/fondoCalle.webp');
+        this.load.image('willy', 'assets/images/characters/balta.jpg');   
+        this.load.image('car', 'assets/images/characters/carPumPum.png'); 
+>>>>>>> Stashed changes
     }
 
     showOptions() {
@@ -41,15 +47,18 @@ export class GameScene extends Phaser.Scene {
 
         const repeatButton = this.add.text(100, 100, 'Repetir Conversación', { fill: '#0f0' })
             .setInteractive()
-            .on('pointerdown', () => this.reopenDialog());
+            .on('pointerup', () => this.reopenDialog());
 
         const closeButton = this.add.text(100, 150, 'Cerrar Diálogo', { fill: '#f00' })
             .setInteractive()
-            .on('pointerdown', () => this.closeDialog());
+            .on('pointerup', () => this.closeDialog());
     }
 
     create() {
         this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'willy');
+        this.car = this.physics.add.sprite(Phaser.Math.Between(50, this.sys.game.config.width - 50), 0, 'car');
+        this.car.setVelocity(100,0);
+        this.car.body.allowGravity = false;
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
@@ -79,7 +88,6 @@ export class GameScene extends Phaser.Scene {
 
     closeDialog() {
         this.dialogModal.toggleWindow();
-        // Puedes agregar acciones adicionales al cerrar el diálogo si es necesario.
     }
 
     update(time, delta) {

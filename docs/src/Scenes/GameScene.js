@@ -28,7 +28,7 @@ export class GameScene extends Phaser.Scene {
         this.load.image('willy', 'assets/images/characters/balta.jpg');   
         this.load.image('car', 'assets/images/characters/carPumPum.png'); 
         this.load.image('interactAux', 'assets/images/toni.jpeg');
-        this.input.setDefaultCursor( 'url(assets/images/toni.cur), pointer'); 
+        //this.input.setDefaultCursor( 'url(assets/images/toni.cur), pointer'); 
 
     }
 

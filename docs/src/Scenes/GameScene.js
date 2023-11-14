@@ -27,6 +27,9 @@ export class GameScene extends Phaser.Scene {
         this.load.image('fondo', 'assets/images/background/fondoCalle.webp');
         this.load.image('willy', 'assets/images/characters/balta.jpg');   
         this.load.image('car', 'assets/images/characters/carPumPum.png'); 
+        this.load.image('interactAux', 'assets/images/toni.jpeg');
+        this.input.setDefaultCursor( 'url(assets/images/toni.cur), pointer'); 
+
     }
 
     showOptions() {
@@ -52,6 +55,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     create() {
+        
         this.bg = this.add.image(0, 0, 'fondo').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'willy');
         this.car = this.physics.add.sprite((50, 400), 0, 'car');
@@ -66,6 +70,7 @@ export class GameScene extends Phaser.Scene {
 
         this.printDialog();
         this.input.on('pointerdown', this.changeDialog, this);
+        const sprite = this.add.sprite(400, 300, 'interactAux').setInteractive({ cursor: 'url(assets/images/toni.cur), pointer' });
     }
 
     changeDialog() {

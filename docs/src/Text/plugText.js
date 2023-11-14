@@ -96,26 +96,26 @@ class DialogModal {
     const y = this._getGameHeight() - this.windowHeight - this.padding + 10;
 
     this.text = this.scene.make.text({
-        x,
-        y,
-        text,
-        style: {
-            font: `${this.fontSize}px Arial`,
-            wordWrap: { width: this._getGameWidth() - (this.padding * 2) - 25 }
-        }
+      x,
+      y,
+      text,
+      style: {
+        font: `${this.fontSize}px Arial`,
+        wordWrap: { width: this._getGameWidth() - (this.padding * 2) - 25 }
+      }
     });
-}
+  }
 
-_createCloseModalButton() {
+  _createCloseModalButton() {
     const self = this;
     this.closeBtn = this.scene.make.text({
-        x: this._getGameWidth() - this.padding - 14,
-        y: this._getGameHeight() - this.windowHeight - this.padding + 3,
-        text: 'X',
-        style: {
-            font: `bold ${this.fontSize}px Arial`,
-            fill: this.closeBtnColor
-        }
+      x: this._getGameWidth() - this.padding - 14,
+      y: this._getGameHeight() - this.windowHeight - this.padding + 3,
+      text: 'X',
+      style: {
+        font: `bold ${this.fontSize}px Arial`,
+        fill: this.closeBtnColor
+      }
     });
   }
 
@@ -124,11 +124,11 @@ _createCloseModalButton() {
 
     // Actualiza el texto y el botón con el nuevo tamaño
     if (this.text) {
-        this._setText(this.text.text);
+      this._setText(this.text.text);
     }
 
     if (this.closeBtn) {
-        this._createCloseModalButton();
+      this._createCloseModalButton();
     }
   }
 
@@ -173,7 +173,7 @@ _createCloseModalButton() {
     this.graphics.strokeRect(x, y, rectWidth, rectHeight);
   }
 
-  
+
 
   _createCloseModalButtonBorder() {
     const x = this._getGameWidth() - this.padding - 20;
@@ -206,6 +206,37 @@ _createCloseModalButton() {
       if (self.text) self.text.destroy();
     });
   }
+  setText(text, x, y, animate = false) {
+    this.eventCounter = 0;
+    this.dialog = text.split('');
+    if (this.timedEvent) this.timedEvent.remove();
+
+    const tempText = animate ? '' : text;
+    this._setText(tempText, x, y);
+
+    if (animate) {
+      this.timedEvent = this.scene.time.addEvent({
+        delay: 150 - (this.dialogSpeed * 30),
+        callback: this._animateText.bind(this),
+        loop: true
+      });
+    }
+  }
+
+  _setText(text, x, y) {
+    if (this.text) this.text.destroy();
+
+    this.text = this.scene.make.text({
+      x,
+      y,
+      text,
+      style: {
+        font: `${this.fontSize}px Arial`,
+        wordWrap: { width: this._getGameWidth() - (this.padding * 2) - 25 }
+      }
+    });
+  }
+
 }
 
 export default DialogModal;

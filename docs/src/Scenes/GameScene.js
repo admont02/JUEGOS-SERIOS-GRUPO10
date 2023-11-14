@@ -24,13 +24,9 @@ export class GameScene extends Phaser.Scene {
     }
 
     preload() {
-<<<<<<< Updated upstream
-        this.load.image('willy', 'assets/images/characters/balta.jpg');
-=======
         this.load.image('fondo', 'assets/images/background/fondoCalle.webp');
         this.load.image('willy', 'assets/images/characters/balta.jpg');   
         this.load.image('car', 'assets/images/characters/carPumPum.png'); 
->>>>>>> Stashed changes
     }
 
     showOptions() {
@@ -55,8 +51,11 @@ export class GameScene extends Phaser.Scene {
     }
 
     create() {
+        this.bg = this.add.image(0, 0, 'fondo').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'willy');
-        this.car = this.physics.add.sprite(Phaser.Math.Between(50, this.sys.game.config.width - 50), 0, 'car');
+        this.car = this.physics.add.sprite((50, 400), 0, 'car');
+        this.car.y = 1350;
+        this.car.setScale(0.5);
         this.car.setVelocity(100,0);
         this.car.body.allowGravity = false;
         this.dialogModal = new DialogModal(this);
@@ -93,6 +92,9 @@ export class GameScene extends Phaser.Scene {
     update(time, delta) {
         if (this.willy.update) {
             this.willy.update(time, delta);
+        }
+        if(this.car.x > this.sys.game.config.width + 300){
+            this.car.x = -400;
         }
     }
 

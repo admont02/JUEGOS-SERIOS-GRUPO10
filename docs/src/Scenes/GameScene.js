@@ -21,6 +21,7 @@ export class GameScene extends Phaser.Scene {
             "tony"
         ];
         this.dialogPrinted = false;
+        this.dialogModalAuxVisible = false;
     }
 
     preload() {
@@ -32,8 +33,18 @@ export class GameScene extends Phaser.Scene {
 
     }
 
+    createButtons(){
+        const repeatButton = this.add.text(100, 100, 'Repetir Conversación', { fill: '#0f0' })
+        .setInteractive()
+        .on('pointerup', () => this.reopenDialog());
+
+    const closeButton = this.add.text(100, 150, 'Cerrar Diálogo', { fill: '#f00' })
+        .setInteractive()
+        .on('pointerup', () => this.showOptions());
+    }
+
     showOptions() {
-        this.dialogModal.toggleWindow();
+       // this.dialogModal.toggleWindow();
         this.dialogModalAux = new DialogModal(this);
         this.dialogModalAux.init();
         this.dialogModalAux.doubleFontSize();
@@ -43,19 +54,10 @@ export class GameScene extends Phaser.Scene {
             this.dialogPrinted = true;
             this.dialogAuxIndex++;
         }
-
-
-        const repeatButton = this.add.text(100, 100, 'Repetir Conversación', { fill: '#0f0' })
-            .setInteractive()
-            .on('pointerup', () => this.reopenDialog());
-
-        const closeButton = this.add.text(100, 150, 'Cerrar Diálogo', { fill: '#f00' })
-            .setInteractive()
-            .on('pointerup', () => this.closeDialog());
     }
 
     create() {
-        
+        let a = false;
         this.bg = this.add.image(0, 0, 'fondo').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'willy');
         this.car = this.physics.add.sprite((50, 400), 0, 'car');
@@ -79,22 +81,24 @@ export class GameScene extends Phaser.Scene {
             this.dialogPrinted = true;
             this.dialogIndex++;
         } else {
-            this.showOptions();
-            this.input.off('pointerdown', this.changeDialog, this);
+            this.createButtons();
+           
         }
     }
 
-    reopenDialog() {
+    reopenDialog() { 
         this.dialogIndex = 0;
         this.dialogPrinted = false;
-        this.dialogModal.toggleWindow();
         this.printDialog();
         this.input.on('pointerdown', this.changeDialog, this);
     }
-
+    
+    
     closeDialog() {
         this.dialogModal.toggleWindow();
+        this.dialogModalAux.toggleWindow();
     }
+
 
     update(time, delta) {
         if (this.willy.update) {

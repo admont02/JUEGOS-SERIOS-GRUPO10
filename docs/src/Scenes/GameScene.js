@@ -99,6 +99,9 @@ export class GameScene extends Phaser.Scene {
         if(this.car.x > this.sys.game.config.width + 300){
             this.car.x = -400;
         }
+       if(this.willy.x > 1000){
+            this.scene.start('CasaScene');
+        }
     }
 
     printDialog() {
@@ -110,6 +113,7 @@ export class GameScene extends Phaser.Scene {
             this.showOptions();
             this.input.off('pointerdown', this.changeDialog, this);
         }
+
     }
 }
 

@@ -8,7 +8,7 @@ export class Menu extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', './assets/images/background/MenuBackground.png');
+        this.load.image('background', './assets/images/background/fondo1.png');
         this.load.audio('menuMusic', './assets/audio/MenuMusic.mp3');
     }
 

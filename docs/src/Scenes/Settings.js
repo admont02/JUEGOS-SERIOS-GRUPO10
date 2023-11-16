@@ -7,7 +7,7 @@ export class Settings extends Phaser.Scene {
 
     preload() {
         this.load.audio('menuMusic', './assets/audio/MenuMusic.mp3');
-        this.load.image('background', './assets/images/background/MenuBackground.png');
+        this.load.image('background', './assets/images/background/fondoSettings.png');
         // Asegúrate de tener imágenes para los botones de subir/bajar volumen y brillo
         this.load.image('buttonUp', './assets/images/buttons/buttonUp.png');
         this.load.image('buttonDown', './assets/images/buttons/buttonDown.png');

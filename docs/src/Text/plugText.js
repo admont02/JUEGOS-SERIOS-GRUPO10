@@ -55,7 +55,22 @@ class DialogModal {
     //this._createWindow();
   }
 
+  createCharacterImage(imageKey, scale = 1) {
+    const x = this.padding;
+    const y = this._getGameHeight() - this.windowHeight - this.padding;
+
+    this.characterImage = this.scene.add.image(x, y, imageKey).setOrigin(0, 1).setScale(scale);
+}
+
+removeCharacterImage() {
+    if (this.characterImage) {
+        this.characterImage.destroy();
+        this.characterImage = null;
+    }
+}
+
   toggleWindow() {
+    this.removeCharacterImage();
     this.visible = !this.visible;
     if (this.text) this.text.visible = this.visible;
     if (this.graphics) this.graphics.visible = this.visible;
@@ -72,14 +87,16 @@ class DialogModal {
     }
   }
 
-  setText(text, animate = false) {
+  setText(text, x, y, animate = false){
     this.eventCounter = 0;
     this.dialog = text.split('');
     if (this.timedEvent) this.timedEvent.remove();
 
     const tempText = animate ? '' : text;
     this._setText(tempText);
-
+    if (!animate) {
+      this.removeCharacterImage(); // Elimina la imagen al finalizar el diálogo
+    }
     if (animate) {
       this.timedEvent = this.scene.time.addEvent({
         delay: 150 - (this.dialogSpeed * 30),

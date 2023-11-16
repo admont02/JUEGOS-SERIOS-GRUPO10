@@ -13,6 +13,7 @@ export class CasaScene extends Phaser.Scene {
     preload() {
         // Carga de recursos gráficos y de audio para la escena de la casa
         this.load.image('casaBackground', 'assets/images/background/fondoCasa.png');
+        this.load.image('mujerCoche', 'assets/images/characters/mujerCoche.png');
 
     }
 
@@ -24,8 +25,10 @@ export class CasaScene extends Phaser.Scene {
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
 
+        // Cargar la imagen de Willy con un tamaño específico
+        this.dialogModal.createCharacterImage('mujerCoche', 0.5); // Ajusta el 0.5 según sea necesario
+
         this.showDialog(this.currentDialogIndex);
-       
     }
 
     // Método para mostrar opciones de respuesta

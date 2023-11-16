@@ -1,4 +1,4 @@
-{
+export default { 
     "npcDialogs": [
         {
             "dialog": "Hola, soy Toni. ¿Cómo estás?",
@@ -28,3 +28,4 @@
         }
     ]
 }
+

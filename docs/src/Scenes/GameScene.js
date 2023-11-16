@@ -1,6 +1,7 @@
 import { gameSettings } from './menu.js';
 import Willy from '../Characters/Willy.js';
 import DialogModal from '../Text/plugText.js';
+import dialogos from '../dialogs.js'
 
 export class GameScene extends Phaser.Scene {
     constructor() {
@@ -8,12 +9,7 @@ export class GameScene extends Phaser.Scene {
         this.dialogIndex = 0;
         this.dialogAuxIndex = 0;
 
-        this.dialogs = [
-            "Balta nos aprueba por pena.",
-            "miau",
-            "miau",
-            "tony"
-        ];
+        this.dialogs = dialogos.npcDialogs.map(dialogo => dialogo.dialog);
         this.dialogsAux = [
             "Funciona",
             "miau",

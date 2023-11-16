@@ -12,7 +12,7 @@ export default class Willy extends Phaser.GameObjects.Sprite {
         this.scene.input.on('pointerdown', this.onPointerDown, this);
 
         // Programamos el salto de forma periódica
-        this.scheduleJump();
+       // this.scheduleJump();
     }
 
     onPointerDown(pointer) {
@@ -35,35 +35,35 @@ export default class Willy extends Phaser.GameObjects.Sprite {
         });
     }
 
-    jump() {
-        // Si hay un tween de salto activo, lo detenemos
-        if (this.jumpTween) {
-            this.jumpTween.stop();
-        }
+    // jump() {
+    //     // Si hay un tween de salto activo, lo detenemos
+    //     if (this.jumpTween) {
+    //         this.jumpTween.stop();
+    //     }
 
-        const jumpHeight = 250;  // Altura del salto
-        const jumpDuration = 500;  // Duración del salto
+    //     const jumpHeight = 250;  // Altura del salto
+    //     const jumpDuration = 500;  // Duración del salto
 
-        this.jumpTween = this.scene.tweens.add({
-            targets: this,
-            y: this.y - jumpHeight,
-            duration: jumpDuration,
-            yoyo: true,  // Vuelve a la posición original
-            ease: 'Power2'
-        });
-    }
+    //     this.jumpTween = this.scene.tweens.add({
+    //         targets: this,
+    //         y: this.y - jumpHeight,
+    //         duration: jumpDuration,
+    //         yoyo: true,  // Vuelve a la posición original
+    //         ease: 'Power2'
+    //     });
+    // }
 
-    scheduleJump() {
-        // Programamos el salto cada X milisegundos
-        const jumpInterval = Phaser.Math.Between(1000, 2000);  // Saltará entre 2 y 5 segundos
+    // scheduleJump() {
+    //     // Programamos el salto cada X milisegundos
+    //     const jumpInterval = Phaser.Math.Between(1000, 2000);  // Saltará entre 2 y 5 segundos
 
-        this.scene.time.addEvent({
-            delay: jumpInterval,
-            callback: () => {
-                this.jump();
-                this.scheduleJump();  // Programamos el siguiente salto
-            },
-            callbackScope: this
-        });
-    }
+    //     this.scene.time.addEvent({
+    //         delay: jumpInterval,
+    //         callback: () => {
+    //             this.jump();
+    //             this.scheduleJump();  // Programamos el siguiente salto
+    //         },
+    //         callbackScope: this
+    //     });
+    // }
 }

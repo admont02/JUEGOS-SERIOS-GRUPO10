@@ -40,15 +40,15 @@ export class Settings extends Phaser.Scene {
 
     createTitle() {
         let centerY = this.game.config.height * 0.5;
-        this.add.text(this.game.config.width * 0.5, centerY - 200, 'CONFIGURACIONES', { font: '64px Arial', fill: '#ffffff' }).setOrigin(0.5);
+        this.add.text(this.game.config.width * 0.5, centerY - 200, 'CONFIGURACIONES', { font: '64px Arial', fill: '#000000' }).setOrigin(0.5);
     }
 
     createVolumeControls() {
         let centerY = this.game.config.height * 0.5;
 
         // Texto del volumen
-        this.add.text(this.game.config.width * 0.3, centerY - 50, 'Volumen:', { font: '32px Arial', fill: '#ffffff' }).setOrigin(0.5);
-        this.volumeText = this.add.text(this.game.config.width * 0.7, centerY - 50, `${Math.round(this.sound.volume * 100)}%`, { font: '32px Arial', fill: '#ffffff' }).setOrigin(0.5);
+        this.add.text(this.game.config.width * 0.3, centerY - 50, 'Volumen:', { font: '32px Arial', fill: '#000000' }).setOrigin(0.5);
+        this.volumeText = this.add.text(this.game.config.width * 0.7, centerY - 50, `${Math.round(this.sound.volume * 100)}%`, { font: '32px Arial', fill: '#000000' }).setOrigin(0.5);
 
         // Botones de subir/bajar volumen
         let volumeUpButton = this.add.image(this.game.config.width * 0.8, centerY - 50, 'buttonUp').setInteractive();
@@ -67,14 +67,16 @@ export class Settings extends Phaser.Scene {
         muteButton.on('pointerup', () => {
             this.toggleMute();
         });
+
+        muteButton.setScale(0.2);
     }
 
     createBrightnessControls() {
         let centerY = this.game.config.height * 0.5;
 
         // Texto del brillo
-        this.add.text(this.game.config.width * 0.3, centerY, 'Brillo:', { font: '32px Arial', fill: '#ffffff' }).setOrigin(0.5);
-        this.brightnessText = this.add.text(this.game.config.width * 0.7, centerY, `${Math.round(gameSettings.brightness * 100)}%`, { font: '32px Arial', fill: '#ffffff' }).setOrigin(0.5);
+        this.add.text(this.game.config.width * 0.3, centerY, 'Brillo:', { font: '32px Arial', fill: '#000000' }).setOrigin(0.5);
+        this.brightnessText = this.add.text(this.game.config.width * 0.7, centerY, `${Math.round(gameSettings.brightness * 100)}%`, { font: '32px Arial', fill: '#000000' }).setOrigin(0.5);
 
         // Botones de subir/bajar brillo
         let brightnessUpButton = this.add.image(this.game.config.width * 0.8, centerY, 'buttonUp').setInteractive();
@@ -91,7 +93,7 @@ export class Settings extends Phaser.Scene {
 
     createBackButton() {
         let centerY = this.game.config.height * 0.5;
-        let backButton = this.add.text(this.game.config.width * 0.5, centerY + 150, 'Volver', { font: '32px Arial', fill: '#ffffff' }).setOrigin(0.5).setInteractive();
+        let backButton = this.add.text(this.game.config.width * 0.5, centerY + 150, 'Volver', { font: '32px Arial', fill: '#000000' }).setOrigin(0.5).setInteractive();
 
         backButton.on('pointerup', () => {
             this.backgroundMusic.stop();

@@ -14,6 +14,7 @@ export class CasaScene extends Phaser.Scene {
         // Carga de recursos gráficos y de audio para la escena de la casa
         this.load.image('casaBackground', 'assets/images/background/fondoCasa.png');
         this.load.image('mujerCoche', 'assets/images/characters/mujerCoche.png');
+        this.load.image('caraMujer', 'assets/images/characters/caraMujer.png');
 
     }
 
@@ -26,14 +27,13 @@ export class CasaScene extends Phaser.Scene {
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
 
         // Cargar la imagen de Willy con un tamaño específico
-        this.dialogModal.createCharacterImage('mujerCoche', 0.5); // Ajusta el 0.5 según sea necesario
+        this.dialogModal.createCharacterImage('caraMujer', 0.5); // Ajusta el 0.5 según sea necesario
 
         this.showDialog(this.currentDialogIndex);
     }
 
     // Método para mostrar opciones de respuesta
     showOptions(options) {
-        // Asumimos que 'options' es un array de opciones de respuesta
         options.forEach((option, index) => {
         // Crear botones o texto interactivo para cada opción
         let optionText = this.add.text(100, 100 + (index * 50), option.text, { fill: '#0f0' })

@@ -8,14 +8,10 @@ export class GameScene extends Phaser.Scene {
         super({ key: 'GameScene' });
         this.dialogIndex = 0;
         this.dialogAuxIndex = 0;
+        this.canMove = false; // Flag to control Willy's movement
 
         this.dialogs = dialogos.npcDialogs.map(dialogo => dialogo.dialog);
-        this.dialogsAux = [
-            "Funciona",
-            "miau",
-            "miau",
-            "tony"
-        ];
+        this.dialogsAux = ["Funciona", "miau", "miau", "tony"];
         this.dialogPrinted = false;
         this.dialogModalAuxVisible = false;
     }
@@ -26,7 +22,6 @@ export class GameScene extends Phaser.Scene {
         this.load.image('car', 'assets/images/characters/carPumPum.png'); 
         this.load.image('interactAux', 'assets/images/toni.jpeg');
     }
-
     createButtons(){
         const repeatButton = this.add.text(100, 100, 'Repetir Conversación', { fill: '#0f0' })
         .setInteractive()
@@ -52,9 +47,10 @@ export class GameScene extends Phaser.Scene {
 
     create() {
         this.input.setDefaultCursor('url(assets/images/hnd.cur), pointer');
-        let a = false;
         this.bg = this.add.image(0, 0, 'fondo').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'willy');
+        this.willy.setMovable(false); // Disable Willy's movement initially
+
         this.car = this.physics.add.sprite((50, 400), 0, 'car');
         this.car.y = 1350;
         this.car.setScale(0.5);
@@ -71,12 +67,13 @@ export class GameScene extends Phaser.Scene {
 
     changeDialog() {
         if (this.dialogIndex < this.dialogs.length) {
-            this.dialogModal.setText(this.dialogs[this.dialogIndex],0, this.dialogModal._getGameHeight()-250, true);
+            this.dialogModal.setText(this.dialogs[this.dialogIndex], 0, this.dialogModal._getGameHeight()-250, true);
             this.dialogPrinted = true;
             this.dialogIndex++;
         } else {
             this.createButtons();
-           
+            this.canMove = true;
+            this.willy.setMovable(true); // Enable Willy to move after dialogues
         }
     }
 
@@ -95,9 +92,10 @@ export class GameScene extends Phaser.Scene {
 
 
     update(time, delta) {
-        if (this.willy.update) {
+        if (this.willy.update && this.canMove) {
             this.willy.update(time, delta);
         }
+
         if(this.car.x > this.sys.game.config.width + 300){
             this.car.x = -400;
         }

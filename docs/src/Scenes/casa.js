@@ -25,12 +25,15 @@ export class CasaScene extends Phaser.Scene {
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
-
+        this.stupidwomen = this.physics.add.sprite((50, 400), 0, 'mujerCoche');
+        this.stupidwomen.body.allowGravity = false;
+        this.stupidwomen.y = 1350;
+        this.stupidwomen.setVelocity(100,0);
         // Cargar la imagen de Willy con un tamaño específico
         this.dialogModal.createCharacterImage('caraMujer', 0.5); // Ajusta el 0.5 según sea necesario
-
         this.showDialog(this.currentDialogIndex);
     }
+
 
     // Método para mostrar opciones de respuesta
     showOptions(options) {
@@ -60,6 +63,9 @@ export class CasaScene extends Phaser.Scene {
 
     update(time, delta) {
         
+        if(this.stupidwomen.x > 1000){
+            this.stupidwomen.setVelocity(0,0);
+        }
     }
 
 }

@@ -8,7 +8,9 @@ export class CasaScene extends Phaser.Scene {
         this.dialogModal = null;
         this.currentDialogIndex = 0;
         this.dialogs = dialogos.npcDialogs;
+        this.mujerDialogs = dialogos.mujerDialogs; // Add this line
     }
+    
 
     preload() {
         // Carga de recursos gráficos y de audio para la escena de la casa
@@ -29,11 +31,26 @@ export class CasaScene extends Phaser.Scene {
         this.stupidwomen.body.allowGravity = false;
         this.stupidwomen.y = 1350;
         this.stupidwomen.setVelocity(100,0);
+
+        this.stupidwomen.setInteractive();
+        this.stupidwomen.on('pointerup', () => {
+            this.showMujerDialog();
+        });
+
         // Cargar la imagen de Willy con un tamaño específico
         this.dialogModal.createCharacterImage('caraMujer', 0.5); // Ajusta el 0.5 según sea necesario
         this.showDialog(this.currentDialogIndex);
     }
 
+    showMujerDialog() {
+        // Display the first dialogue from mujerDialogs
+        let dialog = this.mujerDialogs[0].dialog;
+        this.dialogModal.setText(dialog, 0, this.dialogModal._getGameHeight() - 150, true);
+    
+        // Optionally, handle the options associated with mujerDialogs
+        this.showOptions(this.mujerDialogs[0].options);
+    }
+    
 
     // Método para mostrar opciones de respuesta
     showOptions(options) {

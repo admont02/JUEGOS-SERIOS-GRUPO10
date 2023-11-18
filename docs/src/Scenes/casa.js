@@ -38,7 +38,7 @@ export class CasaScene extends Phaser.Scene {
         });
 
         // Cargar la imagen de Willy con un tamaño específico
-        this.dialogModal.createCharacterImage('caraMujer', 0.5); // Ajusta el 0.5 según sea necesario
+        this.dialogModal.createCharacterImage('caraMujer', 0.7); // Ajusta el 0.5 según sea necesario
         this.showDialog(this.currentDialogIndex);
     }
 

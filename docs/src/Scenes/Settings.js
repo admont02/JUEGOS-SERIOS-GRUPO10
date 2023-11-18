@@ -110,17 +110,45 @@ export class Settings extends Phaser.Scene {
         this.sound.setVolume(newVolume);
         this.volumeText.setText(`${Math.round(newVolume * 100)}%`);
         gameSettings.musicVolume = newVolume;
+    
+        // Actualizar el volumen de todos los sonidos
+        this.game.sound.sounds.forEach(sound => {
+            sound.setVolume(newVolume);
+        });
     }
+    
 
     adjustBrightness(change) {
         let newBrightness = Phaser.Math.Clamp(gameSettings.brightness + change, 0, 1);
         this.bg.setAlpha(newBrightness);
         this.brightnessText.setText(`${Math.round(newBrightness * 100)}%`);
         gameSettings.brightness = newBrightness;
+    
+        // Actualizar el brillo en todas las escenas relevantes
+        this.game.scene.scenes.forEach(scene => {
+            if (scene.bg) {
+                scene.bg.setAlpha(newBrightness);
+            }
+        });
     }
+    
 
     toggleMute() {
-        this.backgroundMusic.mute = !this.backgroundMusic.mute;
-        this.volumeText.setText(this.backgroundMusic.mute ? 'Mute' : `${Math.round(this.sound.volume * 100)}%`);
+        if (this.game.sound.mute) {
+            // Si el juego está en silencio, restaura el volumen anterior
+            gameSettings.musicVolume = gameSettings.previousVolume;
+            this.game.sound.setMute(false);
+        } else {
+            // Si el juego no está en silencio, siléncialo y guarda el volumen actual
+            gameSettings.previousVolume = gameSettings.musicVolume;
+            gameSettings.musicVolume = 0;
+            this.game.sound.setMute(true);
+        }
+    
+        // Actualizar el texto del volumen y aplicar el nuevo volumen
+        this.volumeText.setText(`${Math.round(gameSettings.musicVolume * 100)}%`);
+        this.sound.setVolume(gameSettings.musicVolume);
     }
+    
+    
 }

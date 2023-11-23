@@ -15,6 +15,8 @@ export class CasaScene extends Phaser.Scene {
     preload() {
         // Carga de recursos gráficos y de audio para la escena de la casa
         this.load.image('casaBackground', 'assets/images/background/fondoCasa.png');
+        this.load.image('accidenteFondo', 'assets/images/background/atropello.png');
+
         this.load.image('mujerCoche', 'assets/images/characters/mujerCoche.png');
         this.load.image('caraMujer', 'assets/images/characters/caraMujer.png');
 
@@ -22,7 +24,7 @@ export class CasaScene extends Phaser.Scene {
 
     create() {
         // Creación de objetos y configuraciones iniciales para la escena
-        this.bg = this.add.image(0, 0, 'casaBackground').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height);
+        this.bg = this.add.image(0, 0, 'accidenteFondo').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height);
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();

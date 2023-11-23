@@ -24,7 +24,7 @@ export class CasaScene extends Phaser.Scene {
 
     create() {
         // Creación de objetos y configuraciones iniciales para la escena
-        this.bg = this.add.image(0, 0, 'accidenteFondo').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height);
+        this.bg = this.add.image(0, 0, 'casaBackground').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height);
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();

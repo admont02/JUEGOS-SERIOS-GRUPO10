@@ -22,7 +22,9 @@ export class GameScene extends Phaser.Scene {
         this.load.image('car', 'assets/images/characters/carPumPum.png'); 
         this.load.image('interactAux', 'assets/images/toni.jpeg');
         this.load.image('mujer', 'assets/images/characters/mujerCoche.png'); 
+        this.load.spritesheet('jugador', 'assets/images/characters/willymove.png', { frameWidth: 175, frameHeight: 195 }, { start: 0, end: 3 });
     }
+
     createButtons(){
         const repeatButton = this.add.text(200, 200, 'Repetir Conversación', { fill: '#0f0' })
         .setInteractive()
@@ -49,9 +51,15 @@ export class GameScene extends Phaser.Scene {
     create() {
         this.input.setDefaultCursor('url(assets/images/hnd.cur), pointer');
         this.bg = this.add.image(0, 0, 'fondo').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
-        this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'willy');
+        this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'jugador');
+
         this.willy.setMovable(false); 
-     
+        this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNumbers('jugador', { start: 0, end: 3 }),
+            frameRate: 5,
+            repeat: -1
+        });
         this.car = this.physics.add.sprite((0, 400), 0, 'car');
         this.car.y = 1350;
         this.car.setScale(0.5);
@@ -61,6 +69,7 @@ export class GameScene extends Phaser.Scene {
         this.mujer = this.physics.add.sprite(400, 300, 'mujer');
         this.mujer.setInteractive();
         this.mujer.body.allowGravity = false;
+        this.mujer.body.setSize(this.mujer.width/2, this.mujer.height/2);
         this.mujer.x = 1500;
         this.mujer.y = 1300;
         this.mujer.setVelocity(-80,0);
@@ -72,7 +81,7 @@ export class GameScene extends Phaser.Scene {
 
     changeDialog() {
         if (this.dialogIndex < this.dialogs.length) {
-            this.dialogModal.setText(this.dialogs[this.dialogIndex], 0, this.dialogModal._getGameHeight()-250, true);
+           // this.dialogModal.setText(this.dialogs[this.dialogIndex], 0, this.dialogModal._getGameHeight()-250, true);
             this.dialogPrinted = true;
             this.dialogIndex++;
         } else {
@@ -122,6 +131,22 @@ export class GameScene extends Phaser.Scene {
     update(time, delta) {
         if (this.willy.update && this.canMove) {
             this.willy.update(time, delta);
+            this.willy.anims.play('walk', true); 
+        }
+
+        if (this.willy.update && this.canMove) {
+            this.willy.update(time, delta);
+            this.willy.anims.play('walk', true); 
+    
+            // Get the pointer (mouse/touch) position
+            let pointer = this.input.activePointer;
+    
+            // Check if the pointer is down (clicked or touched)
+            if (pointer.isDown) {
+                // Flip Willy based on pointer position relative to Willy
+                this.willy.flipX = pointer.worldX < this.willy.x;
+            }
+           
         }
 
         if (this.mujer.x < 1000) {
@@ -134,6 +159,9 @@ export class GameScene extends Phaser.Scene {
        if(this.willy.x > 1100){
             this.scene.start('CasaScene');
         }
+
+
+        
     }
 
    

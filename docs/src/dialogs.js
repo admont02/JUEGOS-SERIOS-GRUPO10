@@ -13,7 +13,7 @@ export default {
                 }
             ]
         },
-        // ...otros diálogos...
+
     ],      
     "mujerDialogs": [
         {

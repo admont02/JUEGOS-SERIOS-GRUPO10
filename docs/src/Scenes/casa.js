@@ -29,22 +29,19 @@ export class CasaScene extends Phaser.Scene {
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
-        this.stupidwomen = this.physics.add.sprite((50, 400), 0, 'mujerCoche');
-        this.stupidwomen.body.allowGravity = false;
-        this.stupidwomen.y = 1350;
-        this.stupidwomen.setVelocity(100,0);
+      // Coloca a la mujer fuera de la pantalla en el lado derecho y muévela hacia la izquierda
+      this.stupidwomen = this.physics.add.sprite(this.game.config.width + 100, this.game.config.height - 400, 'mujerCoche');
+      this.stupidwomen.body.allowGravity = false;
+      this.stupidwomen.setVelocity(-100,0); // Movimiento hacia la izquierda
 
-        this.stupidwomen.setInteractive();
-        this.stupidwomen.on('pointerup', () => {
-            this.showMujerDialog();
-        });
+      // Flip horizontal si es necesario
+      this.stupidwomen.flipX = true;
 
-        // Cargar la imagen de Willy con un tamaño específico
-        this.dialogModal.createCharacterImage('caraMujer', 0.7); // Ajusta el 0.5 según sea necesario
-        this.showDialog(this.currentDialogIndex);
+      this.stupidwomen.setInteractive();
     }
 
     showMujerDialog() {
+        this.dialogModal.createCharacterImage('caraMujer', 0.7); // Ajusta el 0.5 según sea necesario
         // Asegúrate de que haya diálogos disponibles
         if (this.currentDialogIndex >= this.mujerDialogs.length) {
             return; // No hay más diálogos
@@ -87,8 +84,10 @@ export class CasaScene extends Phaser.Scene {
 
     update(time, delta) {
         
-        if(this.stupidwomen.x > 1000){
-            this.stupidwomen.setVelocity(0,0);
+        if(this.stupidwomen.x <= 1200 && !this.dialogStarted) {
+            this.stupidwomen.setVelocity(0,0); // Detiene a la mujer
+            this.showMujerDialog();
+            this.dialogStarted = true; // Establece una bandera para evitar que el diálogo se inicie de nuevo
         }
     }
 

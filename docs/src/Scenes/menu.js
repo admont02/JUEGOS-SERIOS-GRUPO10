@@ -56,8 +56,8 @@ export class Menu extends Phaser.Scene {
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
-                    //this.scene.start('GameScene');
-                    this.scene.start('EscenaInicial');
+                    this.scene.start('GameScene');
+                    //this.scene.start('EscenaInicial');
 
                 }
             });

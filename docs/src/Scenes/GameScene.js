@@ -17,10 +17,17 @@ export class GameScene extends Phaser.Scene {
     }
 
     preload() {
+        this.load.spritesheet('jugador', 'assets/images/characters/willymove.png', { frameWidth: 175, frameHeight: 195 }, { start: 0, end: 3 });
         this.load.image('fondo', 'assets/images/background/fondoCalle.webp');
         this.load.image('willy', 'assets/images/characters/balta.jpg');   
         this.load.image('car', 'assets/images/characters/carPumPum.png'); 
         this.load.image('interactAux', 'assets/images/toni.jpeg');
+        const anima = this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNumbers('jugador'),
+            frameRate: 10,
+            repeat: -1
+        });
     }
     createButtons(){
         const repeatButton = this.add.text(100, 100, 'Repetir Conversación', { fill: '#0f0' })
@@ -48,7 +55,7 @@ export class GameScene extends Phaser.Scene {
     create() {
         this.input.setDefaultCursor('url(assets/images/hnd.cur), pointer');
         this.bg = this.add.image(0, 0, 'fondo').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
-        this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'willy');
+        this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'jugador');
         this.willy.setMovable(false); // Disable Willy's movement initially
 
         this.car = this.physics.add.sprite((50, 400), 0, 'car');
@@ -94,6 +101,7 @@ export class GameScene extends Phaser.Scene {
     update(time, delta) {
         if (this.willy.update && this.canMove) {
             this.willy.update(time, delta);
+            this.willy.play('walk'); // Play the 'walk' animation on Willy
         }
 
         if(this.car.x > this.sys.game.config.width + 300){

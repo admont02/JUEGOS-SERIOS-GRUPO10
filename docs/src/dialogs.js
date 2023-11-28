@@ -2,12 +2,10 @@ export default {
     "npcDialogs": [
         {
             "dialog": "Hola, soy Toni. ¿Cómo estás?",
-            "dialogMujer": "Soy mujer",
             "options": [
                 {
                     "text": "Estoy bien, gracias.",
                     "nextDialog": "Me alegro de oír eso."
-                    
                 },
                 {
                     "text": "No muy bien, ¿tienes alguna misión para mí?",
@@ -15,34 +13,64 @@ export default {
                 }
             ]
         },
-        {
-            "dialog": "Otro diálogo de otro NPC.",
-            "options": [
-                {
-                    "text": "Opción 1",
-                    "nextDialog": "Respuesta a la opción 1."
-                },
-                {
-                    "text": "Opción 2",
-                    "nextDialog": "Respuesta a la opción 2."
-                }
-            ]
-        },
-    ],
+        // ...otros diálogos...
+    ],      
     "mujerDialogs": [
         {
             "dialog": "Hola, soy una mujer interesante. ¿Cómo estás?",
-            // Continue with other properties if needed
+            "options": [
+                {
+                    "text": "Estoy bien, ¿y tú?",
+                    "nextDialogIndex": 1
+                },
+                {
+                    "text": "Podría estar mejor.",
+                    "nextDialogIndex": 2
+                }
+            ]
         },
         {
-            "dialog": "Aquí va la segunda línea del diálogo.",
+            "dialog": "Me alegro de que estés bien. ¿Qué te trae por aquí?",
+            "options": [
+                {
+                    "text": "Solo estoy de paso, admirando el lugar.",
+                    "nextDialogIndex": 3
+                },
+                {
+                    "text": "Estoy buscando algo de aventura. ¿Alguna sugerencia?",
+                    "nextDialogIndex": 4
+                }
+            ]
         },
         {
-            "dialog": "Esta es la tercera línea de nuestra conversación.",
+            "dialog": "Vaya, espero que mejore tu día. ¿Quieres hablar de ello?",
+            "options": [
+                {
+                    "text": "Sí, me gustaría desahogarme un poco.",
+                    "nextDialogIndex": 5
+                },
+                {
+                    "text": "No realmente, prefiero mantenerlo para mí.",
+                    "nextDialogIndex": 6
+                }
+            ]
         },
         {
-            "dialog": "Y finalmente, esta es la cuarta línea de diálogo.",
+            "dialog": "Es un lugar hermoso, ¿verdad? A veces me gusta venir aquí solo para pensar.",
+        
+        },
+        {
+            "dialog": "Bueno, hay una cueva misteriosa al este que podría explorar. Pero ten cuidado, se dice que está llena de enigmas.",
+            
+        },
+        {
+            "dialog": "Entiendo, todos tenemos esos días. Si cambias de opinión, estoy aquí.",
+           
+        },
+        {
+            "dialog": "No hay problema. A veces, solo necesitamos un poco de espacio.",
+         
         }
     ]
-}
+}   
 

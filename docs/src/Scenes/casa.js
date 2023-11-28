@@ -45,31 +45,36 @@ export class CasaScene extends Phaser.Scene {
     }
 
     showMujerDialog() {
-        // Display the first dialogue from mujerDialogs
-        let dialog = this.mujerDialogs[0].dialog;
-        this.dialogModal.setText(dialog, 0, this.dialogModal._getGameHeight() - 150, true);
-    
-        // Optionally, handle the options associated with mujerDialogs
-        this.showOptions(this.mujerDialogs[0].options);
-    }
-    
+        // Asegúrate de que haya diálogos disponibles
+        if (this.currentDialogIndex >= this.mujerDialogs.length) {
+            return; // No hay más diálogos
+        }
 
-    // Método para mostrar opciones de respuesta
+        let dialogData = this.mujerDialogs[this.currentDialogIndex];
+        this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
+
+        if (dialogData.options && dialogData.options.length > 0) {
+            this.showOptions(dialogData.options);
+        } else {
+            console.log("No hay opciones disponibles para este diálogo.");
+        }
+    }
+
     showOptions(options) {
         options.forEach((option, index) => {
-        // Crear botones o texto interactivo para cada opción
-        let optionText = this.add.text(100, 100 + (index * 50), option.text, { fill: '#0f0' })
-            .setInteractive()
-            .on('pointerup', () => this.handleOptionSelect(option, index));
+            let optionText = this.add.text(100, 100 + (index * 50), option.text, { fill: '#0f0', fontSize: '16px' })
+                .setInteractive()
+                .on('pointerup', () => this.handleOptionSelect(option.nextDialogIndex, index));
         });
     }
+    
 
-    // Manejo de la selección de una opción
-    handleOptionSelect(option, index) {
-        console.log("Seleccionaste la opción:", option.text);
-        this.showDialog(option.nextDialog);
+    handleOptionSelect(nextDialogIndex, index) {
+        console.log("Seleccionaste la opción:", index);
+        // Pasa al siguiente diálogo basado en la selección
+        this.currentDialogIndex = nextDialogIndex;
+        this.showMujerDialog();
     }
-
 
     showDialog(index) {
         if (index >= this.dialogs.length) {

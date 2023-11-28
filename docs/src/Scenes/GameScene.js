@@ -35,6 +35,21 @@ export class GameScene extends Phaser.Scene {
         .on('pointerup', () => this.showOptions());
     }
 
+    createOptions(options) {
+        options.forEach((option, index) => {
+            // Crea botones u opciones interactivas en tu modal de diálogo
+            let optionButton = this.add.text(500,300, option.text)
+                .setInteractive()
+                .on('pointerup', () => this.handleOptionSelect(option.nextDialog));
+        });
+    }
+
+    handleOptionSelect(nextDialog) {
+        // Muestra el siguiente diálogo basado en la opción seleccionada
+        this.dialogModal.setText(nextDialog, /* coordenadas x y y */);
+        // Aquí puedes manejar otros aspectos del juego según la opción seleccionada
+    }
+
     showOptions() {
        // this.dialogModal.toggleWindow();
         this.dialogModalAux = new DialogModal(this);
@@ -77,6 +92,23 @@ export class GameScene extends Phaser.Scene {
         this.mujer.on('pointerup', () => this.showMujerDialog());
     
         this.input.on('pointerdown', this.changeDialog, this);
+    }
+
+    showToniDialog() {
+        // Suponiendo que dialogModal es tu modal de diálogo
+        if (!this.dialogModal) {
+            this.dialogModal = new DialogModal(this);
+            // Configura tu dialogModal como sea necesario
+        }
+    
+        // Obtén el diálogo actual y sus opciones
+        let currentDialog = this.dialogs[this.dialogIndex];
+        if (currentDialog.dialog === "Hola, soy Toni. ¿Cómo estás?") {
+            this.dialogModal.setText(currentDialog.dialog,500,500);
+            this.createOptions(currentDialog.options);
+        }
+        // Incrementa el índice del diálogo para el próximo diálogo
+        this.dialogIndex++;
     }
 
     changeDialog() {

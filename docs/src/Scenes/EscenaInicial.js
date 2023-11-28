@@ -45,29 +45,48 @@ export class EscenaInicial extends Phaser.Scene {
 
     create() {
         this.input.setDefaultCursor('url(assets/images/hnd.cur), pointer');
-        this.bg = this.add.image(0, 0, 'fondo').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
-
-      
+        this.bg = this.add.image(0, 0, 'fondo').setOrigin(0, 0)
+        .setDisplaySize(this.game.config.width, this.game.config.height)
+        .setAlpha(gameSettings.brightness);
         this.dialogModal = new DialogModal(this);
-        // this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 250);
 
         this.printDialog();
         this.input.on('pointerdown', this.changeDialog, this);
     }
-
+    
     changeDialog() {
         if (this.dialogIndex < this.dialogs.length) {
             this.dialogModal.setText(this.dialogs[this.dialogIndex], 0, this.dialogModal._getGameHeight() - 250, true);
             this.dialogPrinted = true;
             this.dialogIndex++;
+            // Check if it's time to change the background after "El rugido..." dialogue
+            if (this.dialogIndex === 2) { // Assuming this dialogue is at index 1
+                this.changeBackgroundWithTween();
+                this.scheduleSceneChange(); // Schedule the scene change after the tween
+            }
         } else {
             this.createButtons();
-            this.changeBackgroundWithTween();
         }
     }
+    
+    scheduleSceneChange() {
+        this.time.addEvent({
+            delay: 5000, // Delay in milliseconds (2000ms = 2s)
+            callback: () => {
+                this.bg.destroy();
+                this.scene.start('GameScene'); // Change to the GameScene
+            },
+            callbackScope: this
+        });
+    }
+    
+    
 
+    sumarDialogo(){
+        this.dialogIndex++;
+    }
     reopenDialog() {
         this.dialogIndex = 0;
         this.dialogPrinted = false;

@@ -96,6 +96,7 @@ export class CasaScene extends Phaser.Scene {
         // Espera un tiempo antes de destruir el sprite
         this.time.delayedCall(3000, () => {
             this.removeOptions();
+            this.dialogModal.removeCharacterImage();
             this.dialogModal.toggleWindow();
             this.stupidwomen.destroy();
         });

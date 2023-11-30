@@ -87,6 +87,14 @@ removeCharacterImage() {
     }
   }
 
+  removeCharacterImage() {
+    if (this.characterImage) {
+        this.characterImage.destroy(); // Destruye la imagen del personaje
+        this.characterImage = null; // Establece la propiedad characterImage a null
+    }
+}
+
+
   setText(text, x, y, animate = false){
     this.eventCounter = 0;
     this.dialog = text.split('');

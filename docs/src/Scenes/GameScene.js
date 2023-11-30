@@ -18,7 +18,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('fondo', 'assets/images/background/fondoCalle.webp');
+        this.load.image('fondoCalle', 'assets/images/background/fondoCalle.webp');
         this.load.image('car', 'assets/images/characters/carPumPum.png'); 
         this.load.image('interactAux', 'assets/images/toni.jpeg');
         this.load.image('mujer', 'assets/images/characters/mujerCoche.png'); 
@@ -65,7 +65,7 @@ export class GameScene extends Phaser.Scene {
 
     create() {
         this.input.setDefaultCursor('url(assets/images/hnd.cur), pointer');
-        this.bg = this.add.image(0, 0, 'fondo').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
+        this.bg = this.add.image(0, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'jugador');
 
         this.willy.setMovable(false); 

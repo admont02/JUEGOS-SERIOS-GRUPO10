@@ -60,7 +60,13 @@ export default {
         
         },
         {
-            "dialog": "Bueno, hay una cueva misteriosa al este que podría explorar. Pero ten cuidado, se dice que está llena de enigmas.",
+            "dialog": "Bueno, ha sido un placer hablar contigo. ¡Adiós!",
+            "options": [
+                {
+                    "text": "Adiós",
+                    "nextDialogIndex": -1 // final del dialogo
+                }
+            ]
             
         },
         {

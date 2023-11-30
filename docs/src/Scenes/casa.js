@@ -7,10 +7,10 @@ export class CasaScene extends Phaser.Scene {
         super({ key: 'CasaScene' });
         this.dialogModal = null;
         this.currentDialogIndex = 0;
+        this.optionTexts = []; 
         this.dialogs = dialogos.npcDialogs;
         this.mujerDialogs = dialogos.mujerDialogs; // Add this line
     }
-    
 
     preload() {
         // Carga de recursos gráficos y de audio para la escena de la casa
@@ -41,10 +41,10 @@ export class CasaScene extends Phaser.Scene {
     }
 
     showMujerDialog() {
-        this.dialogModal.createCharacterImage('caraMujer', 0.7); // Ajusta el 0.5 según sea necesario
-        // Asegúrate de que haya diálogos disponibles
+        this.dialogModal.createCharacterImage('caraMujer', 0.7);
         if (this.currentDialogIndex >= this.mujerDialogs.length) {
-            return; // No hay más diálogos
+        this.dialogStarted = false; // Reinicia el indicador de diálogo iniciado
+        return;
         }
 
         let dialogData = this.mujerDialogs[this.currentDialogIndex];
@@ -58,20 +58,49 @@ export class CasaScene extends Phaser.Scene {
     }
 
     showOptions(options) {
+        this.optionTexts.forEach(text => text.destroy()); // Destruye cualquier opción anterior
+        this.optionTexts = []; // Restablece el arreglo
+    
         options.forEach((option, index) => {
             let optionText = this.add.text(100, 100 + (index * 50), option.text, { fill: '#0f0', fontSize: '16px' })
                 .setInteractive()
                 .on('pointerup', () => this.handleOptionSelect(option.nextDialogIndex, index));
+    
+            this.optionTexts.push(optionText); // Guarda el objeto de texto en el arreglo
         });
     }
+     
+    removeOptions() {
+        this.optionTexts.forEach(text => text.destroy());
+        this.optionTexts = []; 
+    }
     
-
+    
     handleOptionSelect(nextDialogIndex, index) {
         console.log("Seleccionaste la opción:", index);
+    
+        if (nextDialogIndex === -1) {
+            this.endDialogAndExitWoman();
+            return;
+        }
+    
         // Pasa al siguiente diálogo basado en la selección
         this.currentDialogIndex = nextDialogIndex;
         this.showMujerDialog();
     }
+
+    endDialogAndExitWoman() {
+        // Mueve a la mujer hacia la derecha para salir de la escena
+        this.stupidwomen.setVelocity(100, 0);
+    
+        // Espera un tiempo antes de destruir el sprite
+        this.time.delayedCall(3000, () => {
+            this.removeOptions();
+            this.dialogModal.toggleWindow();
+            this.stupidwomen.destroy();
+        });
+    }
+    
 
     showDialog(index) {
         if (index >= this.dialogs.length) {
@@ -83,13 +112,14 @@ export class CasaScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        
-        if(this.stupidwomen.x <= 1200 && !this.dialogStarted) {
-            this.stupidwomen.setVelocity(0,0); // Detiene a la mujer
+        if (this.stupidwomen.x <= 1200 && !this.dialogStarted) {
+            this.stupidwomen.setVelocity(0, 0); // Detiene a la mujer
             this.showMujerDialog();
-            this.dialogStarted = true; // Establece una bandera para evitar que el diálogo se inicie de nuevo
+
+            this.dialogStarted = true; // Indica que el diálogo ha comenzado
         }
     }
+    
 
 }
 

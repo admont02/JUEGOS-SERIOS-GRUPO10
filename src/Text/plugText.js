@@ -102,11 +102,6 @@ removeCharacterImage() {
 
     const tempText = animate ? '' : text;
     this._setText(tempText);
-    // Reproduce el sonido del diálogo
-    if (this.scene.sound && text.length > 0) {
-          this.scene.sound.play('dialogSound');
-      }
-  
     if (!animate) {
       this.removeCharacterImage(); // Elimina la imagen al finalizar el diálogo
     }

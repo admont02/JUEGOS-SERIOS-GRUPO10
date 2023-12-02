@@ -38,7 +38,7 @@ export default {
                 },
                 {
                     "text": "Estoy buscando algo de aventura. ¿Alguna sugerencia?",
-                    "nextDialogIndex": 4
+                    "nextDialogIndex": 3
                 }
             ]
         },
@@ -47,36 +47,24 @@ export default {
             "options": [
                 {
                     "text": "Sí, me gustaría desahogarme un poco.",
-                    "nextDialogIndex": 5
+                    "nextDialogIndex": 3
                 },
                 {
                     "text": "No realmente, prefiero mantenerlo para mí.",
-                    "nextDialogIndex": 6
+                    "nextDialogIndex": 3
                 }
             ]
-        },
-        {
-            "dialog": "Es un lugar hermoso, ¿verdad? A veces me gusta venir aquí solo para pensar.",
-        
         },
         {
             "dialog": "Bueno, ha sido un placer hablar contigo. ¡Adiós!",
             "options": [
                 {
                     "text": "Adiós",
-                    "nextDialogIndex": -1 // final del dialogo
+                    "nextDialogIndex": -1 
                 }
             ]
             
         },
-        {
-            "dialog": "Entiendo, todos tenemos esos días. Si cambias de opinión, estoy aquí.",
-           
-        },
-        {
-            "dialog": "No hay problema. A veces, solo necesitamos un poco de espacio.",
-         
-        }
     ]
 }   
 

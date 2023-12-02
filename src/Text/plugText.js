@@ -2,7 +2,7 @@ class DialogModal {
   constructor(scene) {
     this.scene = scene;
     this.systems = scene.sys;
-
+    this.dialogSoundKey = 'dialogSound'; 
     if (!scene.sys.settings.isBooted) {
       scene.sys.events.once('boot', this.boot, this);
     }
@@ -78,14 +78,19 @@ removeCharacterImage() {
     // If you're adding a reopen button, you might want to handle its visibility here as well.
   }
 
-
   _animateText() {
     this.eventCounter++;
     this.text.setText(this.text.text + this.dialog[this.eventCounter - 1]);
-    if (this.eventCounter === this.dialog.length) {
-      this.timedEvent.remove();
+
+    // Reproduce el sonido del diálogo aquí
+    if (this.eventCounter < this.dialog.length) {
+        if (this.scene.sound && this.scene.sound.get(this.dialogSoundKey)) {
+            this.scene.sound.play(this.dialogSoundKey);
+        }
+    } else {
+        this.timedEvent.remove();
     }
-  }
+}
 
   removeCharacterImage() {
     if (this.characterImage) {

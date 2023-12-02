@@ -16,7 +16,7 @@ export class CasaScene extends Phaser.Scene {
         // Carga de recursos gráficos y de audio para la escena de la casa
         this.load.image('casaBackground', 'assets/images/background/fondoCasa.png');
         this.load.image('accidenteFondo', 'assets/images/background/atropello.png');
-
+        this.load.audio('dialogSound', './assets/audio/MenuMusic.mp3');
         this.load.image('mujerCoche', 'assets/images/characters/mujerCoche.png');
         this.load.image('caraMujer', 'assets/images/characters/caraMujer.png');
 
@@ -41,6 +41,8 @@ export class CasaScene extends Phaser.Scene {
     }
 
     showMujerDialog() {
+        this.removeOptions(); // Agregar esta línea
+        this.dialogModal.removeCharacterImage();
         this.dialogModal.createCharacterImage('caraMujer', 0.7);
         if (this.currentDialogIndex >= this.mujerDialogs.length) {
         this.dialogStarted = false; // Reinicia el indicador de diálogo iniciado
@@ -57,23 +59,42 @@ export class CasaScene extends Phaser.Scene {
         }
     }
 
-    showOptions(options) {
-        this.optionTexts.forEach(text => text.destroy()); // Destruye cualquier opción anterior
-        this.optionTexts = []; // Restablece el arreglo
+showOptions(options) {
+    this.optionTexts.forEach(option => {
+        option.text.destroy();
+        option.box.destroy();
+    });
+    this.optionTexts = [];
+
+    options.forEach((option, index) => {
+        // Configurar el texto con un tamaño más grande
+        let optionText = this.add.text(0, 0, option.text, { fill: '#fff', fontSize: '32px' }); // Tamaño del texto aumentado
+        let textWidth = optionText.width + 40; // Margen aumentado
+        let textHeight = optionText.height + 20; // Altura ajustada para el nuevo tamaño del texto
+
+        // Crear un gráfico para la caja de diálogo, ajustando el tamaño
+        let dialogBox = this.add.graphics();
+        dialogBox.fillStyle(0x000000, 0.5);
+        dialogBox.fillRect(100, 100 + (index * (textHeight + 10)), textWidth, textHeight); // Ajusta el ancho y alto
+
+        // Actualiza la posición del texto y lo hace interactivo
+        optionText.setPosition(110, 110 + (index * (textHeight + 10)));
+        optionText.setInteractive()
+            .on('pointerup', () => this.handleOptionSelect(option.nextDialogIndex, index));
+
+        this.optionTexts.push({ box: dialogBox, text: optionText });
+    });
+}
+
     
-        options.forEach((option, index) => {
-            let optionText = this.add.text(100, 100 + (index * 50), option.text, { fill: '#0f0', fontSize: '16px' })
-                .setInteractive()
-                .on('pointerup', () => this.handleOptionSelect(option.nextDialogIndex, index));
-    
-            this.optionTexts.push(optionText); // Guarda el objeto de texto en el arreglo
-        });
-    }
-     
     removeOptions() {
-        this.optionTexts.forEach(text => text.destroy());
+        this.optionTexts.forEach(option => {
+            option.text.destroy();
+            option.box.destroy();
+        });
         this.optionTexts = []; 
     }
+    
     
     
     handleOptionSelect(nextDialogIndex, index) {
@@ -84,15 +105,13 @@ export class CasaScene extends Phaser.Scene {
             return;
         }
     
-        // Pasa al siguiente diálogo basado en la selección
-        this.currentDialogIndex = nextDialogIndex;
-        this.showMujerDialog();
+        this.currentDialogIndex = nextDialogIndex; // Actualiza el índice del diálogo
+        this.showMujerDialog(); // Muestra el siguiente diálogo
     }
-
+    
     endDialogAndExitWoman() {
         // Mueve a la mujer hacia la derecha para salir de la escena
         this.stupidwomen.setVelocity(100, 0);
-    
         // Espera un tiempo antes de destruir el sprite
         this.time.delayedCall(3000, () => {
             this.removeOptions();
@@ -102,6 +121,12 @@ export class CasaScene extends Phaser.Scene {
         });
     }
     
+    removeCharacterImage() {
+        if (this.characterImage) {
+            this.characterImage.destroy();
+            this.characterImage = null;
+        }
+    }
 
     showDialog(index) {
         if (index >= this.dialogs.length) {
@@ -116,7 +141,6 @@ export class CasaScene extends Phaser.Scene {
         if (this.stupidwomen.x <= 1200 && !this.dialogStarted) {
             this.stupidwomen.setVelocity(0, 0); // Detiene a la mujer
             this.showMujerDialog();
-
             this.dialogStarted = true; // Indica que el diálogo ha comenzado
         }
     }

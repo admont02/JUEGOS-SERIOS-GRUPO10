@@ -14,7 +14,7 @@ export class EscenaInicial extends Phaser.Scene {
         this.dialogModalAuxVisible = false;
     }
 
-    
+
     createButtons() {
         const repeatButton = this.add.text(100, 100, 'Repetir Conversación', { fill: '#0f0' })
             .setInteractive()
@@ -41,8 +41,8 @@ export class EscenaInicial extends Phaser.Scene {
     create() {
         this.input.setDefaultCursor('url(assets/images/hnd.cur), pointer');
         this.bg = this.add.image(0, 0, 'fondo').setOrigin(0, 0)
-        .setDisplaySize(this.game.config.width, this.game.config.height)
-        .setAlpha(gameSettings.brightness);
+            .setDisplaySize(this.game.config.width, this.game.config.height)
+            .setAlpha(gameSettings.brightness);
         this.dialogModal = new DialogModal(this);
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 250);
@@ -50,22 +50,23 @@ export class EscenaInicial extends Phaser.Scene {
         this.printDialog();
         this.input.on('pointerdown', this.changeDialog, this);
     }
-    
+
     changeDialog() {
         if (this.dialogIndex < this.dialogs.length) {
             this.dialogModal.setText(this.dialogs[this.dialogIndex], 0, this.dialogModal._getGameHeight() - 250, true);
             this.dialogPrinted = true;
             this.dialogIndex++;
             // Check if it's time to change the background after "El rugido..." dialogue
-            if (this.dialogIndex === 2) { // Assuming this dialogue is at index 1
-                this.changeBackgroundWithTween();
-                this.scheduleSceneChange(); // Schedule the scene change after the tween
+            if (this.dialogIndex > this.dialogIndex.length) { // Assuming this dialogue is at index 1
+                // Schedule the scene change after the tween
             }
         } else {
             this.createButtons();
+            this.changeBackgroundWithTween();
+            this.scheduleSceneChange();
         }
     }
-    
+
     scheduleSceneChange() {
         this.time.addEvent({
             delay: 5000, // Delay in milliseconds (2000ms = 2s)
@@ -76,10 +77,10 @@ export class EscenaInicial extends Phaser.Scene {
             callbackScope: this
         });
     }
-    
-    
 
-    sumarDialogo(){
+
+
+    sumarDialogo() {
         this.dialogIndex++;
     }
     reopenDialog() {
@@ -97,7 +98,7 @@ export class EscenaInicial extends Phaser.Scene {
 
 
     update(time, delta) {
-      
+
     }
 
     printDialog() {

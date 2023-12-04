@@ -17,13 +17,7 @@ export class GameScene extends Phaser.Scene {
         this.dialogModalAuxVisible = false;
     }
 
-    preload() {
-        this.load.image('fondoCalle', 'assets/images/background/fondoCalle.webp');
-        this.load.image('car', 'assets/images/characters/carPumPum.png'); 
-        this.load.image('interactAux', 'assets/images/toni.jpeg');
-        this.load.image('mujer', 'assets/images/characters/mujerCoche.png'); 
-        this.load.spritesheet('jugador', 'assets/images/characters/willymove.png', { frameWidth: 175, frameHeight: 195 }, { start: 0, end: 3 });
-    }
+   
 
     createButtons(){
         const repeatButton = this.add.text(200, 200, 'Repetir Conversación', { fill: '#0f0' })

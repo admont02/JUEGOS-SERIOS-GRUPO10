@@ -14,12 +14,7 @@ export class EscenaInicial extends Phaser.Scene {
         this.dialogModalAuxVisible = false;
     }
 
-    preload() {
-        this.load.image('fondo', 'assets/images/background/atropello.png');
-        this.load.image('interactAux', 'assets/images/toni.jpeg');
-        this.load.image('casa', 'assets/images/background/fondoCasa.png');
-
-    }
+    
     createButtons() {
         const repeatButton = this.add.text(100, 100, 'Repetir Conversación', { fill: '#0f0' })
             .setInteractive()

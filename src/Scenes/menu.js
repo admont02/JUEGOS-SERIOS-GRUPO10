@@ -11,11 +11,7 @@ export class Menu extends Phaser.Scene {
         super({ key: 'Menu' });
     }
 
-    preload() {
-        this.load.image('background', './assets/images/background/fondo1.png');
-        this.load.audio('menuMusic', './assets/audio/MenuMusic.mp3');
-    }
-
+   
     create() {
         this.bg = this.add.image(0, 0, 'background').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.sound.setMute(gameSettings.isMuted);

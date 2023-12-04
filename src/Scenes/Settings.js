@@ -5,14 +5,7 @@ export class Settings extends Phaser.Scene {
         super({ key: 'Settings' });
     }
 
-    preload() {
-        this.load.audio('menuMusic', './assets/audio/MenuMusic.mp3');
-        this.load.image('background', './assets/images/background/fondoSettings.png');
-        // Asegúrate de tener imágenes para los botones de subir/bajar volumen y brillo
-        this.load.image('buttonUp', './assets/images/buttons/buttonUp.png');
-        this.load.image('buttonDown', './assets/images/buttons/buttonDown.png');
-        this.load.image('muteButton', './assets/images/buttons/muteButton.png'); // Botón de silencio
-    }
+   
 
     create() {
         this.createBackground();

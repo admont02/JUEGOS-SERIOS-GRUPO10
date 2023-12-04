@@ -14,21 +14,6 @@ export class CasaScene extends Phaser.Scene {
         this.mujerDialogs = dialogos.mujerDialogs; // Add this line
     }
 
-<<<<<<< Updated upstream
-   
-=======
-    preload() {
-        // Carga de recursos gráficos y de audio para la escena de la casa
-        this.load.image('casaBackground', 'assets/images/background/fondoCasa.png');
-        this.load.image('accidenteFondo', 'assets/images/background/atropello.png');
-        this.load.audio('dialogSound', './assets/audio/MenuMusic.mp3');
-        this.load.image('mujerCoche', 'assets/images/characters/mujerCoche.png');
-        this.load.image('caraMujer', 'assets/images/characters/caraMujer.png');
-        this.load.spritesheet('jugador', 'assets/images/characters/willymove.png', { frameWidth: 175, frameHeight: 195 }, { start: 0, end: 3 });
-
-    }
-
->>>>>>> Stashed changes
     create() {
         // Creación de objetos y configuraciones iniciales para la escena
         this.bg = this.add.image(0, 0, 'casaBackground').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height);
@@ -37,7 +22,13 @@ export class CasaScene extends Phaser.Scene {
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
 
-        this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height - 200, 'jugador');
+        this.car = this.physics.add.sprite((0, 400), 0, 'car');
+        this.car.y = 1350;
+        this.car.setScale(0.5);
+        this.car.setVelocity(100,0);
+        this.car.body.allowGravity = false;
+
+        this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
 
         this.willy.setMovable(false); 
         this.anims.create({
@@ -62,9 +53,11 @@ export class CasaScene extends Phaser.Scene {
         this.removeOptions(); // Agregar esta línea
         this.dialogModal.removeCharacterImage();
         this.dialogModal.createCharacterImage('caraMujer', 0.7);
-        if (this.currentDialogIndex >= this.mujerDialogs.length) {
-        this.dialogStarted = false; // Reinicia el indicador de diálogo iniciado
-        return;
+        
+        if (this.currentDialogIndex >= this.mujerDialogs.length || this.currentDialogIndex === -1) {
+            // Manejo del final del diálogo
+            this.endDialogAndExitWoman();
+            return;
         }
 
         let dialogData = this.mujerDialogs[this.currentDialogIndex];
@@ -127,6 +120,7 @@ showOptions(options) {
         this.showMujerDialog(); // Muestra el siguiente diálogo
     }
     
+    
     endDialogAndExitWoman() {
         // Mueve a la mujer hacia la derecha para salir de la escena
         this.stupidwomen.setVelocity(100, 0);
@@ -164,6 +158,10 @@ showOptions(options) {
             this.stupidwomen.setVelocity(0, 0); // Detiene a la mujer
             this.showMujerDialog();
             this.dialogStarted = true; // Indica que el diálogo ha comenzado
+        }
+
+        if(this.car.x > this.sys.game.config.width + 300){
+            this.car.x = -400;
         }
     
         // Lógica de movimiento de Willy

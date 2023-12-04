@@ -1,4 +1,5 @@
 import { gameSettings } from './menu.js';
+import Willy from '../Characters/Willy.js'; 
 import DialogModal from '../Text/plugText.js';
 import dialogos from '../dialogs.js';
 
@@ -8,11 +9,26 @@ export class CasaScene extends Phaser.Scene {
         this.dialogModal = null;
         this.currentDialogIndex = 0;
         this.optionTexts = []; 
+        this.willy = null;
         this.dialogs = dialogos.npcDialogs;
         this.mujerDialogs = dialogos.mujerDialogs; // Add this line
     }
 
+<<<<<<< Updated upstream
    
+=======
+    preload() {
+        // Carga de recursos gráficos y de audio para la escena de la casa
+        this.load.image('casaBackground', 'assets/images/background/fondoCasa.png');
+        this.load.image('accidenteFondo', 'assets/images/background/atropello.png');
+        this.load.audio('dialogSound', './assets/audio/MenuMusic.mp3');
+        this.load.image('mujerCoche', 'assets/images/characters/mujerCoche.png');
+        this.load.image('caraMujer', 'assets/images/characters/caraMujer.png');
+        this.load.spritesheet('jugador', 'assets/images/characters/willymove.png', { frameWidth: 175, frameHeight: 195 }, { start: 0, end: 3 });
+
+    }
+
+>>>>>>> Stashed changes
     create() {
         // Creación de objetos y configuraciones iniciales para la escena
         this.bg = this.add.image(0, 0, 'casaBackground').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height);
@@ -20,15 +36,26 @@ export class CasaScene extends Phaser.Scene {
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
-      // Coloca a la mujer fuera de la pantalla en el lado derecho y muévela hacia la izquierda
-      this.stupidwomen = this.physics.add.sprite(this.game.config.width + 100, this.game.config.height - 400, 'mujerCoche');
-      this.stupidwomen.body.allowGravity = false;
-      this.stupidwomen.setVelocity(-100,0); // Movimiento hacia la izquierda
 
-      // Flip horizontal si es necesario
-      this.stupidwomen.flipX = true;
+        this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height - 200, 'jugador');
 
-      this.stupidwomen.setInteractive();
+        this.willy.setMovable(false); 
+        this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNumbers('jugador', { start: 0, end: 3 }),
+            frameRate: 5,
+            repeat: -1
+        });
+
+        // Coloca a la mujer fuera de la pantalla en el lado derecho y muévela hacia la izquierda
+        this.stupidwomen = this.physics.add.sprite(this.game.config.width + 100, this.game.config.height - 400, 'mujerCoche');
+        this.stupidwomen.body.allowGravity = false;
+        this.stupidwomen.setVelocity(-100,0); // Movimiento hacia la izquierda
+
+        // Flip horizontal si es necesario
+        this.stupidwomen.flipX = true;
+
+        this.stupidwomen.setInteractive();
     }
 
     showMujerDialog() {
@@ -103,6 +130,7 @@ showOptions(options) {
     endDialogAndExitWoman() {
         // Mueve a la mujer hacia la derecha para salir de la escena
         this.stupidwomen.setVelocity(100, 0);
+      
         // Espera un tiempo antes de destruir el sprite
         this.time.delayedCall(3000, () => {
             this.removeOptions();
@@ -110,6 +138,8 @@ showOptions(options) {
             this.dialogModal.toggleWindow();
             this.stupidwomen.destroy();
         });
+        this.willy.setMovable(true); 
+        this.canMove = true;
     }
     
     removeCharacterImage() {
@@ -129,14 +159,36 @@ showOptions(options) {
     }
 
     update(time, delta) {
+        // Comprueba si el diálogo con la mujer ha terminado
         if (this.stupidwomen.x <= 1200 && !this.dialogStarted) {
             this.stupidwomen.setVelocity(0, 0); // Detiene a la mujer
             this.showMujerDialog();
             this.dialogStarted = true; // Indica que el diálogo ha comenzado
         }
-    }
     
+        // Lógica de movimiento de Willy
+        if (this.willy && this.willy.update && this.canMove) {
+            this.willy.update(time, delta);
+        
+            let pointer = this.input.activePointer;
+            if (pointer.isDown) {
+                this.willy.flipX = pointer.worldX < this.willy.x;
+            }
+    
+            // Restringe a Willy a no moverse más allá del borde izquierdo de la pantalla
+            if (this.willy.x < 200) {
+                this.willy.x = 200;
+            }
+    
+            // Reproduce la animación de caminar si Willy se está moviendo
+            if (this.willy.velocity !== 0) { 
+                this.willy.anims.play('walk', true);
+            } else {
+                this.willy.anims.stop();
 
+            }
+        }
+    }
 }
 
 export default CasaScene;

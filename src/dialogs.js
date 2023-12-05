@@ -17,7 +17,7 @@ export default {
     ],      
     "mujerDialogs": [
         {
-            "dialog": "¡Oh! Disculpa, sé que no debería haber aparcado aquí, pero estoy realmente apurada.",
+          /*0*/   "dialog": "¡Oh! Disculpa, sé que no debería haber aparcado aquí, pero estoy realmente apurada.",
             "options": [
                 {
                     "text": "Es comprensible estar apurado, pero este espacio es vital\npara las personas con discapacidad.",
@@ -30,7 +30,7 @@ export default {
             ]
         },
         {
-            "dialog": "Lo siento, no me di cuenta de la importancia de este espacio.\nMoveré mi coche de inmediato.",
+         /*1*/    "dialog": "Lo siento, no me di cuenta de la importancia de este espacio.\nMoveré mi coche de inmediato.",
             "options": [
                 {
                     "text": "Gracias por entender. Cada espacio de este tipo tiene\nun propósito crucial.",
@@ -43,7 +43,7 @@ export default {
             ]
         },
         {
-            "dialog": "¡Pero si sólo fue por un momento! ¿Es realmente para tanto?",
+         /*2*/    "dialog": "¡Pero si sólo fue por un momento! ¿Es realmente para tanto?",
             "options": [
                 {
                     "text": "Un 'solo momento' puede ser el tiempo que alguien necesita\npara acceder a su vehículo en un espacio adecuado.",
@@ -56,11 +56,11 @@ export default {
             ]
         },
         {
-            "dialog": "Supongo que nunca lo había visto así. A veces actuamos\nsin pensar en las consecuencias.",
+         /*3*/    "dialog": "Supongo que nunca lo había visto así. A veces actuamos\nsin pensar en las consecuencias.",
             "options": [
                 {
                     "text": "Todos podemos aprender y mejorar. Lo importante es\nser consciente y actuar con consideración.",
-                    "nextDialogIndex": 6
+                    "nextDialogIndex": 7
                 },
                 {
                     "text": "Exacto, y es por eso que tomar un momento para reflexionar\npuede hacer una gran diferencia.",
@@ -69,7 +69,7 @@ export default {
             ]
         },
         {
-            "dialog": "Tienes razón, debo ser más considerada. No volverá a suceder.",
+         /*4*/    "dialog": "Tienes razón, debo ser más considerada. No volverá a suceder.",
             "options": [
                 {
                     "text": "Me alegra oír eso. Gracias por tomar conciencia\nde tu acción.",
@@ -82,7 +82,7 @@ export default {
             ]
         },
         {
-            "dialog": "Gracias por hacérmelo ver. A veces necesitamos que alguien\nnos señale estas cosas.",
+         /*5*/      "dialog": "Gracias por hacérmelo ver. A veces necesitamos que alguien\nnos señale estas cosas.",
             "options": [
                 {
                     "text": "Con gusto. A veces todos necesitamos un recordatorio\npara ser más empáticos.",
@@ -95,10 +95,62 @@ export default {
             ]
         },
         {
-            "dialog": "Prometo ser más consciente en el futuro.\nGracias por tu paciencia y comprensión.",
+        /*6*/     "dialog": "Prometo ser más consciente en el futuro.\nGracias por tu paciencia y comprensión.",
             "options": [
                 {
                     "text": "No hay de qué. Disfruta tu día y recuerda lo que hemos hablado.",
+                    "nextDialogIndex": -1
+                }
+            ]
+        },
+        {
+        /*7*/     "dialog": "¡Esto es ridículo! ¡Solo estaba por un momento!",
+            "options": [
+                {
+                    "text": "Entiendo tu frustración, pero las reglas están por una razón importante.",
+                    "nextDialogIndex": 8
+                },
+                {
+                    "text": "Un momento o una hora, las reglas son iguales para todos.",
+                    "nextDialogIndex": 9
+                }
+            ]
+        },
+        {
+        /*8*/     "dialog": "¡No necesito lecciones de moralidad de un extraño! ¡Déjame en paz!",
+            "options": [
+                {
+                    "text": "Lamento que te sientas así, pero es importante ser considerado con los demás.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "Es una cuestión de respeto, no solo de reglas.",
+                    "nextDialogIndex": -1
+                }
+            ]
+        },
+        {
+        /*9*/     "dialog": "¡Eres un metiche! ¡No tienes derecho a decirme qué hacer!",
+            "options": [
+                {
+                    "text": "Todos somos parte de esta comunidad y debemos ayudarnos a mejorar.",
+                    "nextDialogIndex": 10
+                },
+                {
+                    "text": "Entiendo que estés molesta, pero mi intención es simplemente recordarte la importancia del respeto mutuo.",
+                    "nextDialogIndex": -1
+                }
+            ]
+        },
+        {
+        /*10*/     "dialog": "¡Basta ya! ¡Tú no eres nadie para juzgarme!",
+            "options": [
+                {
+                    "text": "No estoy juzgando, solo intento hacer ver la importancia de pensar en los demás.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "Mi intención no es juzgar, sino fomentar la conciencia sobre las necesidades de otros.",
                     "nextDialogIndex": -1
                 }
             ]

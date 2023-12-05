@@ -70,33 +70,39 @@ export class CasaScene extends Phaser.Scene {
         }
     }
 
-showOptions(options) {
-    this.optionTexts.forEach(option => {
-        option.text.destroy();
-        option.box.destroy();
-    });
-    this.optionTexts = [];
-
-    options.forEach((option, index) => {
-        // Configurar el texto con un tamaño más grande
-        let optionText = this.add.text(0, 0, option.text, { fill: '#fff', fontSize: '32px' }); // Tamaño del texto aumentado
-        let textWidth = optionText.width + 40; // Margen aumentado
-        let textHeight = optionText.height + 20; // Altura ajustada para el nuevo tamaño del texto
-
-        // Crear un gráfico para la caja de diálogo, ajustando el tamaño
-        let dialogBox = this.add.graphics();
-        dialogBox.fillStyle(0x000000, 0.5);
-        dialogBox.fillRect(100, 100 + (index * (textHeight + 10)), textWidth, textHeight); // Ajusta el ancho y alto
-
-        // Actualiza la posición del texto y lo hace interactivo
-        optionText.setPosition(110, 110 + (index * (textHeight + 10)));
-        optionText.setInteractive()
-            .on('pointerup', () => this.handleOptionSelect(option.nextDialogIndex, index));
-
-        this.optionTexts.push({ box: dialogBox, text: optionText });
-    });
-}
-
+    showOptions(options) {
+        this.optionTexts.forEach(option => {
+            if (option.text) option.text.destroy();
+            if (option.box) option.box.destroy();
+        });
+        this.optionTexts = [];
+    
+        options.forEach((option, index) => {
+            let textHeight = 0;
+            let textWidth = 0;
+    
+            // Crear un gráfico para la caja de diálogo primero (sin texto aún)
+            let dialogBox = this.add.graphics();
+            dialogBox.fillStyle(0x000000, 0.5);  // Color y transparencia de la caja
+    
+            // Configurar el texto con un tamaño más grande y calcular dimensiones
+            let optionText = this.add.text(0, 0, option.text, { fill: '#fff', fontSize: '32px' });
+            textWidth = optionText.width + 40;  // Margen aumentado
+            textHeight = optionText.height + 20; // Altura ajustada para el nuevo tamaño del texto
+    
+            // Ahora dibuja la caja de diálogo con las dimensiones adecuadas
+            dialogBox.fillRect(100, 100 + (index * (textHeight + 10)), textWidth, textHeight); 
+    
+            // Actualiza la posición del texto y lo hace interactivo, colocándolo encima de la caja
+            optionText.setPosition(110, 110 + (index * (textHeight + 10)));
+            optionText.setInteractive()
+                .on('pointerup', () => this.handleOptionSelect(option.nextDialogIndex, index));
+    
+            // Almacenar tanto la caja como el texto en optionTexts
+            this.optionTexts.push({ box: dialogBox, text: optionText });
+        });
+    }
+    
     
     removeOptions() {
         this.optionTexts.forEach(option => {
@@ -149,7 +155,8 @@ showOptions(options) {
         }
 
         let dialog = this.dialogs[index].dialog;
-        this.dialogModal.setText(dialog, 0, this.dialogModal._getGameHeight() - 150, true);
+        this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true, { fill: '#fff' });
+
     }
 
     update(time, delta) {

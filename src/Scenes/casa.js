@@ -167,6 +167,9 @@ export class CasaScene extends Phaser.Scene {
             this.dialogStarted = true; // Indica que el diálogo ha comenzado
         }
 
+        if(this.willy.x > 1000){
+            this.scene.start('CentroScene');
+        }
         if(this.car.x > this.sys.game.config.width + 300){
             this.car.x = -400;
         }

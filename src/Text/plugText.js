@@ -255,6 +255,23 @@ removeCharacterImage() {
     }
   }
 
+  typeWriterEffect(text, onComplete) {
+    const length = text.length;
+    let i = 0;
+    this.scene.time.addEvent({
+        callback: () => {
+            this.setText(text.substring(0, i + 1), 0, this._getGameHeight() - 250, false);
+            i++;
+            if (i === length) {
+                onComplete(); // Llama al callback cuando el texto se ha terminado de escribir
+            }
+        },
+        repeat: length - 1,
+        delay: 50 // Velocidad de escritura del texto (en milisegundos)
+    });
+}
+
+
   _setText(text, x, y) {
     if (this.text) this.text.destroy();
 

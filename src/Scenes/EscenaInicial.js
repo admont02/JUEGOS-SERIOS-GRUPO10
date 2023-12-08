@@ -49,11 +49,22 @@ export class EscenaInicial extends Phaser.Scene {
 
         this.printDialog();
         this.input.on('pointerdown', this.changeDialog, this);
+        this.isDialogComplete = false; // Nueva propiedad para controlar si el diálogo ha terminado
+        this.input.on('pointerdown', () => {
+            if (this.isDialogComplete) {
+                this.changeDialog();
+            }
+        }, this);
     }
 
     changeDialog() {
+        if (!this.isDialogComplete) return; // Evitar cambiar el diálogo si aún no ha terminado
+
         if (this.dialogIndex < this.dialogs.length) {
-            this.dialogModal.setText(this.dialogs[this.dialogIndex], 0, this.dialogModal._getGameHeight() - 250, true);
+            this.isDialogComplete = false; // Restablecer la bandera para el nuevo diálogo
+            this.dialogModal.typeWriterEffect(this.dialogs[this.dialogIndex], () => {
+                this.isDialogComplete = true; // Marcar el diálogo como completo
+            });
             this.dialogPrinted = true;
             this.dialogIndex++;
             // Check if it's time to change the background after "El rugido..." dialogue
@@ -106,15 +117,18 @@ export class EscenaInicial extends Phaser.Scene {
 
     printDialog() {
         if (this.dialogIndex < this.dialogs.length) {
-            this.dialogModal.setText(this.dialogs[this.dialogIndex], 0, this.dialogModal._getGameHeight() - 250, true);
+            this.isDialogComplete = false; // Asegurarse de que el flag está en false al empezar
+            this.dialogModal.typeWriterEffect(this.dialogs[this.dialogIndex], () => {
+                this.isDialogComplete = true; // Marcar el diálogo como completo
+            });
             this.dialogPrinted = true;
             this.dialogIndex++;
         } else {
             this.showOptions();
             this.input.off('pointerdown', this.changeDialog, this);
         }
-
     }
+
     changeBackgroundWithTween(id) {
         this.tweens.add({
             targets: this.bg, // El fondo actual

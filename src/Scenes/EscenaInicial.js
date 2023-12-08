@@ -72,7 +72,7 @@ export class EscenaInicial extends Phaser.Scene {
             delay: 5000, // Delay in milliseconds (2000ms = 2s)
             callback: () => {
                 this.bg.destroy();
-                this.scene.start('GameScene'); // Change to the GameScene
+                this.scene.start('CasaScene'); // Change to the GameScene
             },
             callbackScope: this
         });

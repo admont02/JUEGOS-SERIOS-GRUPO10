@@ -20,6 +20,12 @@ export class CentroScene extends Phaser.Scene {
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
+        if (gameSettings.lateBecauseOfWoman) {
+            // Inicia con el diálogo específico
+            this.dialogModal.setText("Por culpa de esa mujer he llegado tarde", 0, this.dialogModal._getGameHeight() - 150, true);
+            // Restablecer el estado para futuras interacciones
+            gameSettings.lateBecauseOfWoman = false;
+        }
 
     }
 

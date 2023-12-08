@@ -23,7 +23,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('interactAux', 'assets/images/toni.jpeg');
         this.load.image('casa', 'assets/images/background/fondoCasa.png');
 
-        this.load.image('fondoCalle', 'assets/images/background/fondoCalle.webp');
+        this.load.image('fondoCalle', 'assets/images/background/fondoCalle.jpg');
         this.load.image('car', 'assets/images/characters/carPumPum.png'); 
         this.load.image('interactAux', 'assets/images/toni.jpeg');
         this.load.image('mujer', 'assets/images/characters/mujerCoche.png'); 

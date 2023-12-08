@@ -3,7 +3,8 @@ export let gameSettings = {
     musicVolume: 1.0, // Asegúrate de que esta propiedad exista
     previousVolume: 1.0, // Nuevo, para almacenar el volumen antes del mute
     isMuted: false, // Nuevo, para almacenar el estado de silencio
-    lateBecauseOfWoman: false
+    lateBecauseOfWoman: false,
+    lateTienda: false
 };
 
 
@@ -53,7 +54,7 @@ export class Menu extends Phaser.Scene {
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
-                    this.scene.start('EscenaInicial');
+                    this.scene.start('CentroScene');
                     //this.scene.start('EscenaInicial');
 
                 }

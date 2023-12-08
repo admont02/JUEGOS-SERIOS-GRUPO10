@@ -155,9 +155,52 @@ export default {
                 }
             ]
         }
+    ],"entrenadorDialogs": [
+        {
+            "dialog": "Willy, otra vez tarde. Si sigues así, no podré incluirte en la selección para el equipo paralímpico. Necesitamos compromiso.",
+            "options": [
+                {
+                    "text": "Lo siento, entrenador. Me aseguraré de mejorar mi puntualidad.",
+                    "nextDialogIndex": -1 // o el índice que corresponda
+                },
+                {
+                    "text": "Entiendo, pero he tenido algunos contratiempos. Trabajaré en esto.",
+                    "nextDialogIndex": -1 // o el índice que corresponda
+                }
+            ]
+        }
+    ],
+    "pacoDialogs": [
+        {
+            "dialog": "¡Willy, cuánto tiempo! ¿Cómo te ha ido con el entrenamiento?",
+            "options": [
+                {
+                    "text": "Ha sido duro, pero estoy progresando. ¿Algún consejo?",
+                    "nextDialogIndex": -1 // o el índice que corresponda
+                },
+                {
+                    "text": "Bien, pero a veces me siento un poco desanimado. ¿Tú cómo lo manejas?",
+                    "nextDialogIndex": -1 // o el índice que corresponda
+                }
+            ]
+        }
+    ],
+    "atletaDialogs": [
+        {
+            "dialog": "¿En serio te consideras un atleta? Pareces más un lastre para el equipo.",
+            "options": [
+                {
+                    "text": "Todos tenemos diferentes desafíos, pero mi esfuerzo vale tanto como el de cualquier otro.",
+                    "nextDialogIndex": -1 // o el índice que corresponda
+                },
+                {
+                    "text": "No dejo que los comentarios negativos me afecten. Estoy aquí para superarme a mí mismo.",
+                    "nextDialogIndex": -1 // o el índice que corresponda
+                }
+            ]
+        }
     ]
+}
     
-    
-    
-}   
+      
 

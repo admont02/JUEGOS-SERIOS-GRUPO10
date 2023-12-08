@@ -50,7 +50,7 @@ export class CasaScene extends Phaser.Scene {
     }
 
     showMujerDialog() {
-        this.removeOptions(); // Agregar esta línea
+        this.removeOptions(); 
         this.dialogModal.removeCharacterImage();
         this.dialogModal.createCharacterImage('caraMujer', 0.7);
         
@@ -81,16 +81,16 @@ export class CasaScene extends Phaser.Scene {
             let textHeight = 0;
             let textWidth = 0;
     
-            // Crear un gráfico para la caja de diálogo primero (sin texto aún)
+           
             let dialogBox = this.add.graphics();
             dialogBox.fillStyle(0x000000, 0.5);  // Color y transparencia de la caja
     
-            // Configurar el texto con un tamaño más grande y calcular dimensiones
+            //  texto con un tamaño más grande y calcular dimensiones
             let optionText = this.add.text(0, 0, option.text, { fill: '#fff', fontSize: '32px' });
             textWidth = optionText.width + 40;  // Margen aumentado
             textHeight = optionText.height + 20; // Altura ajustada para el nuevo tamaño del texto
     
-            // Ahora dibuja la caja de diálogo con las dimensiones adecuadas
+            // dibuja la caja de diálogo con las dimensiones adecuadas
             dialogBox.fillRect(100, 100 + (index * (textHeight + 10)), textWidth, textHeight); 
     
             // Actualiza la posición del texto y lo hace interactivo, colocándolo encima de la caja
@@ -121,9 +121,11 @@ export class CasaScene extends Phaser.Scene {
             this.endDialogAndExitWoman();
             return;
         }
+
         if(nextDialogIndex === 7 || nextDialogIndex === 8 || nextDialogIndex === 9 || nextDialogIndex === 10){
             gameSettings.lateBecauseOfWoman = true; // la mujer insulta al jugador
         }
+        
         this.currentDialogIndex = nextDialogIndex; // Actualiza el índice del diálogo
         this.showMujerDialog(); // Muestra el siguiente diálogo
     }

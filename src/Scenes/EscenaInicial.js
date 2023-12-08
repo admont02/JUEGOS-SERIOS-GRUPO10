@@ -57,12 +57,15 @@ export class EscenaInicial extends Phaser.Scene {
             this.dialogPrinted = true;
             this.dialogIndex++;
             // Check if it's time to change the background after "El rugido..." dialogue
-            if (this.dialogIndex > this.dialogIndex.length) { // Assuming this dialogue is at index 1
-                // Schedule the scene change after the tween
+            if (this.dialogIndex == 5) {
+                this.changeBackgroundWithTween('hospital');
+            } else if (this.dialogIndex == 8) {
+                this.changeBackgroundWithTween('pista');
             }
-        } else {
+        }
+        else {
             this.createButtons();
-            this.changeBackgroundWithTween();
+            this.changeBackgroundWithTween('casa');
             this.scheduleSceneChange();
         }
     }
@@ -112,13 +115,13 @@ export class EscenaInicial extends Phaser.Scene {
         }
 
     }
-    changeBackgroundWithTween() {
+    changeBackgroundWithTween(id) {
         this.tweens.add({
             targets: this.bg, // El fondo actual
             alpha: 0, // Animación de desvanecimiento
             duration: 500, // Duración de la transición en milisegundos
             onComplete: () => {
-                this.bg.setTexture('casa'); // Cambiar el fondo
+                this.bg.setTexture(id); // Cambiar el fondo
                 this.tweens.add({
                     targets: this.bg,
                     alpha: 1, // Animación de aparecer

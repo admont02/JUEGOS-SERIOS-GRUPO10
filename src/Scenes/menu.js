@@ -54,8 +54,8 @@ export class Menu extends Phaser.Scene {
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
-                    //this.scene.start('CentroScene');
-                    this.scene.start('EscenaInicial');
+                    this.scene.start('CentroScene');
+                    //this.scene.start('EscenaInicial');
 
                 }
             });

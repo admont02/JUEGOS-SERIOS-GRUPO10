@@ -1,5 +1,5 @@
-import { gameSettings } from './menu.js';
 import DialogModal from '../Text/plugText.js';
+import { gameSettings } from './menu.js';
 import dialogos from '../dialogs.js';
 import Willy from '../Characters/Willy.js';
 
@@ -10,37 +10,39 @@ export class CentroScene extends Phaser.Scene {
         this.currentDialogIndex = 0;
         this.optionTexts = [];
         this.willy = null;
-        this.entrenadorDialogs = dialogos.entrenadorDialogs; // Diálogos del entrenador
-        this.pacoDialogs = dialogos.pacoDialogs; // Diálogos de Paco
-        this.currentDialogs = null; // Almacena los diálogos actuales
+        this.entrenador = null; 
+        this.entrenadorDialogs = dialogos.entrenadorDialogs;
+        this.pacoDialogs = dialogos.pacoDialogs;
+        this.currentDialogs = null;
     }
 
     create() {
         this.bg = this.add.image(0, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
-
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
-        this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
 
+        this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
+        this.createTrainerSprite();
         this.createWomenSprites();
         this.startEntrenadorDialog();
+    }
+
+    createTrainerSprite() {
+        // Crear y configurar el sprite del entrenador aquí
+        this.entrenador = this.add.sprite(100, 200, 'entrenadorSprite');
     }
 
     createWomenSprites() {
         this.firstWoman = this.createWomanSprite();
         this.secondWoman = this.createWomanSprite();
-
         this.secondWoman.visible = false; // Ocultar la segunda mujer inicialmente
     }
 
     createWomanSprite() {
-        // Posición de Willy (ajustar según sea necesario)
-        let willyX = this.game.config.width / 3;
-        let willyY = this.game.config.height - 400;
-    
-        // Coloca a la mujer un poco a la derecha de Willy
+        let willyX = this.willy.x;
+        let willyY = this.willy.y;
         let womanX = willyX + 100; // 100 píxeles a la derecha de Willy
         let womanY = willyY;
     
@@ -50,16 +52,9 @@ export class CentroScene extends Phaser.Scene {
         woman.setInteractive();
         return woman;
     }
-    
 
     startEntrenadorDialog() {
         this.currentDialogs = this.entrenadorDialogs;
-        this.currentDialogIndex = 0;
-        this.showDialog();
-    }
-
-    startPacoDialog() {
-        this.currentDialogs = this.pacoDialogs;
         this.currentDialogIndex = 0;
         this.showDialog();
     }
@@ -72,48 +67,39 @@ export class CentroScene extends Phaser.Scene {
 
         let dialogData = this.currentDialogs[this.currentDialogIndex];
         this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
-        
         this.showOptions(dialogData.options);
     }
 
     showOptions(options) {
-        // Primero, elimina las opciones existentes
         this.removeOptions(); 
-    
+
         options.forEach((option, index) => {
-            // Crear un cuadro de diálogo gráfico para cada opción
             let dialogBox = this.add.graphics();
-            dialogBox.fillStyle(0x000000, 0.5);  // Color y transparencia del cuadro
-    
-            // Crear el texto de la opción
+            dialogBox.fillStyle(0x000000, 0.5);  
+
             let optionText = this.add.text(0, 0, option.text, { 
                 fill: '#fff', 
                 fontSize: '32px',
-                wordWrap: { width: this.game.config.width - 200 } // Asegúrate de que el texto se ajuste dentro del cuadro
+                wordWrap: { width: this.game.config.width - 200 }
             });
-    
-            // Calcular el ancho y alto necesarios para el cuadro de diálogo
+
             let textWidth = optionText.width + 40;
             let textHeight = optionText.height + 20;
-    
-            // Posicionar y dibujar el cuadro de diálogo
-            let xPosition = (this.game.config.width - textWidth) / 2; // Centrar horizontalmente
-            let yPosition = 150 + (index * (textHeight + 10)); // Posicionar verticalmente
+
+            let xPosition = (this.game.config.width - textWidth) / 2;
+            let yPosition = 150 + (index * (textHeight + 10));
             dialogBox.fillRect(xPosition, yPosition, textWidth, textHeight);
-    
-            // Posicionar el texto encima del cuadro
+
             optionText.setPosition(xPosition + 20, yPosition + 10);
-    
-            // Hacer el texto interactivo y manejar el evento de clic
+
             optionText.setInteractive().on('pointerup', () => {
                 this.handleOptionSelect(option.nextDialogIndex);
             });
-    
-            // Guardar las referencias a los gráficos y al texto
+
             this.optionTexts.push({ box: dialogBox, text: optionText });
         });
     }
-    
+
     removeOptions() {
         this.optionTexts.forEach(option => {
             option.text.destroy();
@@ -121,7 +107,6 @@ export class CentroScene extends Phaser.Scene {
         });
         this.optionTexts = []; 
     }
-    
 
     handleOptionSelect(nextDialogIndex) {
         if (nextDialogIndex === -1) {
@@ -133,19 +118,37 @@ export class CentroScene extends Phaser.Scene {
     }
 
     endDialog() {
-        // Implementa lo que sucede al terminar un diálogo aquí
-        // Por ejemplo, cambiar de personaje o finalizar la escena
         if (this.currentDialogs === this.entrenadorDialogs) {
-            this.firstWoman.visible = false;
-            this.secondWoman.visible = true;
-            this.startPacoDialog();
+            this.moveTrainerOffScreen();
+            this.time.delayedCall(1000, () => {
+                this.secondWoman.visible = true;
+                this.startPacoDialog();
+            });
         } else {
-            // Terminar la escena o iniciar otra acción
+            // Acciones para otros diálogos
         }
     }
 
+    moveTrainerOffScreen() {
+        this.tweens.add({
+            targets: this.entrenador,
+            y: this.game.config.height + 100,
+            ease: 'Power1',
+            duration: 1000,
+            onComplete: () => {
+                this.entrenador.visible = false;
+            }
+        });
+    }
+
+    startPacoDialog() {
+        this.currentDialogs = this.pacoDialogs;
+        this.currentDialogIndex = 0;
+        this.showDialog();
+    }
+
     update(time, delta) {
-        // Lógica de actualización aquí
+        // Actualización del juego aquí
     }
 }
 

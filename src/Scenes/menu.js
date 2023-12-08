@@ -2,7 +2,8 @@ export let gameSettings = {
     brightness: 1.0,
     musicVolume: 1.0, // Asegúrate de que esta propiedad exista
     previousVolume: 1.0, // Nuevo, para almacenar el volumen antes del mute
-    isMuted: false // Nuevo, para almacenar el estado de silencio
+    isMuted: false, // Nuevo, para almacenar el estado de silencio
+    lateBecauseOfWoman: false
 };
 
 

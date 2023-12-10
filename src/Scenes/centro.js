@@ -24,9 +24,12 @@ export class CentroScene extends Phaser.Scene {
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
 
         this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
-        this.createTrainerSprite();
-        this.createWomenSprites();
-        this.startEntrenadorDialog();
+        if (gameSettings.lateBecauseOfWoman) {
+            // Inicia con el diálogo 
+            this.dialogModal.setText("Por culpa de esa mujer he llegado tarde", 0, this.dialogModal._getGameHeight() - 150, true);
+            // Restablecer el estado para futuras interacciones
+            gameSettings.lateBecauseOfWoman = false;
+        }
     }
 
     createTrainerSprite() {

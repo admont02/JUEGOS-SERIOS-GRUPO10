@@ -106,20 +106,23 @@ colisionHandler(willy, caja) {
             let textHeight = 0;
             let textWidth = 0;
     
-           
             let dialogBox = this.add.graphics();
             dialogBox.fillStyle(0x000000, 0.5);  // Color y transparencia de la caja
     
-            //  texto con un tamaño más grande y calcular dimensiones
-            let optionText = this.add.text(0, 0, option.text, { fill: '#fff', fontSize: '32px' });
+            let optionText = this.add.text(0, 0, option.text, { fill: '#fff', fontSize: '42px' });
+            optionText.setResolution(1.1); // Ajuste para mejorar la calidad del texto
             textWidth = optionText.width + 40;  // Margen aumentado
             textHeight = optionText.height + 20; // Altura ajustada para el nuevo tamaño del texto
     
-            // dibuja la caja de diálogo con las dimensiones adecuadas
-            dialogBox.fillRect(100, 100 + (index * (textHeight + 10)), textWidth, textHeight); 
+            // Aumentar el espacio entre cada caja de opción
+            const spacing = 100; // Ajusta este valor según sea necesario
+            let boxY = 100 + (index * (textHeight + spacing));
     
-            // Actualiza la posición del texto y lo hace interactivo, colocándolo encima de la caja
-            optionText.setPosition(110, 110 + (index * (textHeight + 10)));
+            // Dibujar la caja de diálogo con las dimensiones adecuadas
+            dialogBox.fillRect(100, boxY, textWidth, textHeight); 
+    
+            // Posicionar el texto y hacerlo interactivo, colocándolo encima de la caja
+            optionText.setPosition(110, boxY + 10);
             optionText.setInteractive()
                 .on('pointerup', () => this.handleOptionSelect(option.nextDialogIndex, index));
     
@@ -127,6 +130,7 @@ colisionHandler(willy, caja) {
             this.optionTexts.push({ box: dialogBox, text: optionText });
         });
     }
+    
     
     
     removeOptions() {

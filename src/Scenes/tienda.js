@@ -34,7 +34,7 @@ export class ShopScene extends Phaser.Scene {
         // Creación de la caja con física habilitada
         const caja = this.physics.add.sprite(this.sys.game.config.width / 5, this.sys.game.config.height - 400, 'caja');
         caja.body.setAllowGravity(false); // Ajusta la gravedad según sea necesario
-    
+        caja.body.setImmovable(true);
         // Establecer colisión entre Willy y la caja
         this.physics.add.collider(this.willy, caja, this.colisionHandler);
 
@@ -60,13 +60,7 @@ export class ShopScene extends Phaser.Scene {
             this.showMujerDialog();
         });
 
-        const tuNuevaImagen = this.physics.add.sprite(this.sys.game.config.width / 5, this.sys.game.config.height - 400, 'caja'); // Cambia x, y y 'nombreDeLaImagen'
-
-        // Habilitas la física para el nuevo sprite
-        this.physics.world.enable(tuNuevaImagen);
-        tuNuevaImagen.body.setAllowGravity(false)
-        // Estableces un collider entre tuNuevaImagen y willy
-        this.physics.add.overlap(tuNuevaImagen, this.willy.body, this.colisionHandler, null, this);
+     
     }
     
 colisionHandler(willy, caja) {

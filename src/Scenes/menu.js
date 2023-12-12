@@ -13,7 +13,7 @@ export class Menu extends Phaser.Scene {
         super({ key: 'Menu' });
     }
 
-   
+
     create() {
         this.bg = this.add.image(0, 0, 'background').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.sound.setMute(gameSettings.isMuted);
@@ -55,7 +55,7 @@ export class Menu extends Phaser.Scene {
                 duration: 1500,
                 onComplete: () => {
                     this.scene.start('ShopScene');
-                   // this.scene.start('CentroScene');
+                    // this.scene.start('CentroScene');
                     //this.scene.start('EscenaInicial');
 
                 }

@@ -50,4 +50,4 @@ let config = {
    transparent: true
 };
 
-new Phaser.Game(config);
+new Phaser.Game(config);    

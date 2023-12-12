@@ -199,7 +199,15 @@ export class ShopScene extends Phaser.Scene {
             this.dialogStarted = true; // Indica que el diálogo ha comenzado
         }
 
-
+        if (this.willy.x > this.sys.game.config.width - 200) {
+            // mover el background papu
+            this.bg.x -= 5;
+            this.bg2.x -= 5;
+            this.shopWorker.x -= 5;
+            this.car.x -= 5;
+            this.caja.x -= 5;
+            this.willy.x -= 5;
+        }
 
         // Lógica de movimiento de Willy
         if (this.willy && this.willy.update && this.canMove) {

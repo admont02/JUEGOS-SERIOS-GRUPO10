@@ -5,9 +5,11 @@ export default class Willy extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
         this.setScale(2);
 
-        this.moveTween = null;
-        this.jumpTween = null;
-        this.canMove = false; // Flag to control movement
+        // Asegurarse de que Willy tiene un cuerpo físico para usar setVelocity
+        this.scene.physics.world.enable(this);
+        this.body.setCollideWorldBounds(true); // Para evitar que salga del mundo
+
+        this.canMove = false; // Flag para controlar el movimiento
 
         this.scene.input.on('pointerdown', this.onPointerDown, this);
     }
@@ -17,21 +19,21 @@ export default class Willy extends Phaser.GameObjects.Sprite {
     }
 
     onPointerDown(pointer) {
-        if (!this.canMove) return; // Check if movement is allowed
+        if (!this.canMove) return; // Verificar si el movimiento está permitido
 
-        if (this.moveTween) {
-            this.moveTween.stop();
+        const speed = 200; // Velocidad de movimiento
+
+        // Calcular la dirección del movimiento
+        const direction = pointer.x >= this.x ? 1 : -1;
+        
+        // Establecer la velocidad de Willy
+        this.body.setVelocityX(speed * direction);
+    }
+
+    update() {
+        // Si Willy no se está moviendo hacia un destino, detener su movimiento
+        if (!this.canMove) {
+            this.body.setVelocityX(0);
         }
-    
-        this.y = this.y; // Maintain current Y position
-    
-        const speedFactor = 5; // Speed factor for movement
-    
-        this.moveTween = this.scene.tweens.add({
-            targets: this,
-            x: pointer.x,
-            duration: Math.abs(this.x - pointer.x) * speedFactor,
-            ease: 'Linear'
-        });
     }
 }

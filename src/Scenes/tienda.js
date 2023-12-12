@@ -27,13 +27,17 @@ export class ShopScene extends Phaser.Scene {
         this.car.setScale(0.5);
         this.car.setVelocity(100,0);
         this.car.body.allowGravity = false;
+        this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height - 400, 'jugador');
+        this.willy.body.setCollideWorldBounds(true);
+        this.willy.body.setAllowGravity(false); // Asegúrate de que la gravedad esté configurada según tus necesidades
+    
+        // Creación de la caja con física habilitada
+        const caja = this.physics.add.sprite(this.sys.game.config.width / 5, this.sys.game.config.height - 400, 'caja');
+        caja.body.setAllowGravity(false); // Ajusta la gravedad según sea necesario
+    
+        // Establecer colisión entre Willy y la caja
+        this.physics.add.collider(this.willy, caja, this.colisionHandler);
 
-        this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
-        this.physics.world.enable(this.willy);
-        //this.willy.setMovable(false); 
-        this.willy.body.setCollideWorldBounds(false)
-        this.willy.body.setAllowGravity(false)
-        
         this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNumbers('jugador', { start: 0, end: 3 }),
@@ -65,14 +69,10 @@ export class ShopScene extends Phaser.Scene {
         this.physics.add.overlap(tuNuevaImagen, this.willy.body, this.colisionHandler, null, this);
     }
     
-    // Función que maneja la colisión entre tuNuevaImagen y willy
-    colisionHandler(tuNuevaImagen, willy) {
-        // Esto se ejecuta cuando hay una colisión entre tuNuevaImagen y willy
-        // Puedes agregar aquí el comportamiento que deseas cuando colisionan
-        console.log("choco")
-        this.willy.velocity=0;
-    }
-    
+colisionHandler(willy, caja) {
+    console.log("Colisión detectada entre Willy y la caja");
+
+}
 
     showMujerDialog() {
         this.removeOptions(); 

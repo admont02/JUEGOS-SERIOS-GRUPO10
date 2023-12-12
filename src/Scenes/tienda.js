@@ -29,8 +29,11 @@ export class ShopScene extends Phaser.Scene {
         this.car.body.allowGravity = false;
 
         this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
-
-        this.willy.setMovable(false); 
+        this.physics.world.enable(this.willy);
+        //this.willy.setMovable(false); 
+        this.willy.body.setCollideWorldBounds(false)
+        this.willy.body.setAllowGravity(false)
+        
         this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNumbers('jugador', { start: 0, end: 3 }),
@@ -52,7 +55,24 @@ export class ShopScene extends Phaser.Scene {
             this.dialogStarted = true;
             this.showMujerDialog();
         });
+
+        const tuNuevaImagen = this.physics.add.sprite(this.sys.game.config.width / 5, this.sys.game.config.height - 400, 'caja'); // Cambia x, y y 'nombreDeLaImagen'
+
+        // Habilitas la física para el nuevo sprite
+        this.physics.world.enable(tuNuevaImagen);
+        tuNuevaImagen.body.setAllowGravity(false)
+        // Estableces un collider entre tuNuevaImagen y willy
+        this.physics.add.overlap(tuNuevaImagen, this.willy.body, this.colisionHandler, null, this);
     }
+    
+    // Función que maneja la colisión entre tuNuevaImagen y willy
+    colisionHandler(tuNuevaImagen, willy) {
+        // Esto se ejecuta cuando hay una colisión entre tuNuevaImagen y willy
+        // Puedes agregar aquí el comportamiento que deseas cuando colisionan
+        console.log("choco")
+        this.willy.velocity=0;
+    }
+    
 
     showMujerDialog() {
         this.removeOptions(); 
@@ -176,12 +196,7 @@ export class ShopScene extends Phaser.Scene {
             this.dialogStarted = true; // Indica que el diálogo ha comenzado
         }
 
-        if(this.willy.x > 1000){
-            this.scene.start('CentroScene');
-        }
-        if(this.car.x > this.sys.game.config.width + 300){
-            this.car.x = -400;
-        }
+       
     
         // Lógica de movimiento de Willy
         if (this.willy && this.willy.update && this.canMove) {

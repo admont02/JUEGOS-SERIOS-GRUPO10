@@ -14,7 +14,7 @@ export default class Boot extends Phaser.Scene {
         this.load.audio('menuMusic', './assets/audio/MenuMusic.mp3');
         this.load.image('background', './assets/images/background/fondoSettings.png');
         // Asegúrate de tener imágenes para los botones de subir/bajar volumen y brillo
-       
+        this.load.image('caja', './assets/images/obstacles/caja.png');
         this.load.image('muteButton', './assets/images/buttons/muteButton.png'); // Botón de silencio
 
     

@@ -17,6 +17,8 @@ export class ShopScene extends Phaser.Scene {
     create() {
         // Creación de objetos y configuraciones iniciales para la escena
         this.bg = this.add.image(0, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
+        this.bg2 = this.add.image(this.game.config.width, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
+        
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();

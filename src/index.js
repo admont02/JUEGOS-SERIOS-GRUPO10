@@ -6,6 +6,7 @@ import { EscenaInicial } from './Scenes/EscenaInicial.js';
 import { CentroScene } from './Scenes/centro.js';
 
 import Boot from './Scenes/boot.js';
+import { ShopScene } from './Scenes/tienda.js';
 
 
 let config = {
@@ -30,7 +31,7 @@ let config = {
 		zoom: 1
     },
 
-    scene: [Boot, Menu, Settings,EscenaInicial, GameScene, CasaScene, CentroScene],
+    scene: [Boot, Menu, Settings,EscenaInicial, GameScene, CasaScene, CentroScene,ShopScene],
 
     physics: { 
         default: 'arcade', 

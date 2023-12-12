@@ -199,6 +199,73 @@ export default {
                 }
             ]
         }
+    ],
+    "shopWorkerDialogs": [
+        {
+            "dialog": "¡Hola! ¿Necesitas ayuda para encontrar algo?",
+            "options": [
+                {
+                    "text": "Sí, estoy buscando un artículo en una estantería alta\ny me resulta difícil alcanzarlo.",
+                    "nextDialogIndex": 1
+                },
+                {
+                    "text": "No, gracias. Puedo hacerlo solo.",
+                    "nextDialogIndex": 2
+                }
+            ]
+        },
+        {
+            "dialog": "Por supuesto, déjame ayudarte a alcanzarlo.",
+            "options": [
+                {
+                    "text": "Gracias, realmente aprecio tu ayuda.",
+                    "nextDialogIndex": 3
+                },
+                {
+                    "text": "No, puedo hacerlo solo. ¿No puedes ver?",
+                    "nextDialogIndex": 4
+                }
+            ]
+        },
+        {
+            "dialog": "Entendido, si cambias de opinión, aquí estaré.",
+            "options": [
+                {
+                    "text": "Lo tendré en cuenta. Gracias.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "No necesito tu ayuda de todos modos.",
+                    "nextDialogIndex": -1
+                }
+            ]
+        },
+        {
+            "dialog": "Estupendo, aquí tienes. ¿Hay algo más en lo que pueda ayudarte?",
+            "options": [
+                {
+                    "text": "No, eso es todo. Gracias por tu ayuda.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "No volveré a pedir ayuda. ¡Espero que entiendas!",
+                    "nextDialogIndex": -1
+                }
+            ]
+        },
+        {
+            "dialog": "Está bien, si cambias de opinión, estaré aquí.",
+            "options": [
+                {
+                    "text": "Lo tendré en cuenta. Gracias.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "No volveré a pedir ayuda. ¡Espero que entiendas!",
+                    "nextDialogIndex": -1
+                }
+            ]
+        }
     ]
 }
     

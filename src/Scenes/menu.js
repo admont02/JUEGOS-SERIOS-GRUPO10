@@ -54,7 +54,11 @@ export class Menu extends Phaser.Scene {
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
+<<<<<<< Updated upstream
                     this.scene.start('ShopScene');
+=======
+                    this.scene.start('CentroScene');
+>>>>>>> Stashed changes
                     //this.scene.start('EscenaInicial');
 
                 }

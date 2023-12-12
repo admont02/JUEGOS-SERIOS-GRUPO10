@@ -10,7 +10,7 @@ export class CentroScene extends Phaser.Scene {
         this.currentDialogIndex = 0;
         this.optionTexts = [];
         this.willy = null;
-        this.entrenador = null; 
+        this.entrenador = null;
         this.entrenadorDialogs = dialogos.entrenadorDialogs;
         this.pacoDialogs = dialogos.pacoDialogs;
         this.currentDialogs = null;
@@ -22,44 +22,36 @@ export class CentroScene extends Phaser.Scene {
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
-
+    
         this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
+    
         if (gameSettings.lateBecauseOfWoman) {
-            // Inicia con el diálogo 
-            this.dialogModal.setText("Por culpa de esa mujer he llegado tarde", 0, this.dialogModal._getGameHeight() - 150, true);
-            // Restablecer el estado para futuras interacciones
-            gameSettings.lateBecauseOfWoman = false;
+            this.startLateWomanDialog();
+        } else {
+            this.startTrainerDialog();
         }
     }
 
-    createTrainerSprite() {
-        // Crear y configurar el sprite del entrenador aquí
-        this.entrenador = this.add.sprite(100, 200, 'entrenadorSprite');
+    startLateWomanDialog() {
+        this.dialogModal.setText("Por culpa de esa mujer he llegado tarde", 0, this.dialogModal._getGameHeight() - 150, true);
+        gameSettings.lateBecauseOfWoman = false;
+
+        this.time.delayedCall(3000, () => {
+            this.dialogModal.toggleWindow(); 
+            this.startTrainerDialog();
+        });
     }
 
-    createWomenSprites() {
-        this.firstWoman = this.createWomanSprite();
-        this.secondWoman = this.createWomanSprite();
-        this.secondWoman.visible = false; // Ocultar la segunda mujer inicialmente
-    }
-
-    createWomanSprite() {
-        let willyX = this.willy.x;
-        let willyY = this.willy.y;
-        let womanX = willyX + 100; // 100 píxeles a la derecha de Willy
-        let womanY = willyY;
-    
-        let woman = this.physics.add.sprite(womanX, womanY, 'mujerCoche');
-        woman.body.allowGravity = false;
-        woman.setScale(0.5);
-        woman.setInteractive();
-        return woman;
-    }
-
-    startEntrenadorDialog() {
+    startTrainerDialog() {
+        this.createTrainerSprite();
         this.currentDialogs = this.entrenadorDialogs;
         this.currentDialogIndex = 0;
         this.showDialog();
+    }
+
+    createTrainerSprite() {
+        this.entrenador = this.physics.add.sprite(100, 200, 'entrenadorSprite');
+        this.entrenador.body.allowGravity = false;
     }
 
     showDialog() {
@@ -74,11 +66,11 @@ export class CentroScene extends Phaser.Scene {
     }
 
     showOptions(options) {
-        this.removeOptions(); 
+        this.removeOptions();
 
         options.forEach((option, index) => {
             let dialogBox = this.add.graphics();
-            dialogBox.fillStyle(0x000000, 0.5);  
+            dialogBox.fillStyle(0x000000, 0.5);
 
             let optionText = this.add.text(0, 0, option.text, { 
                 fill: '#fff', 
@@ -94,7 +86,6 @@ export class CentroScene extends Phaser.Scene {
             dialogBox.fillRect(xPosition, yPosition, textWidth, textHeight);
 
             optionText.setPosition(xPosition + 20, yPosition + 10);
-
             optionText.setInteractive().on('pointerup', () => {
                 this.handleOptionSelect(option.nextDialogIndex);
             });
@@ -108,14 +99,14 @@ export class CentroScene extends Phaser.Scene {
             option.text.destroy();
             option.box.destroy();
         });
-        this.optionTexts = []; 
+        this.optionTexts = [];
     }
 
     handleOptionSelect(nextDialogIndex) {
         if (nextDialogIndex === -1) {
             this.endDialog();
             return;
-        } 
+        }
         this.currentDialogIndex = nextDialogIndex;
         this.showDialog();
     }
@@ -123,12 +114,8 @@ export class CentroScene extends Phaser.Scene {
     endDialog() {
         if (this.currentDialogs === this.entrenadorDialogs) {
             this.moveTrainerOffScreen();
-            this.time.delayedCall(1000, () => {
-                this.secondWoman.visible = true;
-                this.startPacoDialog();
-            });
-        } else {
-            // Acciones para otros diálogos
+        } else if (this.currentDialogs === this.pacoDialogs) {
+            // Additional actions for the end of Paco's dialog
         }
     }
 
@@ -140,6 +127,7 @@ export class CentroScene extends Phaser.Scene {
             duration: 1000,
             onComplete: () => {
                 this.entrenador.visible = false;
+                this.startPacoDialog();
             }
         });
     }
@@ -151,7 +139,7 @@ export class CentroScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        // Actualización del juego aquí
+        // Game update logic here
     }
 }
 

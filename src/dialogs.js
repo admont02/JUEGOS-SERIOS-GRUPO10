@@ -234,8 +234,8 @@
                     "nextDialogIndex": -1
                 },
                 {
-                    "text": "No necesito tu ayuda de todos modos.  ",
-                    "nextDialogIndex": -1
+                    "text": "No necesito tu ayuda de todos modos.\n No soy un inútil  ",
+                    "nextDialogIndex": 4
                 }
             ]
         },
@@ -253,17 +253,8 @@
             ]
         },
         {
-           /*4*/  "dialog": "Está bien, si cambias de opinión, estaré aquí.",
-            "options": [
-                {
-                    "text": "Lo tendré en cuenta. Gracias. ",
-                    "nextDialogIndex": -1
-                },
-                {
-                    "text": "No volveré a pedir ayuda.\n¡Espero que entiendas!  ",
-                    "nextDialogIndex": -1
-                }
-            ]
+           /*4*/  "dialog": "Bueno! Va a hablar usted así a quien yo \n le diga..",
+            
         }
     ]
 }

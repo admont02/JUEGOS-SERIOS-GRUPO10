@@ -201,7 +201,7 @@
     ],
     "shopWorkerDialogs": [
         {
-            "dialog": "¡Hola!\n¿Necesitas ayuda para encontrar algo? ",
+          /*0*/  "dialog": "¡Hola!\n¿Necesitas ayuda para encontrar algo? ",
             "options": [
                 {
                     "text": "Sí, estoy buscando\n un artículo en una estantería alta\ny me resulta difícil alcanzarlo.  ",
@@ -214,7 +214,7 @@
             ]
         },
         {
-            "dialog": "Por supuesto, déjame ayudarte a alcanzarlo.",
+           /*1*/  "dialog": "Por supuesto, déjame ayudarte a alcanzarlo.",
             "options": [
                 {
                     "text": "Gracias, realmente aprecio tu ayuda.  ",
@@ -227,7 +227,7 @@
             ]
         },
         {
-            "dialog": "Entendido, si cambias de opinión, aquí estaré.",
+           /*2*/  "dialog": "Entendido, si cambias de opinión, aquí estaré.",
             "options": [
                 {
                     "text": "Lo tendré en cuenta. Gracias.  ",
@@ -240,7 +240,7 @@
             ]
         },
         {
-            "dialog": "Estupendo, aquí tienes. ¿Hay algo más en lo que pueda ayudarte?",
+           /*3*/  "dialog": "Estupendo, aquí tienes. ¿Hay algo más en lo que pueda ayudarte?",
             "options": [
                 {
                     "text": "No, eso es todo. Gracias por tu ayuda.  ",
@@ -253,7 +253,7 @@
             ]
         },
         {
-            "dialog": "Está bien, si cambias de opinión, estaré aquí.",
+           /*4*/  "dialog": "Está bien, si cambias de opinión, estaré aquí.",
             "options": [
                 {
                     "text": "Lo tendré en cuenta. Gracias. ",

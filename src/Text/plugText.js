@@ -12,7 +12,7 @@ class DialogModal {
     this.borderAlpha = 1;
     this.windowAlpha = 0.8;
     this.windowColor = 0x303030;
-    this.windowHeight = 150;
+    this.windowHeight = 250;
     this.padding = 32;
     this.closeBtnColor = 'darkgoldenrod';
     this.dialogSpeed = 4;
@@ -184,8 +184,8 @@ removeCharacterImage() {
   }
 
   _calculateWindowDimensions(x, y) {
-    const rectWidth = this._getGameWidth() - (this.padding * 2);
-    const rectHeight = this.windowHeight;
+    const rectWidth = this._getGameWidth();
+    const rectHeight = this.windowHeight*2;
 
     return {
         x,

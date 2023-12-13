@@ -162,6 +162,7 @@ export class ShopScene extends Phaser.Scene {
 
     endDialogAndExitWoman() {
         // Mueve a la mujer hacia la derecha para salir de la escena
+        if(!this.mujerDialogs[this.currentDialogIndex].undesirableOption)
         this.physics.moveToObject(this.shopWorker, this.caja, 70);
         // Espera un tiempo antes de destruir el sprite
         this.time.delayedCall(3000, () => {

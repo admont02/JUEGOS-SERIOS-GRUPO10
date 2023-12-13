@@ -1,19 +1,19 @@
-    export default { 
-        "npcDialogs": [
-            {
-                "dialog": "Hola, soy Toni. ¿Cómo estás?",
-                "options": [
-                    {
-                        "text": "Estoy bien, gracias.",
-                        "nextDialog": "Me alegro de oír eso."
-                    },
-                    {
-                        "text": "No muy bien, ¿tienes alguna misión para mí?",
-                        "nextDialog": "Claro, necesito ayuda con..."
-                    }
-                ]
-            },
-    ],      
+export default {
+    "npcDialogs": [
+        {
+            "dialog": "Hola, soy Toni. ¿Cómo estás?",
+            "options": [
+                {
+                    "text": "Estoy bien, gracias.",
+                    "nextDialog": "Me alegro de oír eso."
+                },
+                {
+                    "text": "No muy bien, ¿tienes alguna misión para mí?",
+                    "nextDialog": "Claro, necesito ayuda con..."
+                }
+            ]
+        },
+    ],
     "mujerDialogs": [
         {
           /*0*/   "dialog": "¡Oh! Disculpa, sé que no debería haber aparcado aquí, pero estoy realmente apurada.",
@@ -154,7 +154,7 @@
                 }
             ]
         }
-    ],"entrenadorDialogs": [
+    ], "entrenadorDialogs": [
         {
             "dialog": "Willy, otra vez tarde. Si sigues así, no podré incluirte en la selección para el equipo paralímpico. Necesitamos compromiso.",
             "options": [
@@ -205,10 +205,12 @@
             "options": [
                 {
                     "text": "Sí, estoy buscando\n un artículo en una estantería alta\ny me resulta difícil alcanzarlo.  ",
-                    "nextDialogIndex": 1
+                    "nextDialogIndex": 1,
+                    "undesirableOption": false
                 },
                 {
                     "text": "No, gracias. Puedo hacerlo solo.  ",
+                    "undesirableOption": false,
                     "nextDialogIndex": 2
                 }
             ]
@@ -218,11 +220,13 @@
             "options": [
                 {
                     "text": "Gracias, realmente aprecio tu ayuda.  ",
-                    "nextDialogIndex": 3
+                    "nextDialogIndex": 3,
+                    "undesirableOption": false
                 },
                 {
                     "text": "No, puedo hacerlo solo. ¿No puedes ver?  ",
-                    "nextDialogIndex": 4
+                    "nextDialogIndex": 4,
+                    "undesirableOption": false
                 }
             ]
         },
@@ -231,11 +235,13 @@
             "options": [
                 {
                     "text": "Lo tendré en cuenta. Gracias.  ",
-                    "nextDialogIndex": -1
+                    "nextDialogIndex": -1,
+                    "undesirableOption": false
                 },
                 {
                     "text": "No necesito tu ayuda de todos modos.\n No soy un inútil  ",
-                    "nextDialogIndex": 4
+                    "nextDialogIndex": 4,
+                    "undesirableOption": true
                 }
             ]
         },
@@ -244,18 +250,31 @@
             "options": [
                 {
                     "text": "No, eso es todo. Gracias por tu ayuda.  ",
-                    "nextDialogIndex": -1
+                    "nextDialogIndex": -1,
+                    "undesirableOption": false
                 },
                 {
                     "text": "No volveré a pedir ayuda.\n¡Espero que entiendas!  ",
-                    "nextDialogIndex": -1
+                    "nextDialogIndex": -1,
+                    "undesirableOption": false
                 }
             ]
         },
         {
            /*4*/  "dialog": "Bueno! Va a hablar usted así a quien yo \n le diga..",
-            
+            "options": [
+                {
+                    "text": "No, eso es todo. Gracias por tu ayuda.  ",
+                    "nextDialogIndex": -1,
+                    "undesirableOption": true
+                },
+                {
+                    "text": "No volveré a pedir ayuda.\n¡Espero que entiendas!  ",
+                    "nextDialogIndex": -1,
+                    "undesirableOption": true
+                }
+            ]
         }
     ]
 }
-    
+

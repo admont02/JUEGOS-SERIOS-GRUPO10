@@ -38,52 +38,53 @@ export class Settings extends Phaser.Scene {
 
     createVolumeControls() {
         let centerY = this.game.config.height * 0.5;
-
+    
         // Texto del volumen
         this.add.text(this.game.config.width * 0.3, centerY - 50, 'Volumen:', { font: '32px Arial', fill: '#000000' }).setOrigin(0.5);
         this.volumeText = this.add.text(this.game.config.width * 0.7, centerY - 50, `${Math.round(this.sound.volume * 100)}%`, { font: '32px Arial', fill: '#000000' }).setOrigin(0.5);
-
-        // Botones de subir/bajar volumen
-        let volumeUpButton = this.add.image(this.game.config.width * 0.8, centerY - 50, 'buttonUp').setInteractive();
-        let volumeDownButton = this.add.image(this.game.config.width * 0.6, centerY - 50, 'buttonDown').setInteractive();
-
+    
+        // Botones de subir/bajar volumen como textos
+        let volumeUpButton = this.add.text(this.game.config.width * 0.8, centerY - 50, '+', { font: '32px Arial', fill: '#000000' }).setOrigin(0.5).setInteractive();
+        let volumeDownButton = this.add.text(this.game.config.width * 0.6, centerY - 50, '-', { font: '32px Arial', fill: '#000000' }).setOrigin(0.5).setInteractive();
+    
         volumeUpButton.on('pointerup', () => {
             this.adjustVolume(0.1);
         });
-
+    
         volumeDownButton.on('pointerup', () => {
             this.adjustVolume(-0.1);
         });
-
-        // Botón de silencio
+    
+        // Botón de silencio (mantener como está si ya usas una imagen)
         let muteButton = this.add.image(this.game.config.width * 0.9, centerY - 50, 'muteButton').setInteractive();
         muteButton.on('pointerup', () => {
             this.toggleMute();
         });
-
+    
         muteButton.setScale(0.2);
     }
+    
 
     createBrightnessControls() {
         let centerY = this.game.config.height * 0.5;
-
+    
         // Texto del brillo
         this.add.text(this.game.config.width * 0.3, centerY, 'Brillo:', { font: '32px Arial', fill: '#000000' }).setOrigin(0.5);
         this.brightnessText = this.add.text(this.game.config.width * 0.7, centerY, `${Math.round(gameSettings.brightness * 100)}%`, { font: '32px Arial', fill: '#000000' }).setOrigin(0.5);
-
-        // Botones de subir/bajar brillo
-        let brightnessUpButton = this.add.image(this.game.config.width * 0.8, centerY, 'buttonUp').setInteractive();
-        let brightnessDownButton = this.add.image(this.game.config.width * 0.6, centerY, 'buttonDown').setInteractive();
-
+    
+        // Botones de subir/bajar brillo como textos
+        let brightnessUpButton = this.add.text(this.game.config.width * 0.8, centerY, '+', { font: '32px Arial', fill: '#000000' }).setOrigin(0.5).setInteractive();
+        let brightnessDownButton = this.add.text(this.game.config.width * 0.6, centerY, '-', { font: '32px Arial', fill: '#000000' }).setOrigin(0.5).setInteractive();
+    
         brightnessUpButton.on('pointerup', () => {
             this.adjustBrightness(0.1);
         });
-
+    
         brightnessDownButton.on('pointerup', () => {
             this.adjustBrightness(-0.1);
         });
     }
-
+    
     createBackButton() {
         let centerY = this.game.config.height * 0.5;
         let backButton = this.add.text(this.game.config.width * 0.5, centerY + 150, 'Volver', { font: '32px Arial', fill: '#000000' }).setOrigin(0.5).setInteractive();

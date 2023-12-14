@@ -87,7 +87,6 @@ export class CasaScene extends Phaser.Scene {
     
             //  texto con un tamaño más grande y calcular dimensiones
             let optionText = this.add.text(0, 0, option.text, { fill: '#fff', fontSize: '32px' });
-            optionText.setResolution(2); // Ajuste para mejorar la calidad del texto
             
             textWidth = optionText.width + 40;  // Margen aumentado
             textHeight = optionText.height + 20; // Altura ajustada para el nuevo tamaño del texto

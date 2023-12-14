@@ -8,18 +8,19 @@ export class ShopScene extends Phaser.Scene {
         super({ key: 'ShopScene' });
         this.dialogModal = null;
         this.currentDialogIndex = 0;
+        this.currentDialogClientIndex = 0;
         this.optionTexts = [];
         this.willy = null;
         this.dialogs = dialogos.shopDialogs;
-        this.workerDialogs = dialogos.shopWorkerDialogs; // Add this line
-        this.workerAngry=false;
-        this.clientAngry=false;
-        this.talkedWithWorker=false;
-        this.talkedWithClient=false;
+        this.workerDialogs = dialogos.shopWorkerDialogs;
+        this.clientDialogs = dialogos.clientDialogs;
+        this.workerAngry = false;
+        this.clientAngry = false;
+        this.talkedWithWorker = false;
+        this.talkedWithClient = false;
     }
 
     create() {
-        // Creación de objetos y configuraciones iniciales para la escena
         this.bg = this.add.image(0, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.bg2 = this.add.image(this.game.config.width, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         
@@ -28,16 +29,12 @@ export class ShopScene extends Phaser.Scene {
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
 
-        
         this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height - 400, 'jugador');
-        //this.willy.body.setCollideWorldBounds(true);
-        this.willy.body.setAllowGravity(false); // Asegúrate de que la gravedad esté configurada según tus necesidades
+        this.willy.body.setAllowGravity(false);
 
-        // Creación de la caja con física habilitada
         this.caja = this.physics.add.sprite(this.sys.game.config.width / 5, this.sys.game.config.height - 400, 'caja');
-        this.caja.body.setAllowGravity(false); // Ajusta la gravedad según sea necesario
+        this.caja.body.setAllowGravity(false);
         this.caja.body.setImmovable(true);
-        // Establecer colisión entre Willy y la caja
         this.physics.add.collider(this.willy, this.caja, this.colisionHandler);
 
         this.anims.create({
@@ -47,31 +44,34 @@ export class ShopScene extends Phaser.Scene {
             repeat: -1
         });
 
-        // Coloca a la mujer fuera de la pantalla en el lado derecho y muévela hacia la izquierda
         this.shopWorker = this.physics.add.sprite(this.game.config.width - 100, this.game.config.height - 400, 'mujerCoche');
         this.shopWorker.body.allowGravity = false;
-        //  this.stupidwomen.setVelocity(-100,0); // Movimiento hacia la izquierda
-
-        // Flip horizontal si es necesario
         this.shopWorker.flipX = true;
 
         this.shopWorker.setInteractive();
         this.shopWorker.on('pointerup', () => {
-            // Inicia el diálogo cuando se hace clic en la mujer
             this.dialogStarted = true;
             this.showMujerDialog();
         });
+
+        this.client = this.physics.add.sprite(this.game.config.width - 1100, this.game.config.height - 400, 'mujerCoche');
+        this.client.body.allowGravity = false;
+        this.client.flipX = true;
+        this.client.setInteractive();
+        this.client.on('pointerup', () => {
+            this.dialogClientStarted = true;
+            this.showClientDialog();
+        });
+
         this.physics.add.collider(this.shopWorker, this.caja, this.collisionCallback, null, this);
-
-
     }
+
     collisionCallback() {
-        // Destruir la caja cuando haya colisión
         this.caja.destroy();
     }
+
     colisionHandler(willy, caja) {
         console.log("Colisión detectada entre Willy y la caja");
-
     }
 
     showMujerDialog() {
@@ -79,26 +79,41 @@ export class ShopScene extends Phaser.Scene {
         this.dialogModal.removeCharacterImage();
         this.dialogModal.createCharacterImage('caraMujer', 0.7);
 
-        if (this.currentDialogIndex >= this.workerDialogs.length || this.currentDialogIndex === -1||this.workerDialogs[this.currentDialogIndex].undesirableOption) {
-            // Manejo del final del diálogo
+        let dialogData = this.workerDialogs[this.currentDialogIndex];
+        if (this.currentDialogIndex >= this.workerDialogs.length || this.currentDialogIndex === -1) {
             this.endDialogAndExitWoman();
             return;
         }
 
-        let dialogData = this.workerDialogs[this.currentDialogIndex];
         this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
 
-        if (dialogData.options && dialogData.options.length > 0) {
-            this.showOptions(dialogData.options);
-        } else {
-            console.log("No hay opciones disponibles para este diálogo.");
+        if (dialogData.options) {
+            this.showOptions(dialogData.options, false);
         }
     }
 
-    showOptions(options) {
+    showClientDialog() {
+        this.removeOptions();
+        this.dialogModal.removeCharacterImage();
+        this.dialogModal.createCharacterImage('imagenCliente', 0.7);
+
+        let dialogData = this.clientDialogs[this.currentDialogClientIndex];
+        if (this.currentDialogClientIndex >= this.clientDialogs.length || this.currentDialogClientIndex === -1) {
+            this.endDialogAndExitClient();
+            return;
+        }
+
+        this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
+
+        if (dialogData.options) {
+            this.showOptions(dialogData.options, true);
+        }
+    }
+
+    showOptions(options, isClient) {
         this.optionTexts.forEach(option => {
-            if (option.text) option.text.destroy();
-            if (option.box) option.box.destroy();
+            option.text.destroy();
+            option.box.destroy();
         });
         this.optionTexts = [];
 
@@ -107,31 +122,35 @@ export class ShopScene extends Phaser.Scene {
             let textWidth = 0;
 
             let dialogBox = this.add.graphics();
-            dialogBox.fillStyle(0x000000, 0.5);  // Color y transparencia de la caja
+            dialogBox.fillStyle(0x000000, 0.5);
 
             let optionText = this.add.text(0, 0, option.text, { fill: '#fff', fontSize: '42px' });
-            optionText.setResolution(1.1); // Ajuste para mejorar la calidad del texto
-            textWidth = optionText.width + 40;  // Margen aumentado
-            textHeight = optionText.height + 20; // Altura ajustada para el nuevo tamaño del texto
+            optionText.setResolution(1.1);
+            textWidth = optionText.width + 40;
+            textHeight = optionText.height + 20;
 
-            // Aumentar el espacio entre cada caja de opción
-            const spacing = 100; // Ajusta este valor según sea necesario
+            const spacing = 100;
             let boxY = 100 + (index * (textHeight + spacing));
 
-            // Dibujar la caja de diálogo con las dimensiones adecuadas
             dialogBox.fillRect(100, boxY, textWidth, textHeight);
 
-            // Posicionar el texto y hacerlo interactivo, colocándolo encima de la caja
             optionText.setPosition(110, boxY + 10);
             optionText.setInteractive()
-                .on('pointerup', () => this.handleOptionSelect(option.nextDialogIndex, index));
+                .on('pointerup', () => this.handleOptionSelect(option.nextDialogIndex, index, isClient));
 
-            // Almacenar tanto la caja como el texto en optionTexts
             this.optionTexts.push({ box: dialogBox, text: optionText });
         });
     }
-    
 
+    handleOptionSelect(nextDialogIndex, index, isClient) {
+        if (isClient) {
+            this.currentDialogClientIndex = nextDialogIndex;
+            this.showClientDialog();
+        } else {
+            this.currentDialogIndex = nextDialogIndex;
+            this.showMujerDialog();
+        }
+    }
 
     removeOptions() {
         this.optionTexts.forEach(option => {
@@ -141,66 +160,24 @@ export class ShopScene extends Phaser.Scene {
         this.optionTexts = [];
     }
 
-
-
-    handleOptionSelect(nextDialogIndex, index) {
-        console.log("Seleccionaste la opción:", index);
-
-        if (nextDialogIndex === -1) {
-            this.endDialogAndExitWoman();
-            return;
-        }
-
-        if (nextDialogIndex === 7 || nextDialogIndex === 8 || nextDialogIndex === 9 || nextDialogIndex === 10) {
-            gameSettings.lateBecauseOfWoman = true; // la mujer insulta al jugador
-        }
-
-        this.currentDialogIndex = nextDialogIndex; // Actualiza el índice del diálogo
-        this.showMujerDialog(); // Muestra el siguiente diálogo
-    }
-
-
     endDialogAndExitWoman() {
-        // Mueve a la mujer hacia la derecha para salir de la escena
-        if(!this.workerDialogs[this.currentDialogIndex].undesirableOption){
-        this.physics.moveToObject(this.shopWorker, this.caja, 70);
-        }
-        else{
-            this.workerAngry=true;
-            this.talkedWithWorker=true;
-           // this.time.delayedCall(1000, () => {
-                this.removeOptions();
-                this.dialogModal.removeCharacterImage();
-                this.dialogModal.toggleWindow();
-                // this.shopWorker.destroy();
-           // });
-        }
-        // Espera un tiempo antes de destruir el sprite
+        this.shopWorker.setVelocityX(70);
         this.time.delayedCall(3000, () => {
+            this.shopWorker.destroy();
             this.removeOptions();
             this.dialogModal.removeCharacterImage();
             this.dialogModal.toggleWindow();
-            // this.shopWorker.destroy();
         });
-        this.willy.setMovable(true);
-        this.canMove = true;
     }
 
-    removeCharacterImage() {
-        if (this.characterImage) {
-            this.characterImage.destroy();
-            this.characterImage = null;
-        }
-    }
-
-    showDialog(index) {
-        if (index >= this.dialogs.length) {
-            return; // No hay más diálogos
-        }
-
-        let dialog = this.dialogs[index].dialog;
-        this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true, { fill: '#fff' });
-
+    endDialogAndExitClient() {
+        this.client.setVelocityX(70);
+        this.time.delayedCall(3000, () => {
+            this.client.destroy();
+            this.removeOptions();
+            this.dialogModal.removeCharacterImage();
+            this.dialogModal.toggleWindow();
+        });
     }
 
     update(time, delta) {

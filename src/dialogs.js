@@ -262,6 +262,7 @@ export default {
         },
         {
            /*4*/  "dialog": "Bueno! Va a hablar usted así a quien yo \n le diga..",
+           "undesirableOption":true,
             "options": [
                 {
                     "text": "No, eso es todo. Gracias por tu ayuda.  ",

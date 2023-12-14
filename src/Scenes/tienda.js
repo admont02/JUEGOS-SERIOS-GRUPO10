@@ -64,6 +64,7 @@ export class ShopScene extends Phaser.Scene {
         });
 
         this.physics.add.collider(this.shopWorker, this.caja, this.collisionCallback, null, this);
+        this.willy.setMovable(true);
     }
 
     collisionCallback() {
@@ -197,28 +198,28 @@ export class ShopScene extends Phaser.Scene {
             this.willy.x -= 5;
         }
 
-        // Lógica de movimiento de Willy
-        if (this.willy && this.willy.update && this.canMove) {
-            this.willy.update(time, delta);
-
-            let pointer = this.input.activePointer;
-            if (pointer.isDown) {
-                this.willy.flipX = pointer.worldX < this.willy.x;
-            }
-
-            // Restringe a Willy a no moverse más allá del borde izquierdo de la pantalla
-            // if (this.willy.x < 200) {
-            //     this.willy.x = 200;
-            // }
-
-            // Reproduce la animación de caminar si Willy se está moviendo
-            if (this.willy.velocity !== 0) {
-                this.willy.anims.play('walk', true);
-            } else {
-                this.willy.anims.stop();
-
-            }
+       // Lógica de movimiento de Willy
+       if (this.willy && this.willy.update && this.canMove) {
+        this.willy.update(time, delta);
+    
+        let pointer = this.input.activePointer;
+        if (pointer.isDown) {
+            this.willy.flipX = pointer.worldX < this.willy.x;
         }
+
+        // Restringe a Willy a no moverse más allá del borde izquierdo de la pantalla
+        if (this.willy.x < 200) {
+            this.willy.x = 200;
+        }
+
+        // Reproduce la animación de caminar si Willy se está moviendo
+        if (this.willy.velocity !== 0) { 
+            this.willy.anims.play('walk', true);
+        } else {
+            this.willy.anims.stop();
+
+        }
+    }
     }
 }
 

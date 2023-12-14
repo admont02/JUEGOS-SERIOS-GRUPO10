@@ -46,6 +46,7 @@ export class Menu extends Phaser.Scene {
                     this.scene.start('Settings');
                 }
             });
+            
         });
 
         startText.on('pointerup', () => {
@@ -55,8 +56,8 @@ export class Menu extends Phaser.Scene {
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
-                    this.scene.start('ShopScene');
-                    //this.scene.start('CasaScene');
+                    //this.scene.start('ShopScene');
+                    this.scene.start('CentroScene');
                     //this.scene.start('EscenaInicial');
 
                 }

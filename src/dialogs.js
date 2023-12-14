@@ -175,11 +175,37 @@ export default {
             "options": [
                 {
                     "text": "Ha sido duro, pero estoy progresando. ¿Algún consejo?",
-                    "nextDialogIndex": -1 // o el índice que corresponda
+                    "nextDialogIndex": 1
                 },
                 {
                     "text": "Bien, pero a veces me siento un poco desanimado. ¿Tú cómo lo manejas?",
-                    "nextDialogIndex": -1 // o el índice que corresponda
+                    "nextDialogIndex": 2
+                }
+            ]
+        },
+        {
+            "dialog": "Lo importante es mantener la consistencia, Willy. Recuerda, el progreso lleva tiempo.",
+            "options": [
+                {
+                    "text": "Gracias, Paco. Eso me ayuda a mantener las cosas en perspectiva.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "Tienes razón. Necesito ser paciente conmigo mismo.",
+                    "nextDialogIndex": -1
+                }
+            ]
+        },
+        {
+            "dialog": "Todos pasamos por altibajos, Willy. Lo importante es no rendirse.",
+            "options": [
+                {
+                    "text": "Gracias por el apoyo, Paco. Haré mi mejor esfuerzo.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "Es bueno saber que no estoy solo en esto. Aprecio tu consejo.",
+                    "nextDialogIndex": -1
                 }
             ]
         }

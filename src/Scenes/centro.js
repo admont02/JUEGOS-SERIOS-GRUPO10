@@ -1,7 +1,7 @@
-import DialogModal from '../Text/plugText.js';
 import { gameSettings } from './menu.js';
-import dialogos from '../dialogs.js';
 import Willy from '../Characters/Willy.js';
+import DialogModal from '../Text/plugText.js';
+import dialogos from '../dialogs.js';
 
 export class CentroScene extends Phaser.Scene {
     constructor() {
@@ -10,9 +10,10 @@ export class CentroScene extends Phaser.Scene {
         this.currentDialogIndex = 0;
         this.optionTexts = [];
         this.willy = null;
+        this.paco = null;
         this.entrenador = null;
-        this.entrenadorDialogs = dialogos.entrenadorDialogs;
         this.pacoDialogs = dialogos.pacoDialogs;
+        this.entrenadorDialogs = dialogos.entrenadorDialogs;
         this.currentDialogs = null;
     }
 
@@ -22,36 +23,24 @@ export class CentroScene extends Phaser.Scene {
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
-    
+
         this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
-    
-        if (gameSettings.lateBecauseOfWoman) {
-            this.startLateWomanDialog();
-        } else {
-            this.startTrainerDialog();
-        }
-    }
 
-    startLateWomanDialog() {
-        this.dialogModal.setText("Por culpa de esa mujer he llegado tarde", 0, this.dialogModal._getGameHeight() - 150, true);
-        gameSettings.lateBecauseOfWoman = false;
+        // Crear sprite del entrenador y comenzar su diálogo
+        this.entrenador = this.physics.add.sprite(this.game.config.width / 2, this.game.config.height - 400, 'mujerCoche');
+        this.entrenador.body.setAllowGravity(false);
+        this.startTrainerDialog();
 
-        this.time.delayedCall(3000, () => {
-            this.dialogModal.toggleWindow(); 
-            this.startTrainerDialog();
-        });
+        // Crear Paco pero no hacerlo interactivo todavía
+        this.paco = this.physics.add.sprite(this.game.config.width / 4, this.game.config.height - 400, 'mujerCoche');
+        this.paco.body.setAllowGravity(false);
+        this.paco.setVisible(false); // Paco inicialmente no es visible
     }
 
     startTrainerDialog() {
-        this.createTrainerSprite();
         this.currentDialogs = this.entrenadorDialogs;
         this.currentDialogIndex = 0;
         this.showDialog();
-    }
-
-    createTrainerSprite() {
-        this.entrenador = this.physics.add.sprite(100, 200, 'entrenadorSprite');
-        this.entrenador.body.allowGravity = false;
     }
 
     showDialog() {
@@ -115,31 +104,41 @@ export class CentroScene extends Phaser.Scene {
         if (this.currentDialogs === this.entrenadorDialogs) {
             this.moveTrainerOffScreen();
         } else if (this.currentDialogs === this.pacoDialogs) {
-            // Additional actions for the end of Paco's dialog
+            // Elimina las opciones cuando se acaben los diálogos con Paco
+            this.removeOptions();
+            this.willy.setMovable(true);
         }
     }
+    
 
     moveTrainerOffScreen() {
         this.tweens.add({
             targets: this.entrenador,
-            y: this.game.config.height + 100,
+            x: this.game.config.width - 100,
             ease: 'Power1',
-            duration: 1000,
+            duration: 3000,
             onComplete: () => {
                 this.entrenador.visible = false;
+                this.paco.setVisible(true); // Hacer visible a Paco
                 this.startPacoDialog();
+                this.entrenador.destroy();
             }
         });
+  
     }
 
     startPacoDialog() {
         this.currentDialogs = this.pacoDialogs;
         this.currentDialogIndex = 0;
         this.showDialog();
+
+        // Hacer a Paco interactivo
+        this.paco.setInteractive();
     }
 
+
     update(time, delta) {
-        // Game update logic here
+        // Aquí puedes añadir lógica adicional de actualización de la escena si es necesario
     }
 }
 

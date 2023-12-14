@@ -244,24 +244,19 @@ export default {
             "options": [
                 {
                     "text": "No, eso es todo. Gracias por tu ayuda.  ",
-                    "nextDialogIndex": -1                },
-                {
-                    "text": "No volveré a pedir ayuda.\n¡Espero que entiendas!  ",
-                    "nextDialogIndex": -1                }
-            ]
-        },
-        {
-           /*4*/  "dialog": "Bueno! Va a hablar usted así a quien yo \n le diga..",
-           "undesirableOption":true,
-            "options": [
-                {
-                    "text": "No, eso es todo. Gracias por tu ayuda.  ",
                     "nextDialogIndex": -1
                 },
                 {
                     "text": "No volveré a pedir ayuda.\n¡Espero que entiendas!  ",
-                    "nextDialogIndex": -1                }
+                    "nextDialogIndex": -1
+                }
             ]
+        },
+        {
+           /*4*/  "dialog": "Bueno! Va a hablar usted así a quien yo \n le diga..",
+            "undesirableOption": true,
+            "nextDialogIndex": -1
+
         }
     ]
 }

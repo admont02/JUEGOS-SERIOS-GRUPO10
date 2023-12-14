@@ -4,7 +4,8 @@ export let gameSettings = {
     previousVolume: 1.0, // Nuevo, para almacenar el volumen antes del mute
     isMuted: false, // Nuevo, para almacenar el estado de silencio
     lateBecauseOfWoman: false,
-    lateTienda: false
+    lateTienda: false,
+    getProducts: false
 };
 
 

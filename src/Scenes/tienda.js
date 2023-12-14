@@ -11,7 +11,11 @@ export class ShopScene extends Phaser.Scene {
         this.optionTexts = [];
         this.willy = null;
         this.dialogs = dialogos.shopDialogs;
-        this.mujerDialogs = dialogos.shopWorkerDialogs; // Add this line
+        this.workerDialogs = dialogos.shopWorkerDialogs; // Add this line
+        this.workerAngry=false;
+        this.clientAngry=false;
+        this.talkedWithWorker=false;
+        this.talkedWithClient=false;
     }
 
     create() {
@@ -24,13 +28,9 @@ export class ShopScene extends Phaser.Scene {
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
 
-        this.car = this.physics.add.sprite((0, 400), 0, 'car');
-        this.car.y = 1350;
-        this.car.setScale(0.5);
-        this.car.setVelocity(100, 0);
-        this.car.body.allowGravity = false;
+        
         this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height - 400, 'jugador');
-        this.willy.body.setCollideWorldBounds(true);
+        //this.willy.body.setCollideWorldBounds(true);
         this.willy.body.setAllowGravity(false); // Asegúrate de que la gravedad esté configurada según tus necesidades
 
         // Creación de la caja con física habilitada
@@ -79,13 +79,13 @@ export class ShopScene extends Phaser.Scene {
         this.dialogModal.removeCharacterImage();
         this.dialogModal.createCharacterImage('caraMujer', 0.7);
 
-        if (this.currentDialogIndex >= this.mujerDialogs.length || this.currentDialogIndex === -1) {
+        if (this.currentDialogIndex >= this.workerDialogs.length || this.currentDialogIndex === -1||this.workerDialogs[this.currentDialogIndex].undesirableOption) {
             // Manejo del final del diálogo
             this.endDialogAndExitWoman();
             return;
         }
 
-        let dialogData = this.mujerDialogs[this.currentDialogIndex];
+        let dialogData = this.workerDialogs[this.currentDialogIndex];
         this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
 
         if (dialogData.options && dialogData.options.length > 0) {
@@ -130,7 +130,7 @@ export class ShopScene extends Phaser.Scene {
             this.optionTexts.push({ box: dialogBox, text: optionText });
         });
     }
-
+    
 
 
     removeOptions() {
@@ -162,8 +162,19 @@ export class ShopScene extends Phaser.Scene {
 
     endDialogAndExitWoman() {
         // Mueve a la mujer hacia la derecha para salir de la escena
-        if(!this.mujerDialogs[this.currentDialogIndex].undesirableOption)
+        if(!this.workerDialogs[this.currentDialogIndex].undesirableOption){
         this.physics.moveToObject(this.shopWorker, this.caja, 70);
+        }
+        else{
+            this.workerAngry=true;
+            this.talkedWithWorker=true;
+           // this.time.delayedCall(1000, () => {
+                this.removeOptions();
+                this.dialogModal.removeCharacterImage();
+                this.dialogModal.toggleWindow();
+                // this.shopWorker.destroy();
+           // });
+        }
         // Espera un tiempo antes de destruir el sprite
         this.time.delayedCall(3000, () => {
             this.removeOptions();
@@ -205,7 +216,6 @@ export class ShopScene extends Phaser.Scene {
             this.bg.x -= 5;
             this.bg2.x -= 5;
             this.shopWorker.x -= 5;
-            this.car.x -= 5;
             this.caja.x -= 5;
             this.willy.x -= 5;
         }
@@ -220,9 +230,9 @@ export class ShopScene extends Phaser.Scene {
             }
 
             // Restringe a Willy a no moverse más allá del borde izquierdo de la pantalla
-            if (this.willy.x < 200) {
-                this.willy.x = 200;
-            }
+            // if (this.willy.x < 200) {
+            //     this.willy.x = 200;
+            // }
 
             // Reproduce la animación de caminar si Willy se está moviendo
             if (this.willy.velocity !== 0) {

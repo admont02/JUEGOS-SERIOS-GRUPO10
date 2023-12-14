@@ -206,11 +206,9 @@ export default {
                 {
                     "text": "Sí, estoy buscando\n un artículo en una estantería alta\ny me resulta difícil alcanzarlo.  ",
                     "nextDialogIndex": 1,
-                    "undesirableOption": false
                 },
                 {
                     "text": "No, gracias. Puedo hacerlo solo.  ",
-                    "undesirableOption": false,
                     "nextDialogIndex": 2
                 }
             ]
@@ -221,12 +219,10 @@ export default {
                 {
                     "text": "Gracias, realmente aprecio tu ayuda.  ",
                     "nextDialogIndex": 3,
-                    "undesirableOption": false
                 },
                 {
                     "text": "No, puedo hacerlo solo. ¿No puedes ver?  ",
                     "nextDialogIndex": 4,
-                    "undesirableOption": false
                 }
             ]
         },
@@ -236,12 +232,10 @@ export default {
                 {
                     "text": "Lo tendré en cuenta. Gracias.  ",
                     "nextDialogIndex": -1,
-                    "undesirableOption": false
                 },
                 {
                     "text": "No necesito tu ayuda de todos modos.\n No soy un inútil  ",
                     "nextDialogIndex": 4,
-                    "undesirableOption": true
                 }
             ]
         },
@@ -250,14 +244,10 @@ export default {
             "options": [
                 {
                     "text": "No, eso es todo. Gracias por tu ayuda.  ",
-                    "nextDialogIndex": -1,
-                    "undesirableOption": false
-                },
+                    "nextDialogIndex": -1                },
                 {
                     "text": "No volveré a pedir ayuda.\n¡Espero que entiendas!  ",
-                    "nextDialogIndex": -1,
-                    "undesirableOption": false
-                }
+                    "nextDialogIndex": -1                }
             ]
         },
         {
@@ -266,14 +256,11 @@ export default {
             "options": [
                 {
                     "text": "No, eso es todo. Gracias por tu ayuda.  ",
-                    "nextDialogIndex": -1,
-                    "undesirableOption": true
+                    "nextDialogIndex": -1
                 },
                 {
                     "text": "No volveré a pedir ayuda.\n¡Espero que entiendas!  ",
-                    "nextDialogIndex": -1,
-                    "undesirableOption": true
-                }
+                    "nextDialogIndex": -1                }
             ]
         }
     ]

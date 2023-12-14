@@ -207,11 +207,6 @@ export class ShopScene extends Phaser.Scene {
             this.willy.flipX = pointer.worldX < this.willy.x;
         }
 
-        // Restringe a Willy a no moverse más allá del borde izquierdo de la pantalla
-        if (this.willy.x < 200) {
-            this.willy.x = 200;
-        }
-
         // Reproduce la animación de caminar si Willy se está moviendo
         if (this.willy.velocity !== 0) { 
             this.willy.anims.play('walk', true);

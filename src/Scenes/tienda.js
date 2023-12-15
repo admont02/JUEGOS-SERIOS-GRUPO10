@@ -69,7 +69,7 @@ export class ShopScene extends Phaser.Scene {
         this.physics.add.collider(this.shopWorker, this.caja, this.collisionCallback, null, this);
         this.willy.setMovable(true);
 
-        this.cameras.main.setBounds(0, 0, this.game.config.width, this.game.config.height);
+        this.cameras.main.setBounds(0, 0, this.game.config.width*4, this.game.config.height);
         this.cameras.main.startFollow(this.willy);
     }
 

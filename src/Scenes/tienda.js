@@ -14,6 +14,9 @@ export class ShopScene extends Phaser.Scene {
         this.dialogs = dialogos.shopDialogs;
         this.workerDialogs = dialogos.shopWorkerDialogs;
         this.clientDialogs = dialogos.clientDialogs;
+        this.dialogWorkerAngry = dialogos.angryWorker;
+        this.dialogClientAngry = dialogos.angryClient;
+
         this.workerAngry = false;
         this.clientAngry = false;
         this.talkedWithWorker = false;
@@ -175,8 +178,6 @@ export class ShopScene extends Phaser.Scene {
             // mover el background papu
             this.bg.x -= 5;
             this.bg2.x -= 5;
-            this.shopWorker.x -= 5;
-            this.caja.x -= 5;
             this.willy.x -= 5;
         }
 
@@ -199,12 +200,26 @@ export class ShopScene extends Phaser.Scene {
         }
     }
     startClientDialog() {
-        this.currentDialogs = this.clientDialogs;
+        if (!this.talkedWithClient) {
+            this.currentDialogs = this.clientDialogs;
+        }
+        else if (this.clientAngry) {
+            this.currentDialogs = this.dialogClientAngry;
+        }
+        else {
+
+        }
         this.currentDialogIndex = 0;
         this.showDialog();
     }
     startWorkerDialog() {
-        this.currentDialogs = this.workerDialogs;
+        if (!this.talkedWithWorker )
+            this.currentDialogs = this.workerDialogs;
+        else if (this.workerAngry)
+            this.currentDialogs = this.dialogWorkerAngry;
+        else {
+
+        }
         this.currentDialogIndex = 0;
         this.showDialog();
     }

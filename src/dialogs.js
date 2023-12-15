@@ -299,6 +299,16 @@ export default {
             "nextDialogIndex": -1
 
         }
+    ],
+    "angryWorker":[
+        {
+            /*0*/  "dialog": "No tengo nada que hablar contigo, maleducado "
+        }
+    ],
+    "angryClient":[
+        {
+            /*0*/  "dialog": "Si claro, ahora quieres ayuda, ¡lárgate! "
+        }
     ]
 }
 

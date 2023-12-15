@@ -23,7 +23,7 @@ export class ShopScene extends Phaser.Scene {
     create() {
         this.bg = this.add.image(0, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.bg2 = this.add.image(this.game.config.width, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
-        
+
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
@@ -75,7 +75,7 @@ export class ShopScene extends Phaser.Scene {
     }
 
     showDialog() {
-        if (this.currentDialogIndex < 0 || this.currentDialogIndex >= this.currentDialogs.length||this.currentDialogs===this.workerDialogs && this.workerDialogs[this.currentDialogIndex].undesirableOption) {
+        if (this.currentDialogIndex < 0 || this.currentDialogIndex >= this.currentDialogs.length || this.currentDialogs === this.workerDialogs && this.workerDialogs[this.currentDialogIndex].undesirableOption) {
             this.endDialog();
             return;
         }
@@ -92,8 +92,8 @@ export class ShopScene extends Phaser.Scene {
             let dialogBox = this.add.graphics();
             dialogBox.fillStyle(0x000000, 0.5);
 
-            let optionText = this.add.text(0, 0, option.text, { 
-                fill: '#fff', 
+            let optionText = this.add.text(0, 0, option.text, {
+                fill: '#fff',
                 fontSize: '32px',
                 wordWrap: { width: this.game.config.width - 200 }
             });
@@ -123,12 +123,15 @@ export class ShopScene extends Phaser.Scene {
     }
     endDialog() {
         if (this.currentDialogs === this.clientDialogs) {
-
+            this.talkedWithClient = true;
         } else if (this.currentDialogs === this.workerDialogs) {
             // Elimina las opciones cuando se acaben los diálogos con Paco
+            this.talkedWithWorker = true;
             this.removeOptions();
-            if(!this.workerDialogs[this.currentDialogIndex].undesirableOption)
+            if (!this.workerDialogs[this.currentDialogIndex].undesirableOption)
                 this.physics.moveToObject(this.shopWorker, this.caja, 70);
+            else
+                this.workerAngry = true;
         }
     }
     handleOptionSelect(nextDialogIndex) {
@@ -177,23 +180,23 @@ export class ShopScene extends Phaser.Scene {
             this.willy.x -= 5;
         }
 
-       // Lógica de movimiento de Willy
-       if (this.willy && this.willy.update && this.canMove) {
-        this.willy.update(time, delta);
-    
-        let pointer = this.input.activePointer;
-        if (pointer.isDown) {
-            this.willy.flipX = pointer.worldX < this.willy.x;
-        }
+        // Lógica de movimiento de Willy
+        if (this.willy && this.willy.update && this.canMove) {
+            this.willy.update(time, delta);
 
-        // Reproduce la animación de caminar si Willy se está moviendo
-        if (this.willy.velocity !== 0) { 
-            this.willy.anims.play('walk', true);
-        } else {
-            this.willy.anims.stop();
+            let pointer = this.input.activePointer;
+            if (pointer.isDown) {
+                this.willy.flipX = pointer.worldX < this.willy.x;
+            }
 
+            // Reproduce la animación de caminar si Willy se está moviendo
+            if (this.willy.velocity !== 0) {
+                this.willy.anims.play('walk', true);
+            } else {
+                this.willy.anims.stop();
+
+            }
         }
-    }
     }
     startClientDialog() {
         this.currentDialogs = this.clientDialogs;

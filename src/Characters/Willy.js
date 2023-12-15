@@ -7,7 +7,7 @@ export default class Willy extends Phaser.GameObjects.Sprite {
 
         // Asegurarse de que Willy tiene un cuerpo físico para usar setVelocity
         this.scene.physics.world.enable(this);
-        this.body.setCollideWorldBounds(true); // Para evitar que salga del mundo
+      //  this.body.setCollideWorldBounds(true); // Para evitar que salga del mundo
 
         this.canMove = false; // Flag para controlar el movimiento
 

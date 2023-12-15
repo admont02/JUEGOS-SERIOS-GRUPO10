@@ -21,6 +21,7 @@ export class ShopScene extends Phaser.Scene {
         this.clientAngry = false;
         this.talkedWithWorker = false;
         this.talkedWithClient = false;
+
     }
 
     create() {
@@ -67,6 +68,9 @@ export class ShopScene extends Phaser.Scene {
 
         this.physics.add.collider(this.shopWorker, this.caja, this.collisionCallback, null, this);
         this.willy.setMovable(true);
+
+        this.cameras.main.setBounds(0, 0, this.game.config.width, this.game.config.height);
+        this.cameras.main.startFollow(this.willy);
     }
 
     collisionCallback() {
@@ -176,9 +180,9 @@ export class ShopScene extends Phaser.Scene {
 
         if (this.willy.x > this.sys.game.config.width - 200) {
             // mover el background papu
-            this.bg.x -= 5;
-            this.bg2.x -= 5;
-            this.willy.x -= 5;
+            // this.bg.x -= 5;
+            // this.bg2.x -= 5;
+            // this.willy.x -= 5;
         }
 
         // Lógica de movimiento de Willy
@@ -213,7 +217,7 @@ export class ShopScene extends Phaser.Scene {
         this.showDialog();
     }
     startWorkerDialog() {
-        if (!this.talkedWithWorker )
+        if (!this.talkedWithWorker)
             this.currentDialogs = this.workerDialogs;
         else if (this.workerAngry)
             this.currentDialogs = this.dialogWorkerAngry;

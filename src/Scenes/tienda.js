@@ -140,6 +140,12 @@ export class ShopScene extends Phaser.Scene {
             else
                 this.workerAngry = true;
         }
+        this.time.delayedCall(3000, () => {
+            //this.removeOptions();
+            //this.dialogModal.removeCharacterImage();
+            this.dialogModal.toggleWindow();
+           
+        });
     }
     handleOptionSelect(nextDialogIndex) {
         if (nextDialogIndex === -1) {
@@ -178,24 +184,21 @@ export class ShopScene extends Phaser.Scene {
         //     this.dialogStarted = true; // Indica que el diálogo ha comenzado
         // }
 
-        if (this.willy.x > this.sys.game.config.width - 200) {
-            // mover el background papu
-            // this.bg.x -= 5;
-            // this.bg2.x -= 5;
-            // this.willy.x -= 5;
-        }
+        
 
         // Lógica de movimiento de Willy
         if (this.willy && this.willy.update && this.canMove) {
             this.willy.update(time, delta);
-
+        
             let pointer = this.input.activePointer;
             if (pointer.isDown) {
                 this.willy.flipX = pointer.worldX < this.willy.x;
             }
-
+    
+            // Restringe a Willy a no moverse más allá del borde izquierdo de la pantalla
+         
             // Reproduce la animación de caminar si Willy se está moviendo
-            if (this.willy.velocity !== 0) {
+            if (this.willy.velocity !== 0) { 
                 this.willy.anims.play('walk', true);
             } else {
                 this.willy.anims.stop();

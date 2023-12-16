@@ -187,7 +187,7 @@ export class ShopScene extends Phaser.Scene {
         
 
         // Lógica de movimiento de Willy
-        if (this.willy && this.willy.update && this.canMove) {
+        if (this.willy && this.willy.update) {
             this.willy.update(time, delta);
         
             let pointer = this.input.activePointer;

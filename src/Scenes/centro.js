@@ -18,21 +18,22 @@ export class CentroScene extends Phaser.Scene {
     }
 
     create() {
-        this.bg = this.add.image(0, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
+        this.bg = this.add.image(0, 0, 'centro').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
 
-        this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
+        this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 200, 'jugador');
 
         // Crear sprite del entrenador y comenzar su diálogo
-        this.entrenador = this.physics.add.sprite(this.game.config.width -100, this.game.config.height - 400, 'mujerCoche');
+        this.entrenador = this.physics.add.sprite(this.game.config.width - 100, this.game.config.height - 200, 'mujerCoche');
+        this.entrenador.setFlipX(true); 
         this.entrenador.body.setAllowGravity(false);
         this.startTrainerDialog();
 
         // Crear Paco pero no hacerlo interactivo todavía
-        this.paco = this.physics.add.sprite(this.game.config.width -100, this.game.config.height - 400, 'mujerCoche');
+        this.paco = this.physics.add.sprite(this.game.config.width -600, this.game.config.height - 400, 'mujerCoche');
         this.paco.body.setAllowGravity(false);
         this.paco.setVisible(false); // Paco inicialmente no es visible
     }
@@ -128,20 +129,22 @@ export class CentroScene extends Phaser.Scene {
     
 
     moveTrainerOffScreen() {
-        this.tweens.add({
-            targets: this.entrenador,
-            x: this.game.config.width - 100,
-            ease: 'Power1',
-            duration: 3000,
-            onComplete: () => {
-                this.entrenador.visible = false;
-                this.paco.setVisible(true); // Hacer visible a Paco
-                this.startPacoDialog();
-                this.entrenador.destroy();
-            }
+        // Calculate the distance to move off-screen and the time required at a constant speed
+        const distanceToEdge = this.game.config.width - this.entrenador.x + this.entrenador.width;
+        const speed = 200; // pixels per second, adjust this to your desired speed
+        const timeToMove = distanceToEdge / speed * 1000; // time in milliseconds
+    
+        this.time.delayedCall(timeToMove, () => {
+            this.entrenador.visible = false;
+            this.paco.setVisible(true); // Hacer visible a Paco
+            this.startPacoDialog();
+            this.entrenador.destroy();
         });
-  
+    
+        // Set the velocity to move the sprite
+        this.entrenador.body.setVelocityX(speed);
     }
+    
 
     startPacoDialog() {
         this.currentDialogs = this.pacoDialogs;

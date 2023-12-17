@@ -131,6 +131,7 @@ export class ShopScene extends Phaser.Scene {
         this.optionTexts = [];
     }
     endDialog() {
+        this.willy.setMovable(true)
         if (this.currentDialogs === this.clientDialogs) {
             this.talkedWithClient = true;
         } else if (this.currentDialogs === this.workerDialogs) {
@@ -210,6 +211,7 @@ export class ShopScene extends Phaser.Scene {
     }
     startClientDialog() {
         this.dialogModal.toggleWindow();
+        this.willy.setMovable(false)
         if (!this.talkedWithClient) {
             this.currentDialogs = this.clientDialogs;
         }
@@ -224,6 +226,7 @@ export class ShopScene extends Phaser.Scene {
     }
     startWorkerDialog() {
         this.dialogModal.toggleWindow();
+        this.willy.setMovable(false)
         if (!this.talkedWithWorker)
             this.currentDialogs = this.workerDialogs;
         else if (this.workerAngry)

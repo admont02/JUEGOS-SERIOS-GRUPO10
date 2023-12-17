@@ -27,12 +27,12 @@ export class CentroScene extends Phaser.Scene {
         this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
 
         // Crear sprite del entrenador y comenzar su diálogo
-        this.entrenador = this.physics.add.sprite(this.game.config.width / 2, this.game.config.height - 400, 'mujerCoche');
+        this.entrenador = this.physics.add.sprite(this.game.config.width -100, this.game.config.height - 400, 'mujerCoche');
         this.entrenador.body.setAllowGravity(false);
         this.startTrainerDialog();
 
         // Crear Paco pero no hacerlo interactivo todavía
-        this.paco = this.physics.add.sprite(this.game.config.width / 4, this.game.config.height - 400, 'mujerCoche');
+        this.paco = this.physics.add.sprite(this.game.config.width -100, this.game.config.height - 400, 'mujerCoche');
         this.paco.body.setAllowGravity(false);
         this.paco.setVisible(false); // Paco inicialmente no es visible
     }
@@ -90,6 +90,19 @@ export class CentroScene extends Phaser.Scene {
         });
         this.optionTexts = [];
     }
+    movePacoOffScreen() {
+        this.tweens.add({
+            targets: this.paco,
+            x: this.game.config.width + 100, // Mueve a Paco fuera de la pantalla a la derecha
+            ease: 'Power1',
+            duration: 3000,
+            onComplete: () => {
+                this.paco.visible = false;
+                this.paco.destroy(); // Destruye el sprite de Paco después de moverlo
+            }
+        });
+    }
+    
 
     handleOptionSelect(nextDialogIndex) {
         if (nextDialogIndex === -1) {
@@ -106,9 +119,12 @@ export class CentroScene extends Phaser.Scene {
         } else if (this.currentDialogs === this.pacoDialogs) {
             // Elimina las opciones cuando se acaben los diálogos con Paco
             this.removeOptions();
-            this.willy.setMovable(true);
+            this.movePacoOffScreen(); // Mueve a Paco fuera de la pantalla
+            this.dialogModal.toggleWindow();
         }
+        this.willy.setMovable(true); // Permite que Willy se mueva después de cualquier diálogo
     }
+    
     
 
     moveTrainerOffScreen() {

@@ -160,15 +160,46 @@ export default {
             "options": [
                 {
                     "text": "Lo siento, entrenador. Me aseguraré de mejorar mi puntualidad.",
-                    "nextDialogIndex": -1 // o el índice que corresponda
+                    "nextDialogIndex": 1
                 },
                 {
                     "text": "Entiendo, pero he tenido algunos contratiempos. Trabajaré en esto.",
-                    "nextDialogIndex": -1 // o el índice que corresponda
+                    "nextDialogIndex": 3
+                }
+            ]
+        },
+        {
+            "dialog": "Recuerda, el entrenamiento es tan mental como físico. ¿Has estado trabajando en tu fortaleza mental?",
+            "options": [
+                {
+                    "text": "Sí, he estado practicando meditación y técnicas de enfoque.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "No mucho, ¿tienes alguna sugerencia?",
+                    "nextDialogIndex": 2
+                }
+            ]
+        },
+        {
+            "dialog": "La meditación y el yoga pueden ser útiles. También, intenta establecer metas pequeñas para mejorar tu enfoque.",
+            "options": [
+                {
+                    "text": "Eso suena útil. Lo probaré, gracias.",
+                    "nextDialogIndex": -1
+                }
+            ]
+        },
+        {
+            "dialog": "¡No es excusa!",
+            "options": [
+                {
+                    "text": "Perdón. (Este ha tenido un mal día hoy)",
+                    "nextDialogIndex": -1
                 }
             ]
         }
-    ],
+    ],    
     "pacoDialogs": [
         {
             "dialog": "¡Willy, cuánto tiempo! ¿Cómo te ha ido con el entrenamiento?",
@@ -184,34 +215,91 @@ export default {
             ]
         },
         {
-            "dialog": "Lo importante es mantener la consistencia, Willy. Recuerda, el progreso lleva tiempo.",
+            "dialog": "La clave está en la consistencia, Willy. No te desanimes por los días malos; son parte del proceso.",
             "options": [
                 {
-                    "text": "Gracias, Paco. Eso me ayuda a mantener las cosas en perspectiva.",
+                    "text": "Gracias, Paco. Intentaré recordar eso.",
+                    "nextDialogIndex": 3
+                },
+                {
+                    "text": "A veces es difícil mantener la motivación.",
+                    "nextDialogIndex": 4
+                }
+            ]
+        },
+        {
+            "dialog": "Todos tenemos días difíciles, Willy. Yo me mantengo motivado recordando mis metas y el porqué comencé.",
+            "options": [
+                {
+                    "text": "Eso tiene sentido. Mantendré mis metas en mente.",
+                    "nextDialogIndex": 5
+                },
+                {
+                    "text": "¿Y si siento que mis metas son demasiado lejanas?",
+                    "nextDialogIndex": 6
+                }
+            ]
+        },
+        {
+            "dialog": "Recuerda que cada pequeño paso cuenta. Celebrar los logros pequeños te ayudará a mantenerte en el camino.",
+            "options": [
+                {
+                    "text": "Eso es cierto. Apreciaré más los pequeños logros.",
                     "nextDialogIndex": -1
                 },
                 {
-                    "text": "Tienes razón. Necesito ser paciente conmigo mismo.",
+                    "text": "Necesito aprender a ser más paciente conmigo mismo.",
+                    "nextDialogIndex": 7
+                }
+            ]
+        },
+        {
+            "dialog": "A veces, la clave está en cambiar la perspectiva. ¿Has probado algún deporte diferente o actividad para refrescar tu rutina?",
+            "options": [
+                {
+                    "text": "No realmente, ¿alguna sugerencia?",
+                    "nextDialogIndex": 8
+                },
+                {
+                    "text": "He estado pensando en probar algo nuevo.",
+                    "nextDialogIndex": 9
+                }
+            ]
+        },
+        {
+            "dialog": "Probar nuevos deportes puede ser revitalizante. ¿Qué tal el remo o el ciclismo?",
+            "options": [
+                {
+                    "text": "El remo suena interesante, ¿cómo podría empezar?",
+                    "nextDialogIndex": 10
+                },
+                {
+                    "text": "Me inclino más por el ciclismo, parece divertido.",
+                    "nextDialogIndex": 11
+                }
+            ]
+        },
+        {
+            "dialog": "El remo es excelente para la fuerza y el equilibrio. Podría presentarte a un amigo que es entrenador.",
+            "options": [
+                {
+                    "text": "Eso sería genial, gracias Paco.",
                     "nextDialogIndex": -1
                 }
             ]
         },
         {
-            "dialog": "Todos pasamos por altibajos, Willy. Lo importante es no rendirse.",
+            "dialog": "El ciclismo es una excelente manera de mejorar la resistencia. Conozco algunos grupos de ciclistas que podrían acogerte.",
             "options": [
                 {
-                    "text": "Gracias por el apoyo, Paco. Haré mi mejor esfuerzo.",
-                    "nextDialogIndex": -1
-                },
-                {
-                    "text": "Es bueno saber que no estoy solo en esto. Aprecio tu consejo.",
+                    "text": "Me encantaría unirme a un grupo. ¿Puedes darme más información?",
                     "nextDialogIndex": -1
                 }
             ]
         }
-    ],
+    ],   
     "atletaDialogs": [
-        {
+        {   
             "dialog": "¿En serio te consideras un atleta? Pareces más un lastre para el equipo.",
             "options": [
                 {

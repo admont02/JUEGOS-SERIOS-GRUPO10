@@ -32,7 +32,8 @@ export class ShopScene extends Phaser.Scene {
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
-
+        this.dialogModal.toggleWindow();
+        
         this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height - 400, 'jugador');
         this.willy.body.setAllowGravity(false);
 
@@ -90,6 +91,7 @@ export class ShopScene extends Phaser.Scene {
         let dialogData = this.currentDialogs[this.currentDialogIndex];
         this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
         this.showOptions(dialogData.options);
+        
     }
 
     showOptions(options) {
@@ -207,6 +209,7 @@ export class ShopScene extends Phaser.Scene {
         }
     }
     startClientDialog() {
+        this.dialogModal.toggleWindow();
         if (!this.talkedWithClient) {
             this.currentDialogs = this.clientDialogs;
         }
@@ -220,6 +223,7 @@ export class ShopScene extends Phaser.Scene {
         this.showDialog();
     }
     startWorkerDialog() {
+        this.dialogModal.toggleWindow();
         if (!this.talkedWithWorker)
             this.currentDialogs = this.workerDialogs;
         else if (this.workerAngry)

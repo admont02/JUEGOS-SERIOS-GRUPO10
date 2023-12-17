@@ -197,12 +197,12 @@ removeCharacterImage() {
 
   _createInnerWindow({ x, y, rectWidth, rectHeight }) {
     this.graphics.fillStyle(this.windowColor, this.windowAlpha);
-    this.graphics.fillRect(x + 1, y + 1, rectWidth - 1, rectHeight - 1);
+    this.graphics.fillRect(x + 1, y + 1, rectWidth - 1, rectHeight - 1).setScrollFactor(0);
   }
 
   _createOuterWindow({ x, y, rectWidth, rectHeight }) {
     this.graphics.lineStyle(this.borderThickness, this.borderColor, this.borderAlpha);
-    this.graphics.strokeRect(x, y, rectWidth, rectHeight);
+    this.graphics.strokeRect(x, y, rectWidth, rectHeight).setScrollFactor(0);
   }
 
 
@@ -283,7 +283,7 @@ removeCharacterImage() {
         font: `${this.fontSize}px Arial`,
         wordWrap: { width: this._getGameWidth() - (this.padding * 2) - 25 }
       }
-    });
+    }).setScrollFactor(0);
   }
 
 }

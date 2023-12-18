@@ -49,6 +49,10 @@ export class ShopScene extends Phaser.Scene {
         this.carro.body.setImmovable(true);
         this.physics.add.collider(this.willy, this.carro, this.colisionHandler);
 
+        this.botella = this.physics.add.sprite(this.sys.game.config.width / 3, this.sys.game.config.height - 1300, 'botella');
+        this.botella.body.setAllowGravity(false);
+        this.botella.body.setImmovable(true);
+
 
         this.anims.create({
             key: 'walk',
@@ -59,8 +63,7 @@ export class ShopScene extends Phaser.Scene {
 
         this.shopWorker = this.physics.add.sprite(this.game.config.width + 1100, this.game.config.height - 400, 'shopWorker').setScale(1.25);
         this.shopWorker.body.allowGravity = false;
-        this.shopWorker.flipX = true;
-
+       
         this.shopWorker.setInteractive();
         this.shopWorker.on('pointerup', () => {
             this.dialogStarted = true;
@@ -229,7 +232,8 @@ export class ShopScene extends Phaser.Scene {
 
             const tiempoLimite = 5000; // 5 segundos
             this.timer = this.time.delayedCall(tiempoLimite, () => {
-                
+                this.carro.destroy();
+                this.clientHelp = true;
             });
         }
 
@@ -259,7 +263,7 @@ export class ShopScene extends Phaser.Scene {
             }
         }
         else if (this.talkedWithClient && this.clientAngry) {
-           //this.dialogModal.toggleWindow();
+            //this.dialogModal.toggleWindow();
             this.currentDialogs = dialogos.angryClient;
             this.currentDialogIndex = 0;
             this.showDialog();
@@ -271,7 +275,7 @@ export class ShopScene extends Phaser.Scene {
                 this.willy.setMovable(true)
             });
         }
-        else {
+        else if (this.clientHelp) {
 
         }
         // this.currentDialogIndex = 0;

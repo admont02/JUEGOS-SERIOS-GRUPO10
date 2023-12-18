@@ -33,9 +33,9 @@ export class ShopScene extends Phaser.Scene {
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
         this.dialogModal.toggleWindow();
-        
-        this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height - 400, 'jugador');
-        this.willy.body.setCollideWorldBounds(false);
+         this.physics.world.setBounds(0, 0, this.game.config.width * 2, this.game.config.height);
+        this.willy = new Willy(this, this.sys.game.config.width*1.5, this.sys.game.config.height - 400, 'jugador');
+       
         this.willy.body.setAllowGravity(false);
 
         this.caja = this.physics.add.sprite(this.sys.game.config.width / 5, this.sys.game.config.height - 400, 'caja');
@@ -70,7 +70,7 @@ export class ShopScene extends Phaser.Scene {
 
         this.physics.add.collider(this.shopWorker, this.caja, this.collisionCallback, null, this);
         this.willy.setMovable(true);
-        this.physics.world.setBounds(0, 0, this.game.config.width * 4, this.game.config.height);
+       
  
         this.cameras.main.setBounds(0, 0, this.game.config.width*4, this.game.config.height);
         this.cameras.main.startFollow(this.willy);

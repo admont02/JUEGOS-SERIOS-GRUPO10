@@ -6,7 +6,7 @@ export default class Willy extends Phaser.GameObjects.Sprite {
 
         // Asegurarse de que Willy tiene un cuerpo físico para usar setVelocity
         this.scene.physics.world.enable(this);
-        // this.body.setCollideWorldBounds(true); // Para evitar que salga del mundo
+        this.body.setCollideWorldBounds(true); // Para evitar que salga del mundo
         this.body.allowGravity = false;
         this.canMove = false; // Flag para controlar el movimiento
         this.destinationX = null; // Nueva variable para almacenar el destino
@@ -20,7 +20,7 @@ export default class Willy extends Phaser.GameObjects.Sprite {
 
     onPointerDown(pointer) {
         if (!this.canMove) return; // Verificar si el movimiento está permitido
-        this.destinationX = pointer.x; // Establecer el destino donde el jugador hizo clic
+        this.destinationX = pointer.worldX; // Establecer el destino donde el jugador hizo clic
     }
 
     update() {
@@ -31,7 +31,7 @@ export default class Willy extends Phaser.GameObjects.Sprite {
         }
         
         // Añadir una tolerancia para determinar si Willy está cerca de su destino
-        const destinationTolerance = 4;
+        const destinationTolerance = 40;
     
         if (this.destinationX !== null) {
             const distanceToDestination = Math.abs(this.x - this.destinationX);

@@ -105,7 +105,7 @@ export class ShopScene extends Phaser.Scene {
 
             let optionText = this.add.text(0, 0, option.text, {
                 fill: '#fff',
-                fontSize: '32px',
+                fontSize: '48px',
                 wordWrap: { width: this.game.config.width - 200 }
             });
 
@@ -113,7 +113,7 @@ export class ShopScene extends Phaser.Scene {
             let textHeight = optionText.height + 20;
 
             let xPosition = (this.game.config.width - textWidth) / 2;
-            let yPosition = 150 + (index * (textHeight + 10));
+            let yPosition = 150 + (index * (textHeight + 150));
             dialogBox.fillRect(xPosition, yPosition, textWidth, textHeight);
 
             optionText.setPosition(xPosition + 20, yPosition + 10);

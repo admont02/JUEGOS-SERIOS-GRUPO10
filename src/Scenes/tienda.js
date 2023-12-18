@@ -99,7 +99,8 @@ export class ShopScene extends Phaser.Scene {
     }
 
     showDialog() {
-        if (this.currentDialogIndex < 0 || this.currentDialogIndex >= this.currentDialogs.length || this.currentDialogs === this.workerDialogs && this.workerDialogs[this.currentDialogIndex].undesirableOption) {
+        if (this.currentDialogIndex < 0 || this.currentDialogIndex >= this.currentDialogs.length || this.currentDialogs === this.workerDialogs && this.workerDialogs[this.currentDialogIndex].undesirableOption
+            || this.currentDialogs === this.clientDialogs || this.currentDialogs === dialogos.clientTouchedBefore) {
             this.endDialog();
             return;
         }
@@ -148,7 +149,7 @@ export class ShopScene extends Phaser.Scene {
     }
     endDialog() {
         this.willy.setMovable(true)
-        if (this.currentDialogs === this.clientDialogs) {
+        if (!this.talkedWithClient && this.currentDialogs === this.clientDialogs) {
             this.talkedWithClient = true;
         } else if (this.currentDialogs === this.workerDialogs) {
             // Elimina las opciones cuando se acaben los diálogos con Paco
@@ -222,7 +223,29 @@ export class ShopScene extends Phaser.Scene {
         this.dialogModal.toggleWindow();
         this.willy.setMovable(false)
         if (!this.talkedWithClient) {
+            this.talkedWithClient=true;
             this.currentDialogs = this.clientDialogs;
+            const tiempoLimite = 5000; // 5 segundos
+            const timer = this.time.delayedCall(tiempoLimite, () => {
+                // Si no ha habido interacción durante el tiempo límite
+                // Realiza alguna acción aquí, por ejemplo, continuar con el diálogo
+                this.currentDialogIndex = 0;
+                this.showDialog(this.client);
+            });
+    
+            // Agrega un evento para interacción durante el tiempo límite
+            this.client.on('pointerup', () => {
+                // Cancela el temporizador si hay interacción antes del tiempo límite
+                if (timer && !timer.hasDispatched) {
+                    timer.remove();
+                    // Realiza una acción diferente, ya que hubo interacción antes del tiempo límite
+                    // Por ejemplo, desencadenar el enojo del cliente
+                    this.clientAngry=true;
+                    this.carro.destroy();
+                    this.currentDialogs=dialogos.clientTouchedBefore
+                    this.showDialog();
+                }
+            });
         }
         else if (this.clientAngry) {
             this.currentDialogs = this.dialogClientAngry;
@@ -246,6 +269,7 @@ export class ShopScene extends Phaser.Scene {
         this.currentDialogIndex = 0;
         this.showDialog(this.shopWorker);
     }
+    
 }
 
 export default ShopScene;

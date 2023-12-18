@@ -27,6 +27,7 @@ export class ShopScene extends Phaser.Scene {
     create() {
         this.bg = this.add.image(0, 0, 'tienda2').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.bg2 = this.add.image(this.game.config.width-550, 0, 'tienda1').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
+        this.bg2 = this.add.image(this.game.config.width, 0, 'tienda3').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
 
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
@@ -84,7 +85,7 @@ export class ShopScene extends Phaser.Scene {
         console.log("Colisión detectada entre Willy y la caja");
     }
 
-    showDialog() {
+    showDialog(npc) {
         if (this.currentDialogIndex < 0 || this.currentDialogIndex >= this.currentDialogs.length || this.currentDialogs === this.workerDialogs && this.workerDialogs[this.currentDialogIndex].undesirableOption) {
             this.endDialog();
             return;
@@ -92,11 +93,11 @@ export class ShopScene extends Phaser.Scene {
 
         let dialogData = this.currentDialogs[this.currentDialogIndex];
         this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
-        this.showOptions(dialogData.options);
+        this.showOptions(dialogData.options,npc);
 
     }
 
-    showOptions(options) {
+    showOptions(options,npc) {
         this.removeOptions();
 
         options.forEach((option, index) => {
@@ -114,11 +115,11 @@ export class ShopScene extends Phaser.Scene {
 
             let xPosition = (this.game.config.width - textWidth) / 2;
             let yPosition = 150 + (index * (textHeight + 150));
-            dialogBox.fillRect(xPosition, yPosition, textWidth, textHeight);
+            dialogBox.fillRect(npc.x, yPosition, textWidth, textHeight);
 
-            optionText.setPosition(xPosition + 20, yPosition + 10);
+            optionText.setPosition(npc.x + 20, yPosition + 10);
             optionText.setInteractive().on('pointerup', () => {
-                this.handleOptionSelect(option.nextDialogIndex);
+                this.handleOptionSelect(option.nextDialogIndex,npc);
             });
 
             this.optionTexts.push({ box: dialogBox, text: optionText });
@@ -152,13 +153,13 @@ export class ShopScene extends Phaser.Scene {
 
         });
     }
-    handleOptionSelect(nextDialogIndex) {
+    handleOptionSelect(nextDialogIndex,npc) {
         if (nextDialogIndex === -1) {
             this.endDialog();
             return;
         }
         this.currentDialogIndex = nextDialogIndex;
-        this.showDialog();
+        this.showDialog(npc);
     }
 
     endDialogAndExitWoman() {
@@ -182,13 +183,6 @@ export class ShopScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        // Comprueba si el diálogo con la mujer ha terminado
-        // if (this.shopWorker.x <= 1200 && !this.dialogStarted) {
-        //     this.shopWorker.setVelocity(0, 0); // Detiene a la mujer
-        //     this.showMujerDialog();
-        //     this.dialogStarted = true; // Indica que el diálogo ha comenzado
-        // }
-
 
 
         // Lógica de movimiento de Willy
@@ -224,7 +218,7 @@ export class ShopScene extends Phaser.Scene {
 
         }
         this.currentDialogIndex = 0;
-        this.showDialog();
+        this.showDialog(this.client);
     }
     startWorkerDialog() {
         this.dialogModal.toggleWindow();
@@ -237,7 +231,7 @@ export class ShopScene extends Phaser.Scene {
 
         }
         this.currentDialogIndex = 0;
-        this.showDialog();
+        this.showDialog(this.shopWorker);
     }
 }
 

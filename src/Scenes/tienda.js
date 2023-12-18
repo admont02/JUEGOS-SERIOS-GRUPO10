@@ -75,6 +75,13 @@ export class ShopScene extends Phaser.Scene {
 
         this.cameras.main.setBounds(0, 0, this.game.config.width * 4, this.game.config.height);
         this.cameras.main.startFollow(this.willy);
+        this.sound.add('superMusic');
+
+        // Reproduce el audio en bucle
+        this.sound.play('superMusic', {
+            loop: true,
+            volume: 0.02
+        });
     }
 
     collisionCallback() {

@@ -51,7 +51,7 @@ export class ShopScene extends Phaser.Scene {
             repeat: -1
         });
 
-        this.shopWorker = this.physics.add.sprite(this.game.config.width - 100, this.game.config.height - 400, 'mujerCoche');
+        this.shopWorker = this.physics.add.sprite(this.game.config.width + 1100, this.game.config.height - 400, 'shopWorker').setScale(1.25);
         this.shopWorker.body.allowGravity = false;
         this.shopWorker.flipX = true;
 
@@ -92,7 +92,7 @@ export class ShopScene extends Phaser.Scene {
         console.log("Colisión detectada entre Willy y la caja");
     }
 
-    showDialog(npc) {
+    showDialog() {
         if (this.currentDialogIndex < 0 || this.currentDialogIndex >= this.currentDialogs.length || this.currentDialogs === this.workerDialogs && this.workerDialogs[this.currentDialogIndex].undesirableOption) {
             this.endDialog();
             return;
@@ -100,11 +100,11 @@ export class ShopScene extends Phaser.Scene {
 
         let dialogData = this.currentDialogs[this.currentDialogIndex];
         this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
-        this.showOptions(dialogData.options,npc);
+        this.showOptions(dialogData.options);
 
     }
 
-    showOptions(options,npc) {
+    showOptions(options) {
         this.removeOptions();
 
         options.forEach((option, index) => {
@@ -120,13 +120,13 @@ export class ShopScene extends Phaser.Scene {
             let textWidth = optionText.width + 40;
             let textHeight = optionText.height + 20;
 
-            let xPosition = (this.game.config.width - textWidth) / 2;
+         
             let yPosition = 150 + (index * (textHeight + 150));
-            dialogBox.fillRect(npc.x, yPosition, textWidth, textHeight);
+            dialogBox.fillRect(this.willy.x - 700, yPosition, textWidth, textHeight);
 
-            optionText.setPosition(npc.x + 20, yPosition + 10);
+            optionText.setPosition(this.willy.x - 600, yPosition + 10);
             optionText.setInteractive().on('pointerup', () => {
-                this.handleOptionSelect(option.nextDialogIndex,npc);
+                this.handleOptionSelect(option.nextDialogIndex);
             });
 
             this.optionTexts.push({ box: dialogBox, text: optionText });
@@ -160,13 +160,13 @@ export class ShopScene extends Phaser.Scene {
 
         });
     }
-    handleOptionSelect(nextDialogIndex,npc) {
+    handleOptionSelect(nextDialogIndex) {
         if (nextDialogIndex === -1) {
             this.endDialog();
             return;
         }
         this.currentDialogIndex = nextDialogIndex;
-        this.showDialog(npc);
+        this.showDialog();
     }
 
     endDialogAndExitWoman() {

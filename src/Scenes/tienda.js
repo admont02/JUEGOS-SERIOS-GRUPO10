@@ -26,19 +26,19 @@ export class ShopScene extends Phaser.Scene {
 
     create() {
         this.bg = this.add.image(0, 0, 'tienda2').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
-        this.bg2 = this.add.image(this.game.config.width, 0, 'tienda1').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
+        this.bg2 = this.add.image(this.game.config.width-550, 0, 'tienda1').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
 
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
         this.dialogModal.toggleWindow();
-         this.physics.world.setBounds(0, 0, this.game.config.width * 2, this.game.config.height);
-        this.willy = new Willy(this, this.sys.game.config.width*1.5, this.sys.game.config.height - 400, 'jugador');
-       
+        this.physics.world.setBounds(0, 0, this.game.config.width * 2, this.game.config.height);
+        this.willy = new Willy(this, this.sys.game.config.width * 1.5, this.sys.game.config.height - 400, 'jugador');
+
         this.willy.body.setAllowGravity(false);
 
-        this.caja = this.physics.add.sprite(this.sys.game.config.width / 5, this.sys.game.config.height - 400, 'caja');
+        this.caja = this.physics.add.sprite(this.sys.game.config.width / 5, this.sys.game.config.height - 400, 'caja').setScale(0.3);
         this.caja.body.setAllowGravity(false);
         this.caja.body.setImmovable(true);
         this.physics.add.collider(this.willy, this.caja, this.colisionHandler);
@@ -70,9 +70,9 @@ export class ShopScene extends Phaser.Scene {
 
         this.physics.add.collider(this.shopWorker, this.caja, this.collisionCallback, null, this);
         this.willy.setMovable(true);
-       
- 
-        this.cameras.main.setBounds(0, 0, this.game.config.width*4, this.game.config.height);
+
+
+        this.cameras.main.setBounds(0, 0, this.game.config.width * 4, this.game.config.height);
         this.cameras.main.startFollow(this.willy);
     }
 
@@ -93,7 +93,7 @@ export class ShopScene extends Phaser.Scene {
         let dialogData = this.currentDialogs[this.currentDialogIndex];
         this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
         this.showOptions(dialogData.options);
-        
+
     }
 
     showOptions(options) {
@@ -149,7 +149,7 @@ export class ShopScene extends Phaser.Scene {
             //this.removeOptions();
             //this.dialogModal.removeCharacterImage();
             this.dialogModal.toggleWindow();
-           
+
         });
     }
     handleOptionSelect(nextDialogIndex) {
@@ -189,21 +189,21 @@ export class ShopScene extends Phaser.Scene {
         //     this.dialogStarted = true; // Indica que el diálogo ha comenzado
         // }
 
-        
+
 
         // Lógica de movimiento de Willy
         if (this.willy && this.willy.update) {
             this.willy.update(time, delta);
-        
+
             let pointer = this.input.activePointer;
             if (pointer.isDown) {
                 this.willy.flipX = pointer.worldX < this.willy.x;
             }
-    
+
             // Restringe a Willy a no moverse más allá del borde izquierdo de la pantalla
-         
+
             // Reproduce la animación de caminar si Willy se está moviendo
-            if (this.willy.velocity !== 0) { 
+            if (this.willy.velocity !== 0) {
                 this.willy.anims.play('walk', true);
             } else {
                 this.willy.anims.stop();

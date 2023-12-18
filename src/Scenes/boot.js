@@ -40,6 +40,8 @@ export default class Boot extends Phaser.Scene {
         this.load.audio('dialogSound', './assets/audio/MenuMusic.mp3');
         this.load.image('mujerCoche', 'assets/images/characters/mujerCoche.png');
         this.load.image('caraMujer', 'assets/images/characters/caraMujer.png');
+        this.load.image('viejo', 'assets/images/characters/viejo.png');
+
 
 
     }

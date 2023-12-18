@@ -61,7 +61,7 @@ export class ShopScene extends Phaser.Scene {
             this.startWorkerDialog();
         });
 
-        this.client = this.physics.add.sprite(this.game.config.width - 1100, this.game.config.height - 400, 'mujerCoche');
+        this.client = this.physics.add.sprite(this.game.config.width - 1100, this.game.config.height - 400, 'viejo').setScale(1.25);
         this.client.body.allowGravity = false;
         this.client.flipX = true;
         this.client.setInteractive();

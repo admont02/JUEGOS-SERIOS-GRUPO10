@@ -25,8 +25,8 @@ export class ShopScene extends Phaser.Scene {
     }
 
     create() {
-        this.bg = this.add.image(0, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
-        this.bg2 = this.add.image(this.game.config.width, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
+        this.bg = this.add.image(0, 0, 'tienda2').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
+        this.bg2 = this.add.image(this.game.config.width, 0, 'tienda1').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
 
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
@@ -35,6 +35,7 @@ export class ShopScene extends Phaser.Scene {
         this.dialogModal.toggleWindow();
         
         this.willy = new Willy(this, this.sys.game.config.width / 2, this.sys.game.config.height - 400, 'jugador');
+        this.willy.body.setCollideWorldBounds(false);
         this.willy.body.setAllowGravity(false);
 
         this.caja = this.physics.add.sprite(this.sys.game.config.width / 5, this.sys.game.config.height - 400, 'caja');
@@ -69,7 +70,8 @@ export class ShopScene extends Phaser.Scene {
 
         this.physics.add.collider(this.shopWorker, this.caja, this.collisionCallback, null, this);
         this.willy.setMovable(true);
-
+        this.physics.world.setBounds(0, 0, this.game.config.width * 4, this.game.config.height);
+ 
         this.cameras.main.setBounds(0, 0, this.game.config.width*4, this.game.config.height);
         this.cameras.main.startFollow(this.willy);
     }

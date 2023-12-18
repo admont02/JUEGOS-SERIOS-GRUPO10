@@ -10,6 +10,7 @@ export class CasaScene extends Phaser.Scene {
         this.currentDialogIndex = 0;
         this.optionTexts = []; 
         this.willy = null;
+        this.isDialogTyping = false;
         this.dialogs = dialogos.npcDialogs;
         this.mujerDialogs = dialogos.mujerDialogs; // Add this line
     }
@@ -20,13 +21,7 @@ export class CasaScene extends Phaser.Scene {
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
-        this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
-
-        this.car = this.physics.add.sprite((0, 400), 0, 'car');
-        this.car.y = 1350;
-        this.car.setScale(0.5);
-        this.car.setVelocity(100,0);
-        this.car.body.allowGravity = false;
+        this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 300);
 
         this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
 
@@ -50,18 +45,20 @@ export class CasaScene extends Phaser.Scene {
     }
 
     showMujerDialog() {
-        this.removeOptions(); 
+        this.removeOptions();
         this.dialogModal.removeCharacterImage();
         this.dialogModal.createCharacterImage('caraMujer', 0.7);
         
         if (this.currentDialogIndex >= this.mujerDialogs.length || this.currentDialogIndex === -1) {
-            // Manejo del final del diálogo
             this.endDialogAndExitWoman();
             return;
         }
 
         let dialogData = this.mujerDialogs[this.currentDialogIndex];
-        this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
+        this.isDialogTyping = true; // Establece la bandera a true al iniciar la escritura del diálogo
+        this.dialogModal.typeWriterEffect(dialogData.dialog, () => {
+            this.isDialogTyping = false; // Establece la bandera a false cuando el diálogo termina de escribirse
+        });
 
         if (dialogData.options && dialogData.options.length > 0) {
             this.showOptions(dialogData.options);
@@ -116,6 +113,10 @@ export class CasaScene extends Phaser.Scene {
     
     
     handleOptionSelect(nextDialogIndex, index) {
+        if (this.isDialogTyping) {
+            console.log("Espera a que termine el diálogo.");
+            return; // No permitir seleccionar la opción si el diálogo se está escribiendo
+        }
         console.log("Seleccionaste la opción:", index);
     
         if (nextDialogIndex === -1) {
@@ -174,9 +175,6 @@ export class CasaScene extends Phaser.Scene {
 
         if(this.willy.x > 1000){
             this.scene.start('CentroScene');
-        }
-        if(this.car.x > this.sys.game.config.width + 300){
-            this.car.x = -400;
         }
     
         // Lógica de movimiento de Willy

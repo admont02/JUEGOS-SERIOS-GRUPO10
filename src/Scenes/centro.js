@@ -24,7 +24,7 @@ export class CentroScene extends Phaser.Scene {
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
-        this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
+        this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 250);
 
         this.willy = new Willy(this, this.sys.game.config.width / 3 -100, this.sys.game.config.height - 200, 'jugador');
 
@@ -57,7 +57,7 @@ export class CentroScene extends Phaser.Scene {
         }
 
         let dialogData = this.currentDialogs[this.currentDialogIndex];
-        this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
+        this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 250, true);
         this.showOptions(dialogData.options);
     }
 

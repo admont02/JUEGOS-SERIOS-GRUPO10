@@ -156,7 +156,7 @@ export default {
         }
     ], "entrenadorDialogs": [
         {
-            "dialog": "Willy, otra vez tarde. Si sigues así, no podré incluirte en la selección para el equipo paralímpico. Necesitamos compromiso.",
+            "dialog": "Willy, otra vez tarde. Si sigues así, no podré incluirte en la selección para el equipo paralímpico.",
             "options": [
                 {
                     "text": "Lo siento, entrenador. Me aseguraré de mejorar mi puntualidad.",

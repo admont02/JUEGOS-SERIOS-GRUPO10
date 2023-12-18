@@ -121,7 +121,11 @@ export class CentroScene extends Phaser.Scene {
             // Elimina las opciones cuando se acaben los diálogos con Paco
             this.removeOptions();
             this.movePacoOffScreen(); // Mueve a Paco fuera de la pantalla
-            this.dialogModal.toggleWindow();
+    
+            // Iniciar un temporizador de 4 segundos antes de cerrar la ventana de diálogo
+            this.time.delayedCall(4000, () => {
+                this.dialogModal.toggleWindow();
+            });
         }
         this.willy.setMovable(true); // Permite que Willy se mueva después de cualquier diálogo
     }

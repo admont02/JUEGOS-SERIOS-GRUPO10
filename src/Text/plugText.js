@@ -137,16 +137,7 @@ removeCharacterImage() {
   }
 
   _createCloseModalButton() {
-    const self = this;
-    this.closeBtn = this.scene.make.text({
-      x: this._getGameWidth() - this.padding - 14,
-      y: this._getGameHeight() - this.windowHeight - this.padding + 3,
-      text: 'X',
-      style: {
-        font: `bold ${this.fontSize}px Arial`,
-        fill: this.closeBtnColor
-      }
-    });
+   
   }
 
   doubleFontSize() {
@@ -208,35 +199,10 @@ removeCharacterImage() {
 
 
   _createCloseModalButtonBorder() {
-    const x = this._getGameWidth() - this.padding - 20;
-    const y = this._getGameHeight() - this.windowHeight - this.padding;
-    this.graphics.strokeRect(x, y, 20, 20);
   }
 
   _createCloseModalButton() {
-    const self = this;
-    this.closeBtn = this.scene.make.text({
-      x: this._getGameWidth() - this.padding - 14,
-      y: this._getGameHeight() - this.windowHeight - this.padding + 3,
-      text: 'X',
-      style: {
-        font: 'bold 12px Arial',
-        fill: this.closeBtnColor
-      }
-    });
-    this.closeBtn.setInteractive();
-
-    this.closeBtn.on('pointerover', function () {
-      this.setTint(0xff0000);
-    });
-    this.closeBtn.on('pointerout', function () {
-      this.clearTint();
-    });
-    this.closeBtn.on('pointerdown', function () {
-      self.toggleWindow();
-      if (self.timedEvent) self.timedEvent.remove();
-      if (self.text) self.text.destroy();
-    });
+  
   }
   setText(text, x, y, animate = false) {
     this.eventCounter = 0;
@@ -258,18 +224,30 @@ removeCharacterImage() {
   typeWriterEffect(text, onComplete) {
     const length = text.length;
     let i = 0;
+
+    // Agrega un miembro para el sonido si aún no existe
+    if (!this.typingSound) {
+        this.typingSound = this.scene.sound.add('tw', { volume: 0.5, loop: true });
+    }
+
+    // Inicia el sonido
+    this.typingSound.play();
+
     this.scene.time.addEvent({
         callback: () => {
             this.setText(text.substring(0, i + 1), 0, this._getGameHeight() - 250, false);
             i++;
             if (i === length) {
-                onComplete(); // Llama al callback cuando el texto se ha terminado de escribir
+                // Detiene el sonido al finalizar la escritura
+                this.typingSound.stop();
+                if (onComplete) onComplete(); // Llama al callback cuando el texto se ha terminado de escribir
             }
         },
         repeat: length - 1,
         delay: 50 // Velocidad de escritura del texto (en milisegundos)
     });
 }
+
 
 
   _setText(text, x, y) {

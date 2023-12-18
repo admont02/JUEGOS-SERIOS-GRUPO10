@@ -15,6 +15,8 @@ export class CasaScene extends Phaser.Scene {
         this.mujerDialogs = dialogos.mujerDialogs; // Add this line
     }
 
+
+
     create() {
         // Creación de objetos y configuraciones iniciales para la escena
         this.bg = this.add.image(0, 0, 'fondoCalle').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
@@ -22,7 +24,11 @@ export class CasaScene extends Phaser.Scene {
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 300);
-
+        this.sound.setMute(gameSettings.isMuted);
+        this.sound.setVolume(gameSettings.musicVolume);
+        this.calleMusic = this.sound.add('calleM');
+        this.calleMusic.play({ loop: true });
+        this.calleMusic.setVolume(0.05);
         this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
 
         this.willy.setMovable(false); 
@@ -174,6 +180,7 @@ export class CasaScene extends Phaser.Scene {
         }
 
         if(this.willy.x > 1000){
+            this.calleMusic.stop();
             this.scene.start('CentroScene');
         }
     

@@ -136,7 +136,7 @@ export default {
                     "nextDialogIndex": 10
                 },
                 {
-                    "text": "Entiendo que estés molesta, pero mi intención es simplemente recordarte la importancia del respeto mutuo.",
+                    "text": "Entiendo que estés molesta, pero mi intención es \nsimplemente recordarte la importancia del respeto mutuo.",
                     "nextDialogIndex": -1
                 }
             ]
@@ -154,9 +154,9 @@ export default {
                 }
             ]
         }
-    ], "entrenadorDialogs": [
+    ],  "entrenadorDialogs": [
         {
-            "dialog": "Willy, otra vez tarde. Si sigues así, no podré incluirte en la selección para el equipo paralímpico.",
+            "dialog": "Willy, otra vez tarde. Si sigues así, no podré incluirte en el equipo paralímpico.",
             "options": [
                 {
                     "text": "Lo siento, entrenador. Me aseguraré de mejorar mi puntualidad.",
@@ -164,42 +164,55 @@ export default {
                 },
                 {
                     "text": "Entiendo, pero he tenido algunos contratiempos. Trabajaré en esto.",
-                    "nextDialogIndex": 3
+                    "nextDialogIndex": 1
                 }
             ]
         },
         {
-            "dialog": "Recuerda, el entrenamiento es tan mental como físico. ¿Has estado trabajando en tu fortaleza mental?",
+            "dialog": "Willy,  necesitas más proteínas para recuperarte después de los entrenamientos.",
             "options": [
                 {
-                    "text": "Sí, he estado practicando meditación y técnicas de enfoque.",
-                    "nextDialogIndex": -1
+                    "text": "Entiendo, ¿alguna recomendación?",
+                    "nextDialogIndex": 2
                 },
                 {
-                    "text": "No mucho, ¿tienes alguna sugerencia?",
+                    "text": "¿Debería comprar algo específico?",
                     "nextDialogIndex": 2
                 }
             ]
         },
         {
-            "dialog": "La meditación y el yoga pueden ser útiles. También, intenta establecer metas pequeñas para mejorar tu enfoque.",
+            "dialog": "Te recomiendo batidos de proteínas.",
             "options": [
                 {
-                    "text": "Eso suena útil. Lo probaré, gracias.",
+                    "text": "¡Gracias! ¿Dónde puedo comprarlos?",
+                    "nextDialogIndex": 3
+                },
+                {
+                    "text": "¿Algún batido en particular?",
+                    "nextDialogIndex": 4
+                }
+            ]
+        },
+        {
+            "dialog": "Puedes encontrarlos en el supermercado local.",
+            "options": [
+                {
+                    "text": "De acuerdo, iré al supermercado.",
                     "nextDialogIndex": -1
                 }
             ]
         },
         {
-            "dialog": "¡No es excusa!",
+            "dialog": "Los batidos de proteínas de suero son una buena opción.",
             "options": [
                 {
-                    "text": "Perdón. (Este ha tenido un mal día hoy)",
+                    "text": "Gracias por el consejo, entrenador.",
                     "nextDialogIndex": -1
                 }
             ]
-        }
-    ],    
+        },
+    ], 
     "pacoDialogs": [
         {
             "dialog": "¡Willy, cuánto tiempo! ¿Cómo te ha ido con el entrenamiento?",
@@ -215,7 +228,7 @@ export default {
             ]
         },
         {
-            "dialog": "La clave está en la consistencia, Willy. No te desanimes por los días malos; son parte del proceso.",
+            "dialog": "La clave está en la consistencia, Willy. No te desanimes por los días malos.",
             "options": [
                 {
                     "text": "Gracias, Paco. Intentaré recordar eso.",
@@ -228,7 +241,7 @@ export default {
             ]
         },
         {
-            "dialog": "Todos tenemos días difíciles, Willy. Yo me mantengo motivado recordando mis metas y el porqué comencé.",
+            "dialog": "Todos tenemos días difíciles, Willy.",
             "options": [
                 {
                     "text": "Eso tiene sentido. Mantendré mis metas en mente.",
@@ -241,7 +254,7 @@ export default {
             ]
         },
         {
-            "dialog": "Recuerda que cada pequeño paso cuenta. Celebrar los logros pequeños te ayudará a mantenerte en el camino.",
+            "dialog": "Recuerda que cada pequeño paso cuenta.",
             "options": [
                 {
                     "text": "Eso es cierto. Apreciaré más los pequeños logros.",
@@ -254,7 +267,7 @@ export default {
             ]
         },
         {
-            "dialog": "A veces, la clave está en cambiar la perspectiva. ¿Has probado algún deporte diferente o actividad para refrescar tu rutina?",
+            "dialog": "¿Has probado algún deporte diferente o actividad para refrescar tu rutina?",
             "options": [
                 {
                     "text": "No realmente, ¿alguna sugerencia?",
@@ -280,7 +293,7 @@ export default {
             ]
         },
         {
-            "dialog": "El remo es excelente para la fuerza y el equilibrio. Podría presentarte a un amigo que es entrenador.",
+            "dialog": "El remo es excelente para la fuerza y el equilibrio.",
             "options": [
                 {
                     "text": "Eso sería genial, gracias Paco.",
@@ -289,7 +302,7 @@ export default {
             ]
         },
         {
-            "dialog": "El ciclismo es una excelente manera de mejorar la resistencia. Conozco algunos grupos de ciclistas que podrían acogerte.",
+            "dialog": "El ciclismo es una excelente manera de mejorar la resistencia.",
             "options": [
                 {
                     "text": "Me encantaría unirme a un grupo. ¿Puedes darme más información?",
@@ -377,7 +390,7 @@ export default {
             ]
         },
         {
-           /*4*/  "dialog": "Bueno! Va a hablar usted así a quien yo \n le diga..",
+           /*4*/  "dialog": "Bueno! Va a hablar usted así a quien yo le diga..",
             "undesirableOption": true,
             "nextDialogIndex": -1
 

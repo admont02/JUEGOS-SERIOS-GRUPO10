@@ -19,13 +19,16 @@ export class CentroScene extends Phaser.Scene {
         this.atletaDialogs = dialogos.atletaDialogs;
     }
 
+
     create() {
         this.bg = this.add.image(0, 0, 'centro').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 250);
-
+        this.centroMusic = this.sound.add('centroM');
+        this.centroMusic.play({ loop: true });
+        this.centroMusic.setVolume(0.05);
         this.willy = new Willy(this, this.sys.game.config.width / 3 -100, this.sys.game.config.height - 200, 'jugador');
 
         // Crear sprite del entrenador y comenzar su diálogo
@@ -35,13 +38,15 @@ export class CentroScene extends Phaser.Scene {
         this.startTrainerDialog();
 
         // Crear Paco pero no hacerlo interactivo todavía
-        this.paco = this.physics.add.sprite(this.game.config.width -600, this.game.config.height - 400, 'mujerCoche');
+        this.paco = this.physics.add.sprite(this.game.config.width -600, this.game.config.height - 400, 'paco');
         this.paco.body.setAllowGravity(false);
+        this.paco.setFlipX(true); 
         this.paco.setVisible(false); // Paco inicialmente no es visible
 
-        this.atletaMujer = this.physics.add.sprite(this.game.config.width - 300, this.game.config.height - 200, 'mujerCoche'); 
+        this.atletaMujer = this.physics.add.sprite(this.game.config.width - 300, this.game.config.height - 200, 'atleta'); 
         this.atletaMujer.body.setAllowGravity(false);
         this.atletaMujer.setVisible(false);
+        this.atletaMujer.setFlipX(true);
     }
 
     startTrainerDialog() {
@@ -57,8 +62,11 @@ export class CentroScene extends Phaser.Scene {
         }
 
         let dialogData = this.currentDialogs[this.currentDialogIndex];
-        this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 250, true);
-        this.showOptions(dialogData.options);
+        this.isDialogTyping = true;  // Establecer la bandera de que el diálogo se está escribiendo
+        this.dialogModal.typeWriterEffect(dialogData.dialog, () => {
+            this.isDialogTyping = false;  // Cambiar la bandera cuando el diálogo haya terminado de escribirse
+            this.showOptions(dialogData.options);
+        });
     }
 
     showOptions(options) {
@@ -118,8 +126,12 @@ export class CentroScene extends Phaser.Scene {
         this.startTrainerDialog();
     }
 
-
     handleOptionSelect(nextDialogIndex) {
+        if (this.isDialogTyping) {
+            console.log("Espera a que termine el diálogo.");
+            return;  // No hacer nada si el diálogo todavía se está escribiendo
+        }
+
         if (nextDialogIndex === -1) {
             this.endDialog();
             return;
@@ -127,6 +139,7 @@ export class CentroScene extends Phaser.Scene {
         this.currentDialogIndex = nextDialogIndex;
         this.showDialog();
     }
+
 
     endDialog() {
         if (this.currentDialogs === this.entrenadorDialogs) {
@@ -141,9 +154,14 @@ export class CentroScene extends Phaser.Scene {
                 this.startAtletaDialog();
             });
         } else if (this.currentDialogs === this.atletaDialogs) {
-            // Espera 2 segundos después del diálogo de la atleta y luego cambia de escena
+            // Espera 2 segundos después del diálogo de la atleta y luego inicia la animación de fade out
             this.time.delayedCall(2000, () => {
-                this.scene.start('ShopScene'); // Cambia por el nombre real de la siguiente escena
+                this.cameras.main.fadeOut(1000, 0, 0, 0, (camera, progress) => {
+                    if (progress === 1) {
+                        this.centroMusic.stop();
+                        this.scene.start('ShopScene'); // Cambia por el nombre real de la siguiente escena
+                    }
+                });
             });
         }
     }

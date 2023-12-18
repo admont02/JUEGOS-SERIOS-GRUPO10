@@ -44,6 +44,12 @@ export class ShopScene extends Phaser.Scene {
         this.caja.body.setImmovable(true);
         this.physics.add.collider(this.willy, this.caja, this.colisionHandler);
 
+        this.carro = this.physics.add.sprite(this.sys.game.config.width /2, this.sys.game.config.height - 300, 'carro').setScale(0.3);
+        this.carro.body.setAllowGravity(false);
+        this.carro.body.setImmovable(true);
+        this.physics.add.collider(this.willy, this.carro, this.colisionHandler);
+
+
         this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNumbers('jugador', { start: 0, end: 3 }),

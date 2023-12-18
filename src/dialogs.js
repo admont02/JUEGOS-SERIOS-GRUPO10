@@ -315,17 +315,12 @@ export default {
     ],
     "clientDialogs": [
         {
-            "dialog": "¿En serio te consideras un atleta? Pareces más un lastre para el equipo.",
-            "options": [
-                {
-                    "text": "Todos tenemos diferentes desafíos, pero mi esfuerzo vale tanto como el de cualquier otro. ",
-                    "nextDialogIndex": -1 // o el índice que corresponda
-                },
-                {
-                    "text": "No dejo que los comentarios negativos me afecten. Estoy aquí para superarme a mí mismo. ",
-                    "nextDialogIndex": -1 // o el índice que corresponda
-                }
-            ]
+            "dialog": "Un momento, ahora lo retiro.",
+        }
+    ],
+    "clientTouchedBefore": [
+        {
+            "dialog": "¡No entiendes el significado de la palabra 'espera'!",
         }
     ],
     "shopWorkerDialogs": [
@@ -397,6 +392,13 @@ export default {
         {
             /*0*/  "dialog": "Si claro, ahora quieres ayuda, ¡lárgate! "
         }
-    ]
+    ],
+    "happy":[
+        {
+            /*0*/  "dialog": "Si claro, yo te lo alcanzo."
+        }
+    ],
+
+    
 }
 

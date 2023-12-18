@@ -229,9 +229,7 @@ export class ShopScene extends Phaser.Scene {
 
             const tiempoLimite = 5000; // 5 segundos
             this.timer = this.time.delayedCall(tiempoLimite, () => {
-                // Si no ha habido interacción durante el tiempo límite
-                // Realiza alguna acción aquí, por ejemplo, continuar con el diálogo
-
+                
             });
         }
 
@@ -260,8 +258,18 @@ export class ShopScene extends Phaser.Scene {
                 });
             }
         }
-        else if (this.clientAngry) {
-            this.currentDialogs = this.dialogClientAngry;
+        else if (this.talkedWithClient && this.clientAngry) {
+           //this.dialogModal.toggleWindow();
+            this.currentDialogs = dialogos.angryClient;
+            this.currentDialogIndex = 0;
+            this.showDialog();
+            this.willy.setMovable(false)
+            this.time.delayedCall(3000, () => {
+                // Si no ha habido interacción durante el tiempo límite
+                // Realiza alguna acción aquí, por ejemplo, continuar con el diálogo
+                this.dialogModal.toggleWindow()
+                this.willy.setMovable(true)
+            });
         }
         else {
 

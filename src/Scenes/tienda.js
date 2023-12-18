@@ -26,7 +26,7 @@ export class ShopScene extends Phaser.Scene {
 
     create() {
         this.bg = this.add.image(0, 0, 'tienda2').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
-        this.bg2 = this.add.image(this.game.config.width-550, 0, 'tienda1').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
+        this.bg2 = this.add.image(this.game.config.width - 550, 0, 'tienda1').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         this.bg2 = this.add.image(this.game.config.width, 0, 'tienda3').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
 
         this.dialogModal = new DialogModal(this);
@@ -44,7 +44,7 @@ export class ShopScene extends Phaser.Scene {
         this.caja.body.setImmovable(true);
         this.physics.add.collider(this.willy, this.caja, this.colisionHandler);
 
-        this.carro = this.physics.add.sprite(this.sys.game.config.width /2, this.sys.game.config.height - 300, 'carro').setScale(0.3);
+        this.carro = this.physics.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height - 300, 'carro').setScale(0.3);
         this.carro.body.setAllowGravity(false);
         this.carro.body.setImmovable(true);
         this.physics.add.collider(this.willy, this.carro, this.colisionHandler);
@@ -100,14 +100,15 @@ export class ShopScene extends Phaser.Scene {
 
     showDialog() {
         if (this.currentDialogIndex < 0 || this.currentDialogIndex >= this.currentDialogs.length || this.currentDialogs === this.workerDialogs && this.workerDialogs[this.currentDialogIndex].undesirableOption
-            || this.currentDialogs === this.clientDialogs || this.currentDialogs === dialogos.clientTouchedBefore) {
+        ) {
             this.endDialog();
             return;
         }
 
         let dialogData = this.currentDialogs[this.currentDialogIndex];
         this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
-        this.showOptions(dialogData.options);
+        if (dialogData.options)
+            this.showOptions(dialogData.options);
 
     }
 
@@ -127,7 +128,7 @@ export class ShopScene extends Phaser.Scene {
             let textWidth = optionText.width + 40;
             let textHeight = optionText.height + 20;
 
-         
+
             let yPosition = 150 + (index * (textHeight + 150));
             dialogBox.fillRect(this.willy.x - 700, yPosition, textWidth, textHeight);
 
@@ -149,9 +150,7 @@ export class ShopScene extends Phaser.Scene {
     }
     endDialog() {
         this.willy.setMovable(true)
-        if (!this.talkedWithClient && this.currentDialogs === this.clientDialogs) {
-            this.talkedWithClient = true;
-        } else if (this.currentDialogs === this.workerDialogs) {
+        if (this.currentDialogs === this.workerDialogs) {
             // Elimina las opciones cuando se acaben los diálogos con Paco
             this.talkedWithWorker = true;
             this.removeOptions();
@@ -221,31 +220,45 @@ export class ShopScene extends Phaser.Scene {
     }
     startClientDialog() {
         this.dialogModal.toggleWindow();
+        this.currentDialogs = this.clientDialogs;
+        this.currentDialogIndex = 0;
+        this.showDialog();
         this.willy.setMovable(false)
         if (!this.talkedWithClient) {
-            this.talkedWithClient=true;
-            this.currentDialogs = this.clientDialogs;
+            this.talkedWithClient = true;
+
             const tiempoLimite = 5000; // 5 segundos
-            const timer = this.time.delayedCall(tiempoLimite, () => {
+            this.timer = this.time.delayedCall(tiempoLimite, () => {
                 // Si no ha habido interacción durante el tiempo límite
                 // Realiza alguna acción aquí, por ejemplo, continuar con el diálogo
-                this.currentDialogIndex = 0;
-                this.showDialog(this.client);
+
             });
-    
-            // Agrega un evento para interacción durante el tiempo límite
-            this.client.on('pointerup', () => {
-                // Cancela el temporizador si hay interacción antes del tiempo límite
-                if (timer && !timer.hasDispatched) {
-                    timer.remove();
-                    // Realiza una acción diferente, ya que hubo interacción antes del tiempo límite
-                    // Por ejemplo, desencadenar el enojo del cliente
-                    this.clientAngry=true;
+        }
+
+        // Agrega un evento para interacción durante el tiempo límite
+        else if (this.talkedWithClient && !this.clientAngry) {
+            // Cancela el temporizador si hay interacción antes del tiempo límite
+            if (this.timer && !this.timer.hasDispatched) {
+                this.timer.remove();
+                // Realiza una acción diferente, ya que hubo interacción antes del tiempo límite
+                // Por ejemplo, desencadenar el enojo del cliente
+                this.clientAngry = true;
+                this.time.delayedCall(1000, () => {
+                    // Si no ha habido interacción durante el tiempo límite
+                    // Realiza alguna acción aquí, por ejemplo, continuar con el diálogo
                     this.carro.destroy();
-                    this.currentDialogs=dialogos.clientTouchedBefore
-                    this.showDialog();
-                }
-            });
+                });
+                this.dialogModal.toggleWindow();
+                this.currentDialogs = dialogos.clientTouchedBefore
+                this.currentDialogIndex = 0;
+                this.showDialog();
+                this.time.delayedCall(2000, () => {
+                    // Si no ha habido interacción durante el tiempo límite
+                    // Realiza alguna acción aquí, por ejemplo, continuar con el diálogo
+                    this.dialogModal.toggleWindow()
+                    this.willy.setMovable(true)
+                });
+            }
         }
         else if (this.clientAngry) {
             this.currentDialogs = this.dialogClientAngry;
@@ -253,8 +266,8 @@ export class ShopScene extends Phaser.Scene {
         else {
 
         }
-        this.currentDialogIndex = 0;
-        this.showDialog(this.client);
+        // this.currentDialogIndex = 0;
+        // this.showDialog(this.client);
     }
     startWorkerDialog() {
         this.dialogModal.toggleWindow();
@@ -267,9 +280,9 @@ export class ShopScene extends Phaser.Scene {
 
         }
         this.currentDialogIndex = 0;
-        this.showDialog(this.shopWorker);
+        this.showDialog();
     }
-    
+
 }
 
 export default ShopScene;

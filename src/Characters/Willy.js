@@ -16,6 +16,8 @@ export default class Willy extends Phaser.GameObjects.Sprite {
 
     setMovable(isMovable) {
         this.canMove = isMovable;
+        this.destinationX=null;
+        this.body.setVelocityX(0);
     }
 
     onPointerDown(pointer) {

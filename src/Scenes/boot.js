@@ -32,7 +32,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('car', 'assets/images/characters/carPumPum.png'); 
         this.load.image('interactAux', 'assets/images/toni.jpeg');
         this.load.image('mujer', 'assets/images/characters/mujerCoche.png'); 
-        this.load.spritesheet('jugador', 'assets/images/characters/willymove.png', { frameWidth: 175, frameHeight: 195 }, { start: 0, end: 3 });
+        this.load.spritesheet('jugador', 'assets/images/characters/willymove.png', { frameWidth: 828, frameHeight: 941 }, { start: 0, end: 2 });
 
         this.load.image('casaBackground', 'assets/images/background/fondoCasa.png');
         this.load.image('accidenteFondo', 'assets/images/background/atropello.png');

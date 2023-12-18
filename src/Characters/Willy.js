@@ -2,7 +2,7 @@ export default class Willy extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, textureKey) {
         super(scene, x, y, textureKey);
         this.scene.add.existing(this);
-        this.setScale(2);
+        this.setScale(0.3,0.5);
 
         // Asegurarse de que Willy tiene un cuerpo físico para usar setVelocity
         this.scene.physics.world.enable(this);

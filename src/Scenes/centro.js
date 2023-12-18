@@ -15,6 +15,8 @@ export class CentroScene extends Phaser.Scene {
         this.pacoDialogs = dialogos.pacoDialogs;
         this.entrenadorDialogs = dialogos.entrenadorDialogs;
         this.currentDialogs = null;
+        this.atletaMujer = null;
+        this.atletaDialogs = dialogos.atletaDialogs;
     }
 
     create() {
@@ -24,7 +26,7 @@ export class CentroScene extends Phaser.Scene {
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
 
-        this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 200, 'jugador');
+        this.willy = new Willy(this, this.sys.game.config.width / 3 -100, this.sys.game.config.height - 200, 'jugador');
 
         // Crear sprite del entrenador y comenzar su diálogo
         this.entrenador = this.physics.add.sprite(this.game.config.width - 100, this.game.config.height - 200, 'mujerCoche');
@@ -36,6 +38,10 @@ export class CentroScene extends Phaser.Scene {
         this.paco = this.physics.add.sprite(this.game.config.width -600, this.game.config.height - 400, 'mujerCoche');
         this.paco.body.setAllowGravity(false);
         this.paco.setVisible(false); // Paco inicialmente no es visible
+
+        this.atletaMujer = this.physics.add.sprite(this.game.config.width - 300, this.game.config.height - 200, 'mujerCoche'); 
+        this.atletaMujer.body.setAllowGravity(false);
+        this.atletaMujer.setVisible(false);
     }
 
     startTrainerDialog() {
@@ -104,6 +110,14 @@ export class CentroScene extends Phaser.Scene {
         });
     }
     
+    startGameSequence() {
+        // Muestra el modal de diálogo
+        this.dialogModal.toggleWindow(true);
+
+        // Inicia la primera interacción (puede ser el diálogo del entrenador)
+        this.startTrainerDialog();
+    }
+
 
     handleOptionSelect(nextDialogIndex) {
         if (nextDialogIndex === -1) {
@@ -118,18 +132,27 @@ export class CentroScene extends Phaser.Scene {
         if (this.currentDialogs === this.entrenadorDialogs) {
             this.moveTrainerOffScreen();
         } else if (this.currentDialogs === this.pacoDialogs) {
-            // Elimina las opciones cuando se acaben los diálogos con Paco
             this.removeOptions();
-            this.movePacoOffScreen(); // Mueve a Paco fuera de la pantalla
-    
-            // Iniciar un temporizador de 4 segundos antes de cerrar la ventana de diálogo
-            this.time.delayedCall(4000, () => {
-                this.dialogModal.toggleWindow();
+            this.movePacoOffScreen();
+
+            // Iniciar el diálogo de la atleta después de Paco
+            this.time.delayedCall(1000, () => {
+                this.atletaMujer.setVisible(true);
+                this.startAtletaDialog();
+            });
+        } else if (this.currentDialogs === this.atletaDialogs) {
+            // Espera 2 segundos después del diálogo de la atleta y luego cambia de escena
+            this.time.delayedCall(2000, () => {
+                this.scene.start('ShopScene'); // Cambia por el nombre real de la siguiente escena
             });
         }
-        this.willy.setMovable(true); // Permite que Willy se mueva después de cualquier diálogo
     }
     
+    startAtletaDialog() {
+        this.currentDialogs = this.atletaDialogs;
+        this.currentDialogIndex = 0;
+        this.showDialog();
+    }
     
 
     moveTrainerOffScreen() {
@@ -161,7 +184,22 @@ export class CentroScene extends Phaser.Scene {
 
 
     update(time, delta) {
-        // Aquí puedes añadir lógica adicional de actualización de la escena si es necesario
+       // Lógica de movimiento de Willy
+        if (this.willy && this.willy.update) {
+            this.willy.update(time, delta);
+
+            let pointer = this.input.activePointer;
+            if (pointer.isDown) {
+                this.willy.flipX = pointer.worldX < this.willy.x;
+            }
+
+            if (this.willy.velocity !== 0) {
+                this.willy.anims.play('walk', true);
+            } else {
+                this.willy.anims.stop();
+
+            }
+        }
     }
 }
 

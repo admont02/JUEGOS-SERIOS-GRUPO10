@@ -39,7 +39,7 @@ export class ShopScene extends Phaser.Scene {
 
         this.willy.body.setAllowGravity(false);
 
-        this.caja = this.physics.add.sprite(this.sys.game.config.width / 5, this.sys.game.config.height - 400, 'caja').setScale(0.3);
+        this.caja = this.physics.add.sprite(this.sys.game.config.width, this.sys.game.config.height - 250, 'caja').setScale(0.3);
         this.caja.body.setAllowGravity(false);
         this.caja.body.setImmovable(true);
         this.physics.add.collider(this.willy, this.caja, this.colisionHandler);
@@ -61,7 +61,7 @@ export class ShopScene extends Phaser.Scene {
             repeat: -1
         });
 
-        this.shopWorker = this.physics.add.sprite(this.game.config.width + 1100, this.game.config.height - 400, 'shopWorker').setScale(1.25);
+        this.shopWorker = this.physics.add.sprite(this.game.config.width + 1100, this.game.config.height - 250, 'shopWorker').setScale(1.25);
         this.shopWorker.body.allowGravity = false;
        
         this.shopWorker.setInteractive();
@@ -157,14 +157,13 @@ export class ShopScene extends Phaser.Scene {
             // Elimina las opciones cuando se acaben los diálogos con Paco
             this.talkedWithWorker = true;
             this.removeOptions();
-            if (!this.workerDialogs[this.currentDialogIndex].undesirableOption)
-                this.physics.moveToObject(this.shopWorker, this.caja, 70);
+            if (this.workerDialogs[this.currentDialogIndex].undesirableOption)
+                this.physics.moveToObject(this.shopWorker, this.caja, 150);
             else
                 this.workerAngry = true;
         }
         this.time.delayedCall(3000, () => {
-            //this.removeOptions();
-            //this.dialogModal.removeCharacterImage();
+            
             this.dialogModal.toggleWindow();
 
         });
@@ -178,25 +177,7 @@ export class ShopScene extends Phaser.Scene {
         this.showDialog();
     }
 
-    endDialogAndExitWoman() {
-        this.shopWorker.setVelocityX(70);
-        this.time.delayedCall(3000, () => {
-            this.shopWorker.destroy();
-            this.removeOptions();
-            this.dialogModal.removeCharacterImage();
-            this.dialogModal.toggleWindow();
-        });
-    }
-
-    endDialogAndExitClient() {
-        this.client.setVelocityX(70);
-        this.time.delayedCall(3000, () => {
-            this.client.destroy();
-            this.removeOptions();
-            this.dialogModal.removeCharacterImage();
-            this.dialogModal.toggleWindow();
-        });
-    }
+    
 
     update(time, delta) {
 
@@ -219,6 +200,33 @@ export class ShopScene extends Phaser.Scene {
                 this.willy.anims.stop();
 
             }
+        }
+        if(!this.client.active && !this.shopWorker.active){
+            gameSettings.lateTienda=true;
+            this.tweens.add({
+                targets: this.cameras.main,
+                alpha: 0,
+                duration: 1500,
+                onComplete: () => {
+                    this.scene.start('ShopScene');
+                    //this.scene.start('CasaScene');
+                    //this.scene.start('EscenaInicial');
+
+                }
+            });
+        }
+        else if(!this.botella.active){
+            this.tweens.add({
+                targets: this.cameras.main,
+                alpha: 0,
+                duration: 1500,
+                onComplete: () => {
+                    this.scene.start('ShopScene');
+                    //this.scene.start('CasaScene');
+                    //this.scene.start('EscenaInicial');
+
+                }
+            });
         }
     }
     startClientDialog() {
@@ -267,6 +275,7 @@ export class ShopScene extends Phaser.Scene {
             this.showDialog();
             this.willy.setMovable(false)
             this.time.delayedCall(3000, () => {
+                this.client.setActive(false)
                 this.client.destroy();
                 this.dialogModal.toggleWindow()
                 this.willy.setMovable(true)
@@ -281,19 +290,40 @@ export class ShopScene extends Phaser.Scene {
                 
                 this.dialogModal.toggleWindow()
                 this.willy.setMovable(true)
+                this.botella.setActive(false)
                 this.botella.destroy()
+                
             });
         }
     }
     startWorkerDialog() {
         this.dialogModal.toggleWindow();
         this.willy.setMovable(false)
-        if (!this.talkedWithWorker)
+        if (!this.talkedWithWorker){
             this.currentDialogs = this.workerDialogs;
-        else if (this.workerAngry)
+            this.talkedWithWorker = true;
+        }
+        else if (this.workerAngry){
             this.currentDialogs = this.dialogWorkerAngry;
+            this.time.delayedCall(3000, () => {
+                this.shopWorker.setActive(false)
+                this.shopWorker.destroy();
+                this.dialogModal.toggleWindow()
+                this.willy.setMovable(true)
+            });
+        }
         else {
+            if(this.talkedWithClient){
+            this.currentDialogs=dialogos.happy;
+            this.time.delayedCall(3000, () => {
+                
+                this.dialogModal.toggleWindow()
+                this.willy.setMovable(true)
+                this.botella.setActive(false)
 
+                this.botella.destroy()
+            });
+        }
         }
         this.currentDialogIndex = 0;
         this.showDialog();

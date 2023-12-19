@@ -59,8 +59,8 @@ export class Menu extends Phaser.Scene {
                 duration: 1500,
                 onComplete: () => {
                    // this.scene.start('CasaScene');
-                    this.scene.start('BedScene');
-                //this.scene.start('EscenaInicial');
+                   // this.scene.start('BedScene');
+                    this.scene.start('EscenaInicial');
                 }
             });
         });

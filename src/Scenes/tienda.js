@@ -32,7 +32,7 @@ export class ShopScene extends Phaser.Scene {
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
-        this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 150);
+        this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 250);
         this.dialogModal.toggleWindow();
         this.physics.world.setBounds(0, 0, this.game.config.width * 2, this.game.config.height);
         this.willy = new Willy(this, this.sys.game.config.width * 1.5, this.sys.game.config.height - 400, 'jugador');
@@ -109,7 +109,11 @@ export class ShopScene extends Phaser.Scene {
         }
 
         let dialogData = this.currentDialogs[this.currentDialogIndex];
-        this.dialogModal.setText(dialogData.dialog, 0, this.dialogModal._getGameHeight() - 150, true);
+        this.isDialogTyping = true;  // Establecer la bandera de que el diálogo se está escribiendo
+        this.dialogModal.typeWriterEffect(dialogData.dialog, () => {
+            this.isDialogTyping = false;  // Cambiar la bandera cuando el diálogo haya terminado de escribirse
+            this.showOptions(dialogData.options);
+        });
         if (dialogData.options)
             this.showOptions(dialogData.options);
 
@@ -157,7 +161,7 @@ export class ShopScene extends Phaser.Scene {
             // Elimina las opciones cuando se acaben los diálogos con Paco
             this.talkedWithWorker = true;
             this.removeOptions();
-            if (this.workerDialogs[this.currentDialogIndex].undesirableOption)
+            if (!this.workerDialogs[this.currentDialogIndex].undesirableOption)
                 this.physics.moveToObject(this.shopWorker, this.caja, 150);
             else
                 this.workerAngry = true;

@@ -80,32 +80,35 @@ export class CasaScene extends Phaser.Scene {
         });
         this.optionTexts = [];
     
+        // Define a new variable for the vertical spacing
+        let verticalSpacing = 50; // Increase this value to increase spacing
+    
         options.forEach((option, index) => {
             let textHeight = 0;
             let textWidth = 0;
     
-           
             let dialogBox = this.add.graphics();
-            dialogBox.fillStyle(0x000000, 0.5);  // Color y transparencia de la caja
+            dialogBox.fillStyle(0x000000, 0.5); // Color and transparency of the box
     
-            //  texto con un tamaño más grande y calcular dimensiones
+            // Text with a larger size and calculate dimensions
             let optionText = this.add.text(0, 0, option.text, { fill: '#fff', fontSize: '32px' });
             
-            textWidth = optionText.width + 40;  // Margen aumentado
-            textHeight = optionText.height + 20; // Altura ajustada para el nuevo tamaño del texto
+            textWidth = optionText.width + 60; // Increased margin
+            textHeight = optionText.height + 20; // Adjusted height for the new text size
     
-            // dibuja la caja de diálogo con las dimensiones adecuadas
-            dialogBox.fillRect(100, 100 + (index * (textHeight + 10)), textWidth, textHeight); 
+            // Draw the dialog box with the appropriate dimensions
+            dialogBox.fillRect(100, 100 + (index * (textHeight + verticalSpacing)), textWidth, textHeight);
     
-            // Actualiza la posición del texto y lo hace interactivo, colocándolo encima de la caja
-            optionText.setPosition(110, 110 + (index * (textHeight + 10)));
+            // Update the position of the text to make it interactive, placing it above the box
+            optionText.setPosition(110, 110 + (index * (textHeight + verticalSpacing)));
             optionText.setInteractive()
                 .on('pointerup', () => this.handleOptionSelect(option.nextDialogIndex, index));
     
-            // Almacenar tanto la caja como el texto en optionTexts
+            // Store both the box and the text in optionTexts
             this.optionTexts.push({ box: dialogBox, text: optionText });
         });
     }
+    
     
     
     removeOptions() {

@@ -106,7 +106,7 @@ export default {
         /*7*/     "dialog": "¡Esto es ridículo! ¡Solo estaba por un momento!",
             "options": [
                 {
-                    "text": "Entiendo tu frustración, pero las reglas están por una razón importante.",
+                    "text": "Entiendo tu frustración, pero las reglas \nestán por una razón importante.",
                     "nextDialogIndex": 8
                 },
                 {
@@ -119,7 +119,7 @@ export default {
         /*8*/     "dialog": "¡No necesito lecciones de moralidad de un extraño! ¡Déjame en paz!",
             "options": [
                 {
-                    "text": "Lamento que te sientas así, pero es importante ser considerado con los demás.",
+                    "text": "Lamento que te sientas así, pero es\nimportante ser considerado con los demás.",
                     "nextDialogIndex": -1
                 },
                 {

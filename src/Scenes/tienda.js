@@ -173,6 +173,10 @@ export class ShopScene extends Phaser.Scene {
         });
     }
     handleOptionSelect(nextDialogIndex) {
+        if (this.isDialogTyping) {
+            console.log("Espera a que termine el diálogo.");
+            return; // No permitir seleccionar la opción si el diálogo se está escribiendo
+        }
         if (nextDialogIndex === -1) {
             this.endDialog();
             return;

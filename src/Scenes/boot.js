@@ -23,7 +23,12 @@ export default class Boot extends Phaser.Scene {
     
 
         this.load.image('fondo', 'assets/images/background/atropello.png');
+<<<<<<< Updated upstream
         this.load.image('botella', 'assets/images/botella.png');
+=======
+        this.load.image('final', 'assets/images/background/final.png');
+        this.load.image('interactAux', 'assets/images/toni.jpeg');
+>>>>>>> Stashed changes
         this.load.image('casa', 'assets/images/background/fondoCasa.png');
         this.load.image('tienda1', 'assets/images/background/tienda1.jpg');
         this.load.image('tienda2', 'assets/images/background/tienda2.jpg');
@@ -47,6 +52,9 @@ export default class Boot extends Phaser.Scene {
         this.load.image('shopWorker', 'assets/images/characters/shopWorker.png');
         this.load.image('atleta', 'assets/images/characters/atletaCuerpo.png');
         this.load.image('paco', 'assets/images/characters/pacoPersonaje.png');
+        this.load.image('atletaCara', 'assets/images/characters/atletaCara.png');
+        this.load.image('trabajadorCara', 'assets/images/characters/shopWorkerCara.png');
+        this.load.image('viejoCara', 'assets/images/characters/viejoCara.png');
 
 
     }

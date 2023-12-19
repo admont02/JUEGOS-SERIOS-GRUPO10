@@ -412,6 +412,65 @@ export default {
         }
     ],
 
-    
+    "mujerCaraDialogs": [
+        {
+            "dialog": "Me siento tan apresurada todo el tiempo. A veces ni siquiera me doy cuenta de las personas a mi alrededor.",
+            "options": [
+                {
+                    "text": "Tomarte un momento para observar puede marcar una gran diferencia en la vida de otros.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "La vida puede ser agitada, pero es importante estar conscientes de nuestro entorno.",
+                    "nextDialogIndex": -1
+                }
+            ]
+        }
+    ],
+    "atletaCaraDialogs": [
+        {
+            "dialog": "He estado compitiendo durante años, pero aún siento nervios antes de cada carrera.",
+            "options": [
+                {
+                    "text": "Es normal sentir nervios. Significa que te importa y estás listo para dar lo mejor de ti.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "Usa esos nervios a tu favor. Te mantienen alerta y enfocado.",
+                    "nextDialogIndex": -1
+                }
+            ]
+        }
+    ],
+    "viejoCaraDialogs": [
+        {
+            "dialog": "La vida pasa rápido, joven. Asegúrate de disfrutar cada momento.",
+            "options": [
+                {
+                    "text": "Gracias por el consejo. Trato de apreciar cada pequeña cosa.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "Tienes razón. Es importante no perder de vista lo que realmente importa.",
+                    "nextDialogIndex": -1
+                }
+            ]
+        }
+    ],
+    "trabajadorCaraDialogs": [
+        {
+            "dialog": "Trabajar aquí me ha enseñado mucho sobre las diferentes necesidades de las personas.",
+            "options": [
+                {
+                    "text": "Es genial escuchar eso. Aprender de los demás siempre es valioso.",
+                    "nextDialogIndex": -1
+                },
+                {
+                    "text": "Sí, todos somos diferentes y eso es lo que hace que la comunidad sea especial.",
+                    "nextDialogIndex": -1
+                }
+            ]
+        }
+    ]
 }
 

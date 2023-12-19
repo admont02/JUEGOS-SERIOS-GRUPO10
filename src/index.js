@@ -4,8 +4,8 @@ import { GameScene } from './Scenes/GameScene.js';
 import { CasaScene } from './Scenes/casa.js';
 import { EscenaInicial } from './Scenes/EscenaInicial.js';
 import { CentroScene } from './Scenes/centro.js';
-
-import Boot from './Scenes/boot.js';
+import { BedScene } from './Scenes/BedScene.js'
+import  Boot  from './Scenes/boot.js';
 import { ShopScene } from './Scenes/tienda.js';
 
 
@@ -17,8 +17,6 @@ let config = {
     pixelArt: true,
 	scale: {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
-		// Configuramos phaser para que se adapte al tamaño de pantalla donde ejecutadmos
-		// con un mínimo y un máximo de tamaño
 		mode: Phaser.Scale.FIT,
 		min: {
             width: 500,
@@ -31,7 +29,7 @@ let config = {
 		zoom: 1
     },
 
-    scene: [Boot, Menu, Settings,EscenaInicial, GameScene, CasaScene, CentroScene,ShopScene],
+    scene: [Boot, Menu, Settings,EscenaInicial, GameScene, CasaScene, CentroScene,ShopScene, BedScene],
 
     physics: { 
         default: 'arcade', 

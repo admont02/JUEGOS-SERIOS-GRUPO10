@@ -341,33 +341,29 @@ export default {
           /*0*/  "dialog": "¡Hola!\n¿Necesitas ayuda para encontrar algo? ",
             "options": [
                 {
-                    "text": "Sí, estoy buscando\n un artículo en una estantería alta\ny me resulta difícil alcanzarlo.  ",
+                    "text": "Sí, hay una caja en el pasillo\ny no puedo pasar.  ",
                     "nextDialogIndex": 1,
                 },
                 {
-                    "text": "No, gracias. Puedo hacerlo solo.  ",
+                    "text": "Hay una caja obstaculizando\n que asco de supermercado",
                     "nextDialogIndex": 2
                 }
             ]
         },
         {
-           /*1*/  "dialog": "Por supuesto, déjame ayudarte a alcanzarlo.",
+           /*1*/  "dialog": "Por supuesto, déjame ayudarte.",
             "options": [
                 {
                     "text": "Gracias, realmente aprecio tu ayuda.  ",
-                    "nextDialogIndex": 3,
-                },
-                {
-                    "text": "No, puedo hacerlo solo. ¿No puedes ver?  ",
-                    "nextDialogIndex": 4,
+                    "nextDialogIndex": -1,
                 }
             ]
         },
         {
-           /*2*/  "dialog": "Entendido, si cambias de opinión, aquí estaré.",
+           /*2*/  "dialog": "Disculpe, no nos dimos cuenta.",
             "options": [
                 {
-                    "text": "Lo tendré en cuenta. Gracias.  ",
+                    "text": "No te preocupes. Gracias.  ",
                     "nextDialogIndex": -1,
                 },
                 {
@@ -381,10 +377,6 @@ export default {
             "options": [
                 {
                     "text": "No, eso es todo. Gracias por tu ayuda.  ",
-                    "nextDialogIndex": -1
-                },
-                {
-                    "text": "No volveré a pedir ayuda.\n¡Espero que entiendas!  ",
                     "nextDialogIndex": -1
                 }
             ]

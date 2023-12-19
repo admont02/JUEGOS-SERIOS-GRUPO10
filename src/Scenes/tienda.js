@@ -234,20 +234,20 @@ export class ShopScene extends Phaser.Scene {
             this.timer = this.time.delayedCall(tiempoLimite, () => {
                 this.carro.destroy();
                 this.clientHelp = true;
+                this.dialogModal.toggleWindow()
+                this.willy.setMovable(true)
             });
         }
 
         // Agrega un evento para interacción durante el tiempo límite
-        else if (this.talkedWithClient && !this.clientAngry) {
+        else if (this.talkedWithClient && !this.clientAngry && !this.clientHelp) {
             // Cancela el temporizador si hay interacción antes del tiempo límite
             if (this.timer && !this.timer.hasDispatched) {
                 this.timer.remove();
-                // Realiza una acción diferente, ya que hubo interacción antes del tiempo límite
-                // Por ejemplo, desencadenar el enojo del cliente
+                
                 this.clientAngry = true;
                 this.time.delayedCall(1000, () => {
-                    // Si no ha habido interacción durante el tiempo límite
-                    // Realiza alguna acción aquí, por ejemplo, continuar con el diálogo
+                    
                     this.carro.destroy();
                 });
                 this.dialogModal.toggleWindow();
@@ -255,31 +255,35 @@ export class ShopScene extends Phaser.Scene {
                 this.currentDialogIndex = 0;
                 this.showDialog();
                 this.time.delayedCall(2000, () => {
-                    // Si no ha habido interacción durante el tiempo límite
-                    // Realiza alguna acción aquí, por ejemplo, continuar con el diálogo
                     this.dialogModal.toggleWindow()
                     this.willy.setMovable(true)
                 });
             }
         }
         else if (this.talkedWithClient && this.clientAngry) {
-            //this.dialogModal.toggleWindow();
+            
             this.currentDialogs = dialogos.angryClient;
             this.currentDialogIndex = 0;
             this.showDialog();
             this.willy.setMovable(false)
             this.time.delayedCall(3000, () => {
-                // Si no ha habido interacción durante el tiempo límite
-                // Realiza alguna acción aquí, por ejemplo, continuar con el diálogo
+                this.client.destroy();
                 this.dialogModal.toggleWindow()
                 this.willy.setMovable(true)
             });
         }
         else if (this.clientHelp) {
-
+            this.currentDialogs = dialogos.happy;
+            this.currentDialogIndex = 0;
+            this.showDialog();
+            this.willy.setMovable(false)
+            this.time.delayedCall(3000, () => {
+                
+                this.dialogModal.toggleWindow()
+                this.willy.setMovable(true)
+                this.botella.destroy()
+            });
         }
-        // this.currentDialogIndex = 0;
-        // this.showDialog(this.client);
     }
     startWorkerDialog() {
         this.dialogModal.toggleWindow();

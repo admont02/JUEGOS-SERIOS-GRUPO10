@@ -5,6 +5,8 @@ export let gameSettings = {
     isMuted: false, // Nuevo, para almacenar el estado de silencio
     lateBecauseOfWoman: false,
     lateTienda: false,
+    viejoImpaciente: false,
+    willyResponseCheck: true,
     getProducts: false
 };
 
@@ -23,7 +25,7 @@ export class Menu extends Phaser.Scene {
         this.backgroundMusic.play({ loop: true });
 
         let centerY = this.game.config.height * 0.5;
-
+        this.willyResponseCheck = true;
         let title = this.add.text(this.game.config.width * 0.5, centerY - 100, 'RUEDAS DE CAMBIO', { font: '64px Arial', fill: '#000000' }).setOrigin(0.5);
         let startText = this.add.text(this.game.config.width * 0.5, centerY, 'Empezar', { font: '48px Arial', fill: '#000000' }).setOrigin(0.5).setInteractive();
         let settingsText = this.add.text(this.game.config.width * 0.5, centerY + 50, 'Configuraciones', { font: '48px Arial', fill: '#000000' }).setOrigin(0.5).setInteractive();
@@ -56,8 +58,8 @@ export class Menu extends Phaser.Scene {
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
-                    this.scene.start('CasaScene');
-                    //this.scene.start('BedScene');
+                   // this.scene.start('CasaScene');
+                    this.scene.start('BedScene');
                 //this.scene.start('EscenaInicial');
                 }
             });

@@ -132,6 +132,11 @@ export class CentroScene extends Phaser.Scene {
             return;  // No hacer nada si el diálogo todavía se está escribiendo
         }
 
+        if (this.currentDialogs === this.atletaDialogs) {
+            if (nextDialogIndex === -1) {
+                gameSettings.willyResponseCheck = true; // Set to true if Willy responds negatively
+            }
+        }
         if (nextDialogIndex === -1) {
             this.endDialog();
             return;
@@ -169,6 +174,7 @@ export class CentroScene extends Phaser.Scene {
     startAtletaDialog() {
         this.currentDialogs = this.atletaDialogs;
         this.currentDialogIndex = 0;
+        this.willyResponseCheck = false; // Reset check at the start of dialogue
         this.showDialog();
     }
     

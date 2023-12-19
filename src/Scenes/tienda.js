@@ -39,7 +39,7 @@ export class ShopScene extends Phaser.Scene {
 
         this.willy.body.setAllowGravity(false);
 
-       
+
         this.caja.body.setAllowGravity(false);
         this.caja.body.setImmovable(true);
         this.physics.add.collider(this.willy, this.caja, this.colisionHandler);
@@ -63,7 +63,7 @@ export class ShopScene extends Phaser.Scene {
 
         this.shopWorker = this.physics.add.sprite(this.game.config.width + 1100, this.game.config.height - 250, 'shopWorker').setScale(1.25);
         this.shopWorker.body.allowGravity = false;
-       
+
         this.shopWorker.setInteractive();
         this.shopWorker.on('pointerup', () => {
             this.dialogStarted = true;
@@ -91,6 +91,14 @@ export class ShopScene extends Phaser.Scene {
             loop: true,
             volume: 0.02
         });
+        this.tweens.add({
+            targets: this.botella,
+            y: 300, // La posición inicial en el eje Y
+            duration: 2000,
+            yoyo: true, // Hace que el tween se repita de vuelta al punto de inicio
+            repeat: -1,
+            ease: 'Sine.easeInOut', // Un efecto de movimiento suave
+        });
     }
 
     collisionCallback() {
@@ -112,10 +120,11 @@ export class ShopScene extends Phaser.Scene {
         this.isDialogTyping = true;  // Establecer la bandera de que el diálogo se está escribiendo
         this.dialogModal.typeWriterEffect(dialogData.dialog, () => {
             this.isDialogTyping = false;  // Cambiar la bandera cuando el diálogo haya terminado de escribirse
-            this.showOptions(dialogData.options);
+            if (dialogData.options)
+                this.showOptions(dialogData.options);
         });
-        if (dialogData.options)
-            this.showOptions(dialogData.options);
+        // if (dialogData.options)
+        //     this.showOptions(dialogData.options);
 
     }
 
@@ -161,13 +170,12 @@ export class ShopScene extends Phaser.Scene {
             // Elimina las opciones cuando se acaben los diálogos con Paco
             this.talkedWithWorker = true;
             this.removeOptions();
-            if (!this.workerDialogs[this.currentDialogIndex].undesirableOption)
-                this.physics.moveToObject(this.shopWorker, this.caja, 150);
-            else
+            if (this.workerDialogs[this.currentDialogIndex].undesirableOption)
                 this.workerAngry = true;
+            this.physics.moveToObject(this.shopWorker, this.caja, 150);
         }
         this.time.delayedCall(3000, () => {
-            
+
             this.dialogModal.toggleWindow();
 
         });
@@ -185,7 +193,7 @@ export class ShopScene extends Phaser.Scene {
         this.showDialog();
     }
 
-    
+
 
     update(time, delta) {
 
@@ -209,27 +217,27 @@ export class ShopScene extends Phaser.Scene {
 
             }
         }
-        if(!this.client.active && !this.shopWorker.active){
-            gameSettings.lateTienda=true;
+        if (!this.client.active && !this.shopWorker.active) {
+            gameSettings.lateTienda = true;
             this.tweens.add({
                 targets: this.cameras.main,
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
-                    this.scene.start('ShopScene');
+                    this.scene.start('BedScene');
                     //this.scene.start('CasaScene');
                     //this.scene.start('EscenaInicial');
 
                 }
             });
         }
-        else if(!this.botella.active){
+        else if (!this.botella.active) {
             this.tweens.add({
                 targets: this.cameras.main,
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
-                    this.scene.start('ShopScene');
+                    this.scene.start('BedScene');
                     //this.scene.start('CasaScene');
                     //this.scene.start('EscenaInicial');
 
@@ -238,6 +246,8 @@ export class ShopScene extends Phaser.Scene {
         }
     }
     startClientDialog() {
+        if (this.isDialogTyping || this.optionTexts.length > 0)
+            return;
         this.dialogModal.toggleWindow();
         this.currentDialogs = this.clientDialogs;
         this.currentDialogIndex = 0;
@@ -260,10 +270,10 @@ export class ShopScene extends Phaser.Scene {
             // Cancela el temporizador si hay interacción antes del tiempo límite
             if (this.timer && !this.timer.hasDispatched) {
                 this.timer.remove();
-                
+
                 this.clientAngry = true;
                 this.time.delayedCall(1000, () => {
-                    
+
                     this.carro.destroy();
                 });
                 this.dialogModal.toggleWindow();
@@ -271,13 +281,15 @@ export class ShopScene extends Phaser.Scene {
                 this.currentDialogIndex = 0;
                 this.showDialog();
                 this.time.delayedCall(2000, () => {
-                    this.dialogModal.toggleWindow()
+                    //  this.dialogModal.toggleWindow()
+                    this.endDialog()
+
                     this.willy.setMovable(true)
                 });
             }
         }
         else if (this.talkedWithClient && this.clientAngry) {
-            
+
             this.currentDialogs = dialogos.angryClient;
             this.currentDialogIndex = 0;
             this.showDialog();
@@ -295,23 +307,25 @@ export class ShopScene extends Phaser.Scene {
             this.showDialog();
             this.willy.setMovable(false)
             this.time.delayedCall(3000, () => {
-                
+
                 this.dialogModal.toggleWindow()
                 this.willy.setMovable(true)
                 this.botella.setActive(false)
                 this.botella.destroy()
-                
+
             });
         }
     }
     startWorkerDialog() {
+        if (this.isDialogTyping || this.optionTexts.length > 0 || !this.talkedWithClient && this.talkedWithWorker)
+            return;
         this.dialogModal.toggleWindow();
         this.willy.setMovable(false)
-        if (!this.talkedWithWorker){
+        if (!this.talkedWithWorker) {
             this.currentDialogs = this.workerDialogs;
             this.talkedWithWorker = true;
         }
-        else if (this.workerAngry){
+        else if (this.workerAngry) {
             this.currentDialogs = this.dialogWorkerAngry;
             this.time.delayedCall(3000, () => {
                 this.shopWorker.setActive(false)
@@ -321,17 +335,17 @@ export class ShopScene extends Phaser.Scene {
             });
         }
         else {
-            if(this.talkedWithClient){
-            this.currentDialogs=dialogos.happy;
-            this.time.delayedCall(3000, () => {
-                
-                this.dialogModal.toggleWindow()
-                this.willy.setMovable(true)
-                this.botella.setActive(false)
+            if (this.talkedWithClient) {
+                this.currentDialogs = dialogos.happy;
+                this.time.delayedCall(3000, () => {
 
-                this.botella.destroy()
-            });
-        }
+                    this.dialogModal.toggleWindow()
+                    this.willy.setMovable(true)
+                    this.botella.setActive(false)
+
+                    this.botella.destroy()
+                });
+            }
         }
         this.currentDialogIndex = 0;
         this.showDialog();

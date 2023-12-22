@@ -184,7 +184,7 @@ export class CasaScene extends Phaser.Scene {
 
         if(this.willy.x > 1000){
             this.calleMusic.stop();
-            this.scene.start('CentroScene');
+            this.scene.start('BedScene');
         }
     
         // Lógica de movimiento de Willy

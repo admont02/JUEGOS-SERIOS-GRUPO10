@@ -3,7 +3,7 @@ export let gameSettings = {
     musicVolume: 1.0, // Asegúrate de que esta propiedad exista
     previousVolume: 1.0, // Nuevo, para almacenar el volumen antes del mute
     isMuted: false, // Nuevo, para almacenar el estado de silencio
-    lateBecauseOfWoman: false,
+    lateBecauseOfWoman: true,
     lateTienda: false,
     viejoImpaciente: false,
     willyResponseCheck: true,
@@ -59,8 +59,8 @@ export class Menu extends Phaser.Scene {
                 duration: 1500,
                 onComplete: () => {
                    // this.scene.start('CasaScene');
-                   // this.scene.start('BedScene');
-                    this.scene.start('EscenaInicial');
+                    this.scene.start('BedScene');
+                   //this.scene.start('EscenaInicial');
                 }
             });
         });

@@ -6,8 +6,8 @@ export let gameSettings = {
     lateBecauseOfWoman: true,
     lateTienda: false,
     viejoImpaciente: false,
-    willyResponseCheck: true,
-    getProducts: false
+    willyResponseCheck: false,
+    getProducts: true
 };
 
 

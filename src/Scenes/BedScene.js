@@ -13,9 +13,21 @@ export class BedScene extends Phaser.Scene {
         this.atletaCaraDialogs = dialogos.atletaCaraDialogs;
         this.mujerImage = null; // Reference to the woman's image
         this.atletaImage = null; // Reference to the athlete's image
+        this.viejoCaraDialogs = dialogos.viejoCaraDialogs;
+        this.viejoImage = null; // Reference to the old man's image
+        this.trabajadorCaraDialogs = dialogos.trabajadorCaraDialogs;
+        this.trabajadorImage = null; // Reference to the 'getProducts' character's image
+        this.dialogCompleted = {
+            mujer: false,
+            atleta: false,
+            viejo: false,
+            trabajador: false
+        };
+        this.charactersPresent = {};
     }
 
     create() {
+
         this.bgFinal = this.add.image(0, 0, 'final').setOrigin(0, 0).setDisplaySize(this.game.config.width, this.game.config.height).setAlpha(gameSettings.brightness);
         let width = this.sys.game.config.width;
         let height = this.sys.game.config.height;
@@ -32,10 +44,78 @@ export class BedScene extends Phaser.Scene {
             this.atletaImage.on('pointerdown', () => this.showAtletaDialog());
         }
 
+        if (gameSettings.viejoImpaciente) {
+            this.viejoImage = this.add.image(0, height-400, 'viejoCara').setOrigin(0, 1).setInteractive();
+            this.viejoImage.on('pointerdown', () => this.showViejoDialog());
+        }
+
+        if (gameSettings.getProducts) {
+            this.trabajadorImage = this.add.image(width, height -400, 'trabajadorCara').setOrigin(1, 1).setInteractive();
+            this.trabajadorImage.on('pointerdown', () => this.showTrabajadorDialog());
+        }
+
+        this.charactersPresent = {
+            mujer: gameSettings.lateBecauseOfWoman,
+            atleta: gameSettings.willyResponseCheck,
+            viejo: gameSettings.viejoImpaciente,
+            trabajador: gameSettings.getProducts
+        };
+
         this.dialogModal = new DialogModal(this);
         this.dialogModal.init();
         this.dialogModal.doubleFontSize();
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 300);
+    }
+
+    showViejoDialog() {
+        this.currentDialogs = this.viejoCaraDialogs;
+        this.makeImagesInvisible(); 
+            this.removeOptions();
+            this.dialogModal.removeCharacterImage();
+            this.dialogModal.createCharacterImage('viejoCara', 0.7);
+    
+            if (this.currentDialogIndex >= this.viejoCaraDialogs.length || this.currentDialogIndex === -1) {
+                this.dialogModal.toggleWindow(); // Hide the dialog window
+                return;
+            }
+    
+            let dialogData = this.viejoCaraDialogs[this.currentDialogIndex];
+            this.isDialogTyping = true;
+            this.dialogModal.typeWriterEffect(dialogData.dialog, () => {
+                this.isDialogTyping = false;
+            });
+    
+            if (dialogData.options && dialogData.options.length > 0) {
+                this.showOptions(dialogData.options);
+            } else {
+                console.log("No options available for this dialog.");
+            }
+    }
+
+
+    showTrabajadorDialog() {
+        this.currentDialogs = this.trabajadorCaraDialogs;
+    this.makeImagesInvisible(); 
+        this.removeOptions();
+        this.dialogModal.removeCharacterImage();
+        this.dialogModal.createCharacterImage('trabajadorCara', 0.7);
+
+        if (this.currentDialogIndex >= this.trabajadorCaraDialogs.length || this.currentDialogIndex === -1) {
+            this.dialogModal.toggleWindow(); // Hide the dialog window
+            return;
+        }
+
+        let dialogData = this.trabajadorCaraDialogs[this.currentDialogIndex];
+        this.isDialogTyping = true;
+        this.dialogModal.typeWriterEffect(dialogData.dialog, () => {
+            this.isDialogTyping = false;
+        });
+
+        if (dialogData.options && dialogData.options.length > 0) {
+            this.showOptions(dialogData.options);
+        } else {
+            console.log("No options available for this dialog.");
+        }
     }
 
     showMujerDialog() {
@@ -89,11 +169,31 @@ export class BedScene extends Phaser.Scene {
     makeImagesInvisible() {
         if (this.mujerImage) this.mujerImage.setVisible(false);
         if (this.atletaImage) this.atletaImage.setVisible(false);
+        if (this.viejoImage) this.viejoImage.setVisible(false);
+        if (this.trabajadorImage) this.trabajadorImage.setVisible(false);
     }
+    
     
     makeImagesVisible() {
         if (this.mujerImage) this.mujerImage.setVisible(true);
         if (this.atletaImage) this.atletaImage.setVisible(true);
+        if (this.viejoImage) this.viejoImage.setVisible(true);
+        if (this.trabajadorImage) this.trabajadorImage.setVisible(true);
+    }
+    
+
+    removeViejoImage() {
+        if (this.viejoImage) {
+            this.viejoImage.destroy();
+            this.viejoImage = null;
+        }
+    }
+
+    removeTrabajadorImage() {
+        if (this.trabajadorImage) {
+            this.trabajadorImage.destroy();
+            this.trabajadorImage = null;
+        }
     }
 
     // Atleta dialog methods
@@ -118,27 +218,51 @@ export class BedScene extends Phaser.Scene {
     }
 
     handleOptionSelect(nextDialogIndex, index) {
-    if (this.isDialogTyping) {
-        console.log("Wait for the dialog to finish typing.");
-        return;
-    }
-
-    if (nextDialogIndex === -1) {
-        this.makeImagesVisible(); // Make all character images visible again
-        // Check which dialog context is active to decide which image to remove
-        if (this.currentDialogs === this.atletaCaraDialogs) {
-            this.removeAtletaImage();
-        } else if (this.currentDialogs === this.mujerCaraDialogs) {
-            this.removeWomanImage();
+        if (this.isDialogTyping) {
+            console.log("Wait for the dialog to finish typing.");
+            return;
         }
-       // this.dialogModal.toggleWindow();
-        this.removeOptions();
-        return;
+    
+        if (nextDialogIndex === -1) {
+            // Update the completion status for the current dialogue
+            if (this.currentDialogs === this.mujerCaraDialogs) {
+                this.removeWomanImage();
+                this.dialogCompleted.mujer = true;
+            } else if (this.currentDialogs === this.atletaCaraDialogs) {
+                this.removeAtletaImage();
+                this.dialogCompleted.atleta = true;
+            } else if (this.currentDialogs === this.viejoCaraDialogs) {
+                this.removeViejoImage();
+                this.dialogCompleted.viejo = true;
+            } else if (this.currentDialogs === this.trabajadorCaraDialogs) {
+                this.removeTrabajadorImage();
+                this.dialogCompleted.trabajador = true;
+            }
+    
+            // Check if all dialogues are complete for the present characters
+            const allDialogsCompleted = Object.entries(this.charactersPresent).every(([character, isPresent]) => {
+                return !isPresent || this.dialogCompleted[character];
+            });
+    
+            if (allDialogsCompleted) {
+                // If all present dialogues are completed, transition to the menu after a delay
+                this.time.delayedCall(3000, () => {
+                    this.scene.start('Menu');
+                });
+            } else {
+                this.makeImagesVisible(); // Make the remaining images visible again
+            }
+    
+            this.dialogModal.toggleWindow();
+            this.removeOptions();
+            return;
+        }
+    
+        this.currentDialogIndex = nextDialogIndex;
+        this.showDialog();
     }
-
-    this.currentDialogIndex = nextDialogIndex;
-    this.showDialog();
-}
+    
+    
 
 
     removeAtletaImage() {

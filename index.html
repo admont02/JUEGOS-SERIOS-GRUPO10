@@ -5,31 +5,47 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ruedas de Cambio: un juego serio de aprendizaje y aventura.">
+    <meta name="keywords" content="Ruedas de Cambio, Juego Educativo, Videojuego, Aprendizaje">
     <script src="./lib/phaser.js"></script>
     <title>Ruedas de Cambio</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<div class = "body">
-<div class="container">
-    <canvas id='juego'  style="image-rendering: pixelated; width: 656px; height: 376px"></canvas>
-    <script src="./src/index.js" type="module"></script> 
-</div>
+    <header>
+        <h1>Ruedas de Cambio</h1> <!-- Título del juego -->
+    </header>
 
-<a href="https://github.com/neutronbomb23/PVLI" target="_blank">
-    <img  class="socials" src="https://pngimg.com/uploads/github/github_PNG55.png" alt="Si la imagen no se carga, se ve esto">
-</a>
+    <aside class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="https://github.com/neutronbomb23/PVLI" target="_blank">GitHub</a></li>
+                <li>Dorjee</li>
+                <li>Adrián</li>
+            </ul>
+        </nav>
+    </aside>
+    
 
-<a id="twitter" href="https://twitter.com/DaspCoding" target="_blank">
-    <img  class="socials" src="https://cdn.freebiesupply.com/logos/large/2x/twitter-3-logo-png-transparent.png" alt="Si la imagen no se carga, se ve esto">
-</a>
-
-<hr class="footer-divider">
-<footer class="container">
-    <p class="float-right"><a href="#">Back to top</a></p>
-    <p>JUEGOS SERIOS. GRUPO 10. CURSO 2023/24S</p>
-    <p>Grado en Desarrollo de Videojuegos &middot; <a target="_blank" href="http://informatica.ucm.es">Facultad de Informática</a> &middot; <a target="_blank" href="http://www.ucm.es">UCM</a></p>
-</footer>
-</div>
+    <main id="main-content">
+        <div class="container">
+            <canvas id='juego' style="image-rendering: pixelated; width: 656px; height: 376px"></canvas>
+            <script src="./src/index.js" type="module"></script>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('mousemove', function(e) {
+            const sidebar = document.querySelector('.sidebar');
+            const rect = sidebar.getBoundingClientRect();
+            const distance = Math.min(Math.abs(e.clientX - rect.left), Math.abs(e.clientX - rect.right));
+            const maxDistance = window.innerWidth / 4; // Ajusta esto según tu diseño
+            let opacity = 1 - (distance / maxDistance);
+    
+            opacity = Math.max(0, Math.min(opacity, 1)); // Asegura que la opacidad esté entre 0 y 1
+            sidebar.style.opacity = opacity;
+        });
+    </script>
+    
+    
 </body>
 </html>

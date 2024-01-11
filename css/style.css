@@ -1,10 +1,61 @@
+:root {
+    --color-primario: rgb(55, 46, 131);
+    --color-secundario: rgb(200, 217, 13);
+    --fuente-principal: 'Arial', sans-serif;
+}
+
+body {
+    animation: fadeIn 1s;
+    background-color: #000; /* Color de fondo negro, cambia según tu preferencia */
+    color: #fff; /* Color del texto, cambia según tu preferencia */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+header h1 {
+    text-align: center;
+    /* Otros estilos para tu título aquí */
+}
+.sidebar a[href*="github.com"] {
+    color: white;
+    text-decoration: none; /* Opcional: elimina el subrayado del enlace */
+}
+
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px; /* Ajusta el ancho según necesites */
+    height: 100%;
+    background-color: #333; /* Cambia el color de fondo según tu diseño */
+    color: white;
+    padding: 20px;
+}
+
+.sidebar nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 10px;
+}
+
 .header {
     width: 400px;
     display: block;
     margin: auto;
 }
 
-.subtitle{
+.subtitle {
     font-size: 22px;
     font-weight: bold;
     margin-left: 645px;
@@ -13,7 +64,7 @@
     margin-top: 50px;
 }
 
-.text{
+.text {
     color: rgb(255, 255, 255);
     font-size: 30px;
     font-weight: bold;
@@ -24,14 +75,15 @@
     margin-right: 350px;
 }
 
-.lista{
+.lista {
     color: rgb(255, 255, 255);
     font-weight: bold;
     width: 30%;
     font-size: 30px;
     margin-left: 34%;
 }
-.titles{
+
+.titles {
     color: rgb(200, 217, 13);
     background-color: rgb(55, 46, 131);
     font-size: 40px;
@@ -44,18 +96,17 @@
     margin-top: 30px;
 }
 
-#descripción
-{
+#descripción {
     color: rgb(200, 217, 13);
     background-color: rgb(98, 139, 0);
 }
-#Historia
-{
+
+#Historia {
     color: rgb(200, 217, 13);
     background-color: rgb(0, 132, 141);
 }
 
-.des{
+.des {
     font-size: 30px;
     color: rgb(200, 217, 13);
     background-color: rgb(55, 46, 131);
@@ -66,7 +117,7 @@
     justify-content: center;
 }
 
-.DASP{
+.DASP {
     width: 145px;
     float:right;
     background-color: transparent;
@@ -76,23 +127,7 @@
     width: 100px;
 }
 
-#github{
+#github {
     align-content: center;
     margin-left: 45%;
-}
-
-#twitter {
-    float: right;
-}
-
-footer{
-    color: rgb(255, 255, 255);
-    margin-left: 100px;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-body{
-    color: rgb(0,0,0);
-    background-color: #000;  /* this will set the background color to black */
 }

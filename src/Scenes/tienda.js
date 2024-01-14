@@ -224,6 +224,7 @@ export class ShopScene extends Phaser.Scene {
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
+                    this.sound.stop();
                     this.scene.start('BedScene');
                     //this.scene.start('CasaScene');
                     //this.scene.start('EscenaInicial');
@@ -237,6 +238,7 @@ export class ShopScene extends Phaser.Scene {
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
+                    this.sound.stop();
                     this.scene.start('BedScene');
                     //this.scene.start('CasaScene');
                     //this.scene.start('EscenaInicial');

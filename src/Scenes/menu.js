@@ -60,7 +60,7 @@ export class Menu extends Phaser.Scene {
                 onComplete: () => {
                    // this.scene.start('CasaScene');
                    //this.scene.start('BedScene');
-                   this.scene.start('EscenaInicial');
+                   this.scene.start('CentroScene');
                 }
             });
         });

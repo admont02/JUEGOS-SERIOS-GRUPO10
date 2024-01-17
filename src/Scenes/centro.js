@@ -201,10 +201,14 @@ export class CentroScene extends Phaser.Scene {
         this.currentDialogs = this.pacoDialogs;
         this.currentDialogIndex = 0;
         this.showDialog();
-
+        this.paco.setScale(0.75,0.75);
         // Hacer a Paco interactivo
         this.paco.setInteractive();
+    
+        // Flip Paco horizontalmente
+        this.paco.setFlipX(false);
     }
+    
 
 
     update(time, delta) {

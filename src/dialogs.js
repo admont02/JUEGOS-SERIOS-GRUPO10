@@ -367,7 +367,7 @@ export default {
                     "nextDialogIndex": -1,
                 },
                 {
-                    "text": "No necesito tu ayuda de todos modos.\n No soy un inútil  ",
+                    "text": "Venga, rapidito..  ",
                     "nextDialogIndex": 4,
                 }
             ]

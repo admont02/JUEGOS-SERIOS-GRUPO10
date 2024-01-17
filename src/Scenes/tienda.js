@@ -84,7 +84,7 @@ export class ShopScene extends Phaser.Scene {
 
         this.cameras.main.setBounds(0, 0, this.game.config.width * 4, this.game.config.height);
         this.cameras.main.startFollow(this.willy);
-        this.sound.add('superMusic');
+        this.backgroundMusic =this.sound.add('superMusic');
 
         // Reproduce el audio en bucle
         this.sound.play('superMusic', {
@@ -224,7 +224,7 @@ export class ShopScene extends Phaser.Scene {
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
-                    this.sound.stop();
+                    this.backgroundMusic.stop();
                     this.scene.start('BedScene');
                     //this.scene.start('CasaScene');
                     //this.scene.start('EscenaInicial');
@@ -238,7 +238,7 @@ export class ShopScene extends Phaser.Scene {
                 alpha: 0,
                 duration: 1500,
                 onComplete: () => {
-                    this.sound.stop();
+                    this.backgroundMusic.stop();
                     this.scene.start('BedScene');
                     //this.scene.start('CasaScene');
                     //this.scene.start('EscenaInicial');

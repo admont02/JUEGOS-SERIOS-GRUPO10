@@ -8,6 +8,7 @@ El juego se enfoca en crear conciencia sobre los desafíos que enfrentan las per
 
 GDD: https://docs.google.com/document/d/1o9Ows1PHm8QdJS_RyZ9N8DyejAIY_iVQ5q1Udb99psw/edit?usp=sharing
 
+Video: https://youtu.be/yuXirgptMV8
 
 
 Juego: https://admont02.github.io/JUEGOS-SERIOS-GRUPO10/

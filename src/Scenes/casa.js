@@ -91,7 +91,7 @@ export class CasaScene extends Phaser.Scene {
             dialogBox.fillStyle(0x000000, 0.5); // Color and transparency of the box
     
             // Text with a larger size and calculate dimensions
-            let optionText = this.add.text(0, 0, option.text, { fill: '#fff', fontSize: '32px' });
+            let optionText = this.add.text(0, 0, option.text, { fill: '#fff', fontSize: '38px' });
             
             textWidth = optionText.width + 60; // Increased margin
             textHeight = optionText.height + 20; // Adjusted height for the new text size

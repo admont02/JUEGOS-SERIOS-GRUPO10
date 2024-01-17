@@ -78,7 +78,7 @@ export class CentroScene extends Phaser.Scene {
 
             let optionText = this.add.text(0, 0, option.text, { 
                 fill: '#fff', 
-                fontSize: '32px',
+                fontSize: '38px',
                 wordWrap: { width: this.game.config.width - 200 }
             });
 

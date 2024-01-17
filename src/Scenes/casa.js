@@ -27,8 +27,8 @@ export class CasaScene extends Phaser.Scene {
         this.sound.setMute(gameSettings.isMuted);
         this.sound.setVolume(gameSettings.musicVolume);
         this.calleMusic = this.sound.add('calleM');
-        this.calleMusic.play({ loop: true });
-        this.calleMusic.setVolume(0.05);
+        //this.calleMusic.play();
+        //this.calleMusic.setVolume(0.05);
         this.willy = new Willy(this, this.sys.game.config.width / 3, this.sys.game.config.height - 400, 'jugador');
 
         this.willy.setMovable(false); 
@@ -155,6 +155,7 @@ export class CasaScene extends Phaser.Scene {
         });
         this.willy.setMovable(true); 
         this.canMove = true;
+       // this.calleMusic.stop();
     }
     
     removeCharacterImage() {
@@ -183,7 +184,7 @@ export class CasaScene extends Phaser.Scene {
         }
 
         if(this.willy.x > 1000){
-            this.calleMusic.stop();
+           // this.calleMusic.stop();
             this.scene.start('CentroScene');
         }
     

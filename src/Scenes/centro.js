@@ -28,7 +28,7 @@ export class CentroScene extends Phaser.Scene {
         this.dialogModal._createWindow(0, this.dialogModal._getGameHeight() - 250);
         this.centroMusic = this.sound.add('centroM');
         this.centroMusic.play({ loop: true });
-        this.centroMusic.setVolume(0.05);
+        this.centroMusic.setVolume(0.01);
         this.willy = new Willy(this, this.sys.game.config.width / 3 -100, this.sys.game.config.height - 200, 'jugador');
 
         // Crear sprite del entrenador y comenzar su diálogo

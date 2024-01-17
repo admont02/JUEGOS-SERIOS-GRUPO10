@@ -32,7 +32,7 @@ export class CentroScene extends Phaser.Scene {
         this.willy = new Willy(this, this.sys.game.config.width / 3 -100, this.sys.game.config.height - 200, 'jugador');
 
         // Crear sprite del entrenador y comenzar su diálogo
-        this.entrenador = this.physics.add.sprite(this.game.config.width - 100, this.game.config.height - 200, 'mujerCoche');
+        this.entrenador = this.physics.add.sprite(this.game.config.width - 100, this.game.config.height - 200, 'trainer');
         this.entrenador.setFlipX(true); 
         this.entrenador.body.setAllowGravity(false);
         this.startTrainerDialog();
